@@ -71,9 +71,9 @@ Very important: `loader.metadata.copyright` should contain the copyright notice 
 
 Please see the examples folder for proper implementations of each case.
 
-[Street View panorama from id](https://spite.github.io/PanomNom.js/examples/basic/sv-panoid.html)  
-[Street View panorama from lat,lng](https://spite.github.io/PanomNom.js/examples/basic/sv-location.html)  
-[Street View panorama from URL](https://spite.github.io/PanomNom.js/examples/basic/sv-url.html)
+[Street View panorama from id](https://freealise.github.io/PanomNom.js/examples/basic/sv-panoid.html)  
+[Street View panorama from lat,lng](https://freealise.github.io/PanomNom.js/examples/basic/sv-location.html)  
+[Street View panorama from URL](https://freealise.github.io/PanomNom.js/examples/basic/sv-url.html)
 
 A more complete example, with Leaflet map control and more:
 
