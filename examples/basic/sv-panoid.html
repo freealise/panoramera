@@ -79,6 +79,7 @@
       <form id="PanoIdForm">
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
+        <button onclick="copyDataUrl();" disabled id="DataUrlCopy">Copy</button>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -95,6 +96,7 @@
       var canvasContainer = document.getElementById("canvasContainer");
       var PanoIdInput = document.getElementById("PanoIdInput");
       var PanoIdForm = document.getElementById("PanoIdForm");
+      var DataUrlCopy = document.getElementById("DataUrlCopy");
 
       function showError(message) {
         errorDiv.innerHTML = message;
@@ -129,6 +131,7 @@
               loader.metadata.copyright +
               ".<br/>"
           );
+          DataUrlCopy.disabled = false;
         } catch (e) {
           if (e === "ZERO_RESULTS") {
             showError("No results");
@@ -144,6 +147,12 @@
         load(PanoIdInput.value);
         e.preventDefault();
       });
+
+      function copyDataUrl() {
+        if (canvasContainer.lastChild) {
+          navigator.clipboard.writeText( canvasContainer.lastChild.toDataURL() );
+        }
+      }
     </script>
   </body>
 </html>
