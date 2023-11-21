@@ -147,9 +147,13 @@
       });
 
       function copyDataUrl(e) {
-        window.focus();
-        navigator.clipboard.writeText( e.target.toDataURL() );
-        showProgress("Copied.");
+        e.target.toBlob((blob) => {
+          const url = URL.createObjectURL(blob);
+          window.focus();
+          navigator.clipboard.write( url );
+          showProgress("Copied.");
+          URL.revokeObjectURL(url);
+        });
       }
     </script>
   </body>
