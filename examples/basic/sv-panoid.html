@@ -67,6 +67,7 @@
       }
       #DataUrlCopy {
         float:left;
+        vertical-align: middle;
       }
     </style>
   </head>
@@ -83,7 +84,7 @@
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
       </form>
-      <button onclick="copyDataUrl();" disabled id="DataUrlCopy">Copy</button>
+      <button disabled id="DataUrlCopy">Copy</button>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
@@ -150,6 +151,7 @@
         load(PanoIdInput.value);
         e.preventDefault();
       });
+      DataUrlCopy.addEventListener("click", copyDataUrl);
 
       function copyDataUrl() {
         if (canvasContainer.lastChild) {
