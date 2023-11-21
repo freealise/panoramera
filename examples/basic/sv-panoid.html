@@ -65,10 +65,6 @@
         border: none;
         height: 2.4em;
       }
-      #DataUrlCopy {
-        float:left;
-        vertical-align: middle;
-      }
     </style>
   </head>
   <body>
@@ -84,7 +80,6 @@
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
       </form>
-      <button disabled id="DataUrlCopy">Copy</button>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
@@ -100,7 +95,6 @@
       var canvasContainer = document.getElementById("canvasContainer");
       var PanoIdInput = document.getElementById("PanoIdInput");
       var PanoIdForm = document.getElementById("PanoIdForm");
-      var DataUrlCopy = document.getElementById("DataUrlCopy");
 
       function showError(message) {
         errorDiv.innerHTML = message;
@@ -135,7 +129,7 @@
               loader.metadata.copyright +
               ".<br/>"
           );
-          DataUrlCopy.disabled = false;
+          canvasContainer.lastChild.addEventListener("click", copyDataUrl);
         } catch (e) {
           if (e === "ZERO_RESULTS") {
             showError("No results");
@@ -151,12 +145,11 @@
         load(PanoIdInput.value);
         e.preventDefault();
       });
-      DataUrlCopy.addEventListener("click", copyDataUrl);
 
-      function copyDataUrl() {
-        if (canvasContainer.lastChild) {
-          navigator.clipboard.writeText( canvasContainer.lastChild.toDataURL() );
-        }
+      function copyDataUrl(e) {
+        document.focus();
+        navigator.clipboard.writeText( e.target.toDataURL() );
+        showProgress("Copied.");
       }
     </script>
   </body>
