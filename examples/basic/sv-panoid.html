@@ -147,7 +147,7 @@
       });
 
       function copyDataUrl(e) {
-        document.focus();
+        window.focus();
         navigator.clipboard.writeText( e.target.toDataURL() );
         showProgress("Copied.");
       }
