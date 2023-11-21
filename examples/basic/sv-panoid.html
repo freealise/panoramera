@@ -65,6 +65,9 @@
         border: none;
         height: 2.4em;
       }
+      #DataUrlCopy {
+        float:left;
+      }
     </style>
   </head>
   <body>
@@ -79,8 +82,8 @@
       <form id="PanoIdForm">
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
-        <button onclick="copyDataUrl();" disabled id="DataUrlCopy">Copy</button>
       </form>
+      <button onclick="copyDataUrl();" disabled id="DataUrlCopy">Copy</button>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
