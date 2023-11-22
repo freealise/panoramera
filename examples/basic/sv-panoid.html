@@ -147,13 +147,9 @@
       });
 
       function copyDataUrl(e) {
-        e.target.toBlob((blob) => {
-          const url = URL.createObjectURL(blob);
-          window.focus();
-          navigator.clipboard.write( url );
-          showProgress("Copied.");
-          URL.revokeObjectURL(url);
-        });
+        window.focus();
+        navigator.clipboard.writeText( e.target.toDataURL() );
+        showProgress("Copied.");
       }
     </script>
   </body>
