@@ -89,6 +89,14 @@
     <script type="module">
       import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
 
+      var idParam = document.location.href.split('ids=')[1];
+      if (idParam && idParam != '') {
+        var ids = idParam.split('&')[0].split(',');
+        for (var i=0; i<ids.length; i++) {
+          load(ids[i]);
+        }
+      }
+
       var messageDiv = document.getElementById("messageDiv");
       var errorDiv = document.getElementById("errorDiv");
       var progressDiv = document.getElementById("progressDiv");
