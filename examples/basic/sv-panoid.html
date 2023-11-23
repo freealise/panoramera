@@ -132,7 +132,7 @@
           canvasContainer.lastChild.addEventListener("click", copyDataUrl);
           j++;
           if (ids[j]) {
-            load(ids[j]);
+            await load(ids[j]);
           }
         } catch (e) {
           if (e === "ZERO_RESULTS") {
