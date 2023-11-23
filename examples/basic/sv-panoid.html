@@ -130,6 +130,10 @@
               ".<br/>"
           );
           canvasContainer.lastChild.addEventListener("click", copyDataUrl);
+          j++;
+          if (ids[j]) {
+            load(ids[j]);
+          }
         } catch (e) {
           if (e === "ZERO_RESULTS") {
             showError("No results");
@@ -152,12 +156,11 @@
         showProgress("Copied.");
       }
 
+      var j=0;
       var idParam = document.location.href.split('ids=')[1];
       if (idParam && idParam != '') {
         var ids = idParam.split('&')[0].split(',');
-        for (var i=0; i<ids.length; i++) {
-          load(ids[i]);
-        }
+        load(ids[0]);
       }
     </script>
   </body>
