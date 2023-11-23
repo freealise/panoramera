@@ -157,9 +157,10 @@
       }
 
       var j=0;
+      var ids = [];
       var idParam = document.location.href.split('ids=')[1];
       if (idParam && idParam != '') {
-        var ids = idParam.split('&')[0].split(',');
+        ids = idParam.split('&')[0].split(',');
         load(ids[0]);
       }
     </script>
