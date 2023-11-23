@@ -16,13 +16,14 @@
       }
       body {
         font: 12px/14px Roboto, tahoma, sans-serif;
-        padding: 10px;
+        padding: 0;
         box-sizing: border-box;
         color: #202020;
       }
       section {
         width: 800px;
         margin: 0 auto;
+        padding: 10px;
       }
       h1 {
         font-size: 24px;
@@ -34,11 +35,9 @@
         line-height: 28px;
       }
       canvas {
-        margin-top: 1em;
+        margin: 0;
+        padding: 0;
         width: 100%;
-        position: absolute;
-        left: 0;
-        right: 0;
       }
       p {
         margin-bottom: 1em;
@@ -132,7 +131,7 @@
           canvasContainer.lastChild.addEventListener("click", copyDataUrl);
           j++;
           if (ids[j]) {
-            await load(ids[j]);
+            load(ids[j]);
           }
         } catch (e) {
           if (e === "ZERO_RESULTS") {
