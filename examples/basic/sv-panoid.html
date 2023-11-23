@@ -78,6 +78,7 @@
       <form id="PanoIdForm">
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
+        <input type="button" id="DownloadImages" /><a href="" id="DownloadLink"></a>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -94,6 +95,8 @@
       var canvasContainer = document.getElementById("canvasContainer");
       var PanoIdInput = document.getElementById("PanoIdInput");
       var PanoIdForm = document.getElementById("PanoIdForm");
+      var DownloadImages = document.getElementById("DownloadImages");
+      var DownloadLink = document.getElementById("DownloadLink");
 
       function showError(message) {
         errorDiv.innerHTML = message;
@@ -147,6 +150,16 @@
       PanoIdForm.addEventListener("submit", function (e) {
         load(PanoIdInput.value);
         e.preventDefault();
+      });
+
+      DownloadImages.addEventListener("click", function (e) {
+        e.preventDefault();
+        var canvases = document.getElementsByTagName('canvas');
+        for (var i=0; i<canvases.length; i++) {
+          DownloadLink.download = 'pano'+i+'.png';
+          DownloadLink.href = canvases[i].toDataURL();
+          DownloadLink.click();
+        }
       });
 
       function copyDataUrl(e) {
