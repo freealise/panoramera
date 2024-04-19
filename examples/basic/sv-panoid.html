@@ -225,6 +225,7 @@
 	  } else if (k < canvases.length + 2) {
 	    k++;
 	  } else {
+	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
 	    clearInterval(intv);
 	    mediaRecorder.stop();
             k=1;
