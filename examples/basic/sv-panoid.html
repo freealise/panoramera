@@ -224,8 +224,6 @@
             context.putImageData(imgData, 0, 0, 0, 0, canvases[0].width, canvases[0].height);
             k++;
 	  } else if (k == canvases.length) {
-	    k++;
-	  } else if (k == canvases.length + 1) {
 	    context.fillRect(0, 0, canvases[0].width, canvases[0].height);
 	    k++;
 	  } else {
