@@ -221,7 +221,7 @@
           canvases[0].height = canvases[k].height;
           context.putImageData(imgData, 0, 0);
           k++;
-          if (k > canvases.length) { clearInterval(intv); k=1; mediaRecorder.stop(); }
+          if (k == canvases.length) { clearInterval(intv); k=1; setTimeout(mediaRecorder.stop(), 1000); }
         }, 1000);
         
         mediaRecorder.start(0);
