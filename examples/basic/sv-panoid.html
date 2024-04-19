@@ -174,10 +174,10 @@
         e.preventDefault();
         const canvases = document.getElementsByTagName('canvas');
         intv = setInterval(function() {
-          const ctx = canvases[i].getContext("2d");
-          const imgData = ctx.getImageData(0, 0, canvases[i].width, canvases[i].height);
-          canvases[0].width = canvases[i].width;
-          canvases[0].height = canvases[i].height;
+          const ctx = canvases[k].getContext("2d");
+          const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
+          canvases[0].width = canvases[k].width;
+          canvases[0].height = canvases[k].height;
           context.putImageData(imgData, 0, 0);
           k++;
           if (k == canvases.length) { clearInterval(intv); k=1; }
