@@ -78,12 +78,15 @@
       <form id="PanoIdForm">
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
-        <input type="button" id="DownloadImages" value="Download"/>
+        <input type="button" id="DownloadImages" value="Download images"/>
         <a href="" id="DownloadLink"></a>
+        <input type="button" id="DownloadVideo" value="Download video"/>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
+      <video id="seq" src="" muted controls></video>
+      <canvas width="1" height="1"></canvas>
       <div id="canvasContainer"></div>
     </section>
     <script src="https://maps.google.com/maps/api/js"></script>
@@ -98,6 +101,10 @@
       var PanoIdForm = document.getElementById("PanoIdForm");
       var DownloadImages = document.getElementById("DownloadImages");
       var DownloadLink = document.getElementById("DownloadLink");
+      var DownloadVideo = document.getElementById("DownloadVideo");
+
+      const canvas = document.getElementsByTagName("canvas")[0];
+      const context = canvas.getContext("2d");
 
       function showError(message) {
         errorDiv.innerHTML = message;
@@ -156,11 +163,25 @@
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
         var canvases = document.getElementsByTagName('canvas');
-        for (var i=0; i<canvases.length; i++) {
+        for (var i=1; i<canvases.length; i++) {
           DownloadLink.download = 'pano'+i+'.png';
           DownloadLink.href = canvases[i].toDataURL();
           DownloadLink.click();
         }
+      });
+
+      DownloadVideo.addEventListener("click", function (e) {
+        e.preventDefault();
+        const canvases = document.getElementsByTagName('canvas');
+        intv = setInterval(function() {
+          const ctx = canvases[i].getContext("2d");
+          const imgData = ctx.getImageData(0, 0, canvases[i].width, canvases[i].height);
+          canvases[0].width = canvases[i].width;
+          canvases[0].height = canvases[i].height;
+          context.putImageData(imgData, 0, 0);
+          k++;
+          if (k == canvases.length) { clearInterval(intv); k=1; }
+        }, 40);
       });
 
       function copyDataUrl(e) {
@@ -169,6 +190,8 @@
         showProgress("Copied.");
       }
 
+      var intv;
+      var k=1;
       var j=0;
       var ids = [];
       var idParam = document.location.href.split('ids=')[1];
