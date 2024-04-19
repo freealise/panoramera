@@ -213,20 +213,22 @@
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
         const canvases = document.getElementsByTagName('canvas');
-	canvases[0].width = canvases[1].width;
-        canvases[0].height = canvases[1].height;
 	context.fillStyle = "#000000";
 
         intv = setInterval(function() {
 	  if (k < canvases.length) { 
             const ctx = canvases[k].getContext("2d");
+	    canvases[0].width = canvases[k].width;
+            canvases[0].height = canvases[k].height;
             const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
             context.putImageData(imgData, 0, 0, 0, 0, canvases[0].width, canvases[0].height);
             k++;
 	  } else if (k == canvases.length) {
 	    k++;
-	  } else {
+	  } else if (k == canvases.length + 1) {
 	    context.fillRect(0, 0, canvases[0].width, canvases[0].height);
+	    k++;
+	  } else {
 	    clearInterval(intv);
 	    mediaRecorder.stop();
             k=1;
