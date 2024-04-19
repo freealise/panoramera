@@ -213,7 +213,7 @@
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
         const canvases = document.getElementsByTagName('canvas');
-        
+
         intv = setInterval(function() {
 	  if (k < canvases.length) { 
             const ctx = canvases[k].getContext("2d");
@@ -222,7 +222,7 @@
             canvases[0].height = canvases[k].height;
             context.putImageData(imgData, 0, 0);
             k++;
-	  } else if (k == canvases.length) {
+	  } else if (k < canvases.length + 2) {
 	    k++;
 	  } else {
 	    clearInterval(intv);
