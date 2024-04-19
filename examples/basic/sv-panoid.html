@@ -86,7 +86,7 @@
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
       <video id="seq" src="" muted controls></video>
-      <canvas width="1" height="1"></canvas>
+      <canvas width="1" height="1" style="display:none;"></canvas>
       <div id="canvasContainer"></div>
     </section>
     <script src="https://maps.google.com/maps/api/js"></script>
@@ -129,16 +129,15 @@
             seq.src = reader.result;
             seq.height = parseInt(256 * canvas.height / canvas.width);
             seq.addEventListener("loadedmetadata", () => {
-				      console.log("duration:", seq.duration); // Handle chrome's bug
-				      if (seq.duration === Infinity) { // Set it to bigger than the actual duration
-					      seq.currentTime = 86400;
-					      seq.addEventListener("timeupdate", () => {
-					        console.log("after workaround:", seq.duration);
-						      seq.currentTime = 0;
-						      console.log(canvas.width + "x" + canvas.height);
-					      }, { once: true });
-				      }
-			      });
+		console.log("duration:", seq.duration); // Handle chrome's bug
+		if (seq.duration === Infinity) { // Set it to bigger than the actual duration
+			seq.currentTime = 86400;
+			seq.addEventListener("timeupdate", () => {
+				console.log("after workaround:", seq.duration);
+				seq.currentTime = 0;
+			}, { once: true });
+		}
+	    });
             recordedChunks = [];
           };
           reader.readAsDataURL(recoveredBlob);
