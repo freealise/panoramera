@@ -135,6 +135,7 @@
 			seq.addEventListener("timeupdate", () => {
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
+				loadFrames(seq.src);
 			}, { once: true });
 		}
 	    });
@@ -145,6 +146,20 @@
         xhr.open('GET', url);
         xhr.send();
       }
+
+var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec";
+
+function loadFrames(d) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      messageDiv.innerHTML = this.responseText;
+    }
+  };
+  xhttp.open("POST", url, true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("a=replicate&url=" + encodeURIComponent(d));
+}
 
       function showError(message) {
         errorDiv.innerHTML = message;
