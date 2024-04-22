@@ -156,9 +156,11 @@ function loadFrames(d) {
       messageDiv.innerHTML = this.responseText;
     }
   };
-  xhttp.open("POST", url, true);
-  xhttp.setRequestHeader("Content-type", "multipart/form-data");
-  xhttp.send( "a=replicate&url=" + encodeURIComponent(d) );
+  const formData = new FormData();
+  formData.append("a", "replicate");
+  formData.append("url", encodeURIComponent(d));
+  xhttp.open("POST", url, false);
+  xhttp.send(JSON.stringify(formData));
 }
 
       function showError(message) {
