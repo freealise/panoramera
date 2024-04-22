@@ -86,7 +86,12 @@
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
       <video id="seq" src="" muted controls></video>
-      <iframe src="https://freealise-video-frame-interpolation.hf.space" frameborder="0" width="320" height="256"></iframe>
+<div style="width:320px;height:256px;overflow-x:visible;overflow-y:scroll">
+<script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.39.0/gradio.js"
+></script>
+<gradio-app src="https://freealise-video-frame-interpolation.hf.space"></gradio-app>
+</div>
+<iframe src="https://freealise-video-frame-interpolation.hf.space" frameborder="0" width="320" height="256"></iframe>
       <canvas width="1" height="1" style="display:none;"></canvas>
       <div id="canvasContainer"></div>
     </section>
