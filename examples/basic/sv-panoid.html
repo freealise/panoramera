@@ -147,8 +147,8 @@
         xhr.send();
       }
 
-var url = "https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec";
-
+var replicate_token = 'r8_TNoyVC0I4eVn6AzYVlrT51dAI4SgpyC3sMy7m';
+	    
 function loadFrames(d) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function() {
@@ -156,11 +156,19 @@ function loadFrames(d) {
       messageDiv.innerHTML = this.responseText;
     }
   };
-  const formData = new FormData();
-  formData.append("a", "replicate");
-  formData.append("url", encodeURIComponent(d));
-  xhttp.open("POST", url, false);
-  xhttp.send(JSON.stringify(formData));
+
+  var data = {
+    "version": "222d67420da179935a68afff47093bab48705fe9e09c3c79268c1eb2ee7c5e91",
+    "input": {
+    	"mp4": d,
+    	"num_interpolation_steps": 6,
+    	"playback_frames_per_second": 25
+    }
+  };
+  xhttp.open("POST", "https://api.replicate.com/v1/predictions", true);
+  xhttp.setRequestHeader("Content-type", "application/json");
+  xhttp.setRequestHeader("Authorization", "Bearer " + replicate_token);
+  xhttp.send(JSON.stringify(data));
 }
 
       function showError(message) {
