@@ -112,7 +112,6 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
 
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
-      context.scale(0.5, 0.5);
       const seq = document.getElementById("seq");
 
       const stream = canvas.captureStream(25);
@@ -228,8 +227,7 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
             const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
 	    canvases[0].width = canvases[k].width / 2;
             canvases[0].height = canvases[k].height / 2;
-            //const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
-            context.drawImage(canvases[k], 0, 0);
+            context.drawImage(canvases[k], 0, 0, canvases[0].width, canvases[0].height);
             k++;
 	  } else if (k == canvases.length) {
 	    context.fillRect(0, 0, canvases[0].width, canvases[0].height);
