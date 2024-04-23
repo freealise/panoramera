@@ -254,7 +254,7 @@ function loadFrames(d) {
 	    canvases[0].width = canvases[k].width / 2;
             canvases[0].height = canvases[k].height / 2;
             const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
-            context.putImageData(imgData, 0, 0, 0, 0, canvases[0].width, canvases[0].height);
+            context.putImageData(imgData, 0, 0);
             k++;
 	  } else if (k == canvases.length) {
 	    context.fillRect(0, 0, canvases[0].width, canvases[0].height);
