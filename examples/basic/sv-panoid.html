@@ -249,9 +249,9 @@ function loadFrames(d) {
 
         intv = setInterval(function() {
 	  if (k < canvases.length) { 
-            const ctx = canvases[k].getContext("2d");
-	    canvases[0].width = canvases[k].width;
-            canvases[0].height = canvases[k].height;
+            const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
+	    canvases[0].width = canvases[k].width / 2;
+            canvases[0].height = canvases[k].height / 2;
             const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
             context.putImageData(imgData, 0, 0, 0, 0, canvases[0].width, canvases[0].height);
             k++;
