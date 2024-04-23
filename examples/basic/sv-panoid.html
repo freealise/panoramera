@@ -114,7 +114,7 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
       const context = canvas.getContext("2d", {willReadFrequently: true});
       const seq = document.getElementById("seq");
 
-      const stream = canvas.captureStream(25);
+      const stream = canvas.captureStream(1);
       const mediaRecorder = new MediaRecorder(stream);
       var recordedChunks = [];
 
