@@ -143,7 +143,6 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
 			seq.addEventListener("timeupdate", () => {
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
-				loadFrames(seq.src);
 			}, { once: true });
 		}
 	    });
@@ -154,30 +153,6 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
         xhr.open('GET', url);
         xhr.send();
       }
-
-var replicate_token = 'r8_TNoyVC0I4eVn6AzYVlrT51dAI4SgpyC3sMy7m';
-	    
-function loadFrames(d) {
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      messageDiv.innerHTML = this.responseText;
-    }
-  };
-
-  var data = {
-    "version": "222d67420da179935a68afff47093bab48705fe9e09c3c79268c1eb2ee7c5e91",
-    "input": {
-    	"mp4": d,
-    	"num_interpolation_steps": 6,
-    	"playback_frames_per_second": 25
-    }
-  };
-  xhttp.open("POST", "https://api.replicate.com/v1/predictions", true);
-  xhttp.setRequestHeader("Content-type", "application/json");
-  xhttp.setRequestHeader("Authorization", "Bearer " + replicate_token);
-  xhttp.send(JSON.stringify(data));
-}
 
       function showError(message) {
         errorDiv.innerHTML = message;
@@ -253,8 +228,8 @@ function loadFrames(d) {
             const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
 	    canvases[0].width = canvases[k].width / 2;
             canvases[0].height = canvases[k].height / 2;
-            const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
-            context.putImageData(imgData, 0, 0);
+            //const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
+            context.drawImage(canvases[k], 0, 0);
             k++;
 	  } else if (k == canvases.length) {
 	    context.fillRect(0, 0, canvases[0].width, canvases[0].height);
