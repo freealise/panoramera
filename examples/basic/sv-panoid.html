@@ -87,9 +87,8 @@
       <div id="errorDiv"></div>
       <video id="seq" src="" muted controls></video>
 <div style="width:320px;height:256px;overflow-x:visible;overflow-y:scroll">
-<script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.39.0/gradio.js"
-></script>
-<gradio-app src="https://freealise-video-frame-interpolation.hf.space"></gradio-app>
+  <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.39.0/gradio.js"></script>
+  <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio"></gradio-app>
 </div>
 <iframe src="https://freealise-video-frame-interpolation.hf.space" frameborder="0" width="320" height="256"></iframe><br/>
 or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-motion" target="_new">upload here</a>
@@ -110,6 +109,7 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
       var DownloadLink = document.getElementById("DownloadLink");
       var DownloadVideo = document.getElementById("DownloadVideo");
 
+      const gradio = document.getElementById("gradio");
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
       const seq = document.getElementById("seq");
@@ -142,6 +142,7 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
 			seq.addEventListener("timeupdate", () => {
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
+				gradio.getElementsByTagName("textarea")[0].value = seq.src;
 			}, { once: true });
 		}
 	    });
