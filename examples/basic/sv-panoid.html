@@ -231,31 +231,33 @@
 	frame.width = canvases[0].width;
 	frame.height = canvases[0].height;
 	      
-	for (var k=1; k<canvases.length; k++) {
+	while (k < canvases.length) {
 	  ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
 	  frame.src = canvases[k].toDataURL();
 	  frame.onload = function(e) {
 	    canvases[k].width = canvases[0].width;
             canvases[k].height = canvases[0].height;
             ctxs[k].drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
+	    k++;
+	    if (k == canvases.length) {
+	      k=1;
+	      intv = setInterval(function() {
+	        if (k < canvases.length) {
+	          const imgData = ctxs[k].getImageData(0, 0, canvases[k].width, canvases[k].height);
+                  context.putImageData(imgData, 0, 0);
+                  k++;
+	        } else {
+	          context.clearRect(0, 0, canvases[0].width, canvases[0].height);
+	          frame.src = "";
+	          clearInterval(intv);
+	          mediaRecorder.stop();
+                  k=1;
+	        }
+              }, 1000);
+              setTimeout(mediaRecorder.start(), 1);
+	    }
 	  }
 	}
-	k=1;
-	      
-        intv = setInterval(function() {
-	  if (k < canvases.length) {
-	    const imgData = ctxs[k].getImageData(0, 0, canvases[k].width, canvases[k].height);
-            context.putImageData(imgData, 0, 0);
-            k++;
-	  } else {
-	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
-	    frame.src = "";
-	    clearInterval(intv);
-	    mediaRecorder.stop();
-            k=1;
-	  }
-        }, 1000);
-        setTimeout(mediaRecorder.start(), 1);
       });
 
       function copyDataUrl(e) {
