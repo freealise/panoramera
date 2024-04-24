@@ -145,7 +145,7 @@
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
 				
-				gradio.getElementsByTagName("textarea")[0].addEventListener('change', function(e) {
+				gradio.getElementsByTagName("textarea")[0].addEventListener('input', function(e) {
 				  gradio.classList.remove('dark');
 				  gradio.getElementsByTagName("button")[0].focus();
 				  gradio.getElementsByTagName("button")[0].click();
@@ -153,7 +153,7 @@
 				gradio.getElementsByTagName("textarea")[0].value = seq.src;
 				
 				var event = document.createEvent('Event');
-				event.initEvent('change', true, false);
+				event.initEvent('input', true, false);
 				gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
 			}, { once: true });
 		}
