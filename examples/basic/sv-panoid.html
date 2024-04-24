@@ -147,8 +147,8 @@
 				
 				gradio.getElementsByTagName("textarea")[0].addEventListener('input', function(e) {
 				  gradio.classList.remove('dark');
-				  gradio.getElementsByTagName("button")[0].focus();
 				  gradio.getElementsByTagName("button")[0].click();
+				  gradio.getElementsByClassName("progress-text")[0].focus();
 				});
 				gradio.getElementsByTagName("textarea")[0].value = seq.src;
 				
