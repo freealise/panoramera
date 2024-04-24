@@ -90,8 +90,6 @@
   <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.39.0/gradio.js"></script>
   <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio"></gradio-app>
 </div>
-<iframe src="https://freealise-video-frame-interpolation.hf.space" frameborder="0" width="320" height="256" name="gradio_iframe" id="gradio_iframe"></iframe><br/>
-or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-motion" target="_new">upload here</a>
       <canvas width="1" height="1" style="display:none;"></canvas>
       <div id="canvasContainer"></div>
     </section>
@@ -143,7 +141,7 @@ or <a href="https://replicate.com/zsxkib/film-frame-interpolation-for-large-moti
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
 				gradio.getElementsByTagName("textarea")[0].value = seq.src;
-				window.frames['gradio_iframe'].contentWindow.document.getElementsByTagName("textarea")[0].value = seq.src;
+				gradio.getElementsByTagName("button")[0].click();
 			}, { once: true });
 		}
 	    });
