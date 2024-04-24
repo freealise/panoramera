@@ -143,8 +143,10 @@
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
 				gradio.getElementsByTagName("textarea")[0].value = seq.src;
-				gradio.classList.remove('dark');
-				gradio.getElementsByTagName("button")[0].click();
+				gradio.getElementsByTagName("textarea")[0].oninput = function(e) {
+				  gradio.classList.remove('dark');
+				  gradio.getElementsByTagName("button")[0].click();
+				}
 			}, { once: true });
 		}
 	    });
@@ -231,12 +233,15 @@
         intv = setInterval(function() {
 	  if (k < canvases.length) {
 	    frame.src = canvases[k].toDataURL();
-            const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
-	    canvases[k].width = canvases[0].width;
-            canvases[k].height = canvases[0].height;
-            ctx.drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
-            context.drawImage(canvases[k], 0, 0);
-            k++;
+	    frame.onload = function(e) {
+              const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
+	      canvases[k].width = canvases[0].width;
+              canvases[k].height = canvases[0].height;
+              ctx.drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
+	      const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
+              context.putImageData(imgData, 0, 0);
+              k++;
+	    }
 	  } else {
 	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
 	    frame.src = "";
