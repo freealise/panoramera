@@ -88,7 +88,7 @@
       <video id="seq" src="" muted controls></video>
 <div style="width:320px;height:256px;overflow-x:visible;overflow-y:scroll">
   <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.39.0/gradio.js"></script>
-  <gradio-app src="https://freealise-video-frame-interpolation.hf.space?__theme=light" id="gradio"></gradio-app>
+  <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio" class="light"></gradio-app>
 </div>
       <canvas width="1" height="1" style="display:none;"></canvas>
       <div id="canvasContainer"></div>
@@ -220,13 +220,12 @@
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
         const canvases = document.getElementsByTagName('canvas');
-	context.fillStyle = "#000000";
-
+        canvases[0].width = canvases[1].width / 2;
+        canvases[0].height = canvases[1].height / 2;
+	      
         intv = setInterval(function() {
 	  if (k < canvases.length) { 
             const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
-	    canvases[0].width = canvases[k].width / 2;
-            canvases[0].height = canvases[k].height / 2;
             context.drawImage(canvases[k], 0, 0, canvases[0].width, canvases[0].height);
             k++;
 	  } else {
