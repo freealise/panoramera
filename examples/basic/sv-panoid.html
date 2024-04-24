@@ -143,10 +143,10 @@
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
 				gradio.getElementsByTagName("textarea")[0].value = seq.src;
-				gradio.getElementsByTagName("textarea")[0].oninput = function(e) {
+				gradio.getElementsByTagName("textarea")[0].addEventListener('input', function(e) {
 				  gradio.classList.remove('dark');
 				  gradio.getElementsByTagName("button")[0].click();
-				}
+				});
 			}, { once: true });
 		}
 	    });
@@ -225,23 +225,28 @@
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
         const canvases = document.getElementsByTagName('canvas');
+	var ctxs = [];
 	canvases[0].width = canvases[1].width / 2;
         canvases[0].height = canvases[1].height / 2;
 	frame.width = canvases[0].width;
 	frame.height = canvases[0].height;
 	      
+	for (var k=1; k<canvases.length; k++) {
+	  ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
+	  frame.src = canvases[k].toDataURL();
+	  frame.onload = function(e) {
+	    canvases[k].width = canvases[0].width;
+            canvases[k].height = canvases[0].height;
+            ctxs[k].drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
+	  }
+	}
+	k=1;
+	      
         intv = setInterval(function() {
 	  if (k < canvases.length) {
-	    frame.src = canvases[k].toDataURL();
-	    frame.onload = function(e) {
-              const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
-	      canvases[k].width = canvases[0].width;
-              canvases[k].height = canvases[0].height;
-              ctx.drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
-	      const imgData = ctx.getImageData(0, 0, canvases[k].width, canvases[k].height);
-              context.putImageData(imgData, 0, 0);
-              k++;
-	    }
+	    const imgData = ctxs[k].getImageData(0, 0, canvases[k].width, canvases[k].height);
+            context.putImageData(imgData, 0, 0);
+            k++;
 	  } else {
 	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
 	    frame.src = "";
