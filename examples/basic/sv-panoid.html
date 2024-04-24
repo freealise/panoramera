@@ -108,6 +108,7 @@
       var DownloadVideo = document.getElementById("DownloadVideo");
 
       const gradio = document.getElementById("gradio");
+      gradio.classList.remove("dark");
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
       const seq = document.getElementById("seq");
@@ -220,21 +221,23 @@
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
         const canvases = document.getElementsByTagName('canvas');
-        canvases[0].width = canvases[1].width / 2;
-        canvases[0].height = canvases[1].height / 2;
 	      
         intv = setInterval(function() {
 	  if (k < canvases.length) { 
             const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
+	    canvases[0].width = canvases[k].width / 2;
+            canvases[0].height = canvases[k].height / 2;
+	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
             context.drawImage(canvases[k], 0, 0, canvases[0].width, canvases[0].height);
             k++;
 	  } else {
+	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
 	    clearInterval(intv);
 	    mediaRecorder.stop();
             k=1;
 	  }
         }, 1000);
-        setTimeout(mediaRecorder.start(), 500);
+        setTimeout(mediaRecorder.start(), 1);
       });
 
       function copyDataUrl(e) {
