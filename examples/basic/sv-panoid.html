@@ -188,7 +188,7 @@
         try {
           await loader.load(id, 3);
 
-          showProgress("Finished.");
+          showProgress("Loaded.");
           showError("");
           canvasContainer.appendChild(loader.canvas);
           showMessage(
@@ -200,7 +200,13 @@
           j++;
           if (ids[j]) {
             load(ids[j]);
-          }
+          } else {
+	    canvases[0].width = canvases[1].width / 2;
+            canvases[0].height = canvases[1].height / 2;
+	    frame.width = canvases[0].width;
+	    frame.height = canvases[0].height;
+	    resizeFrame();
+	  }
         } catch (e) {
           if (e === "ZERO_RESULTS") {
             showError("No results");
@@ -228,6 +234,7 @@
       });
 
       function resizeFrame() {
+	  showProgress("Resizing" + k + "/" + (canvases.length-1));
 	  ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
 	  frame.src = canvases[k].toDataURL();
 	  frame.onload = function(e) {
@@ -238,7 +245,7 @@
 	    if (k < canvases.length) {
 		resizeFrame(); 
 	    } else {
-	        recordFrames();
+		showProgress("Finished.");
 	    }
 	  }
       }
@@ -263,11 +270,7 @@
 
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
-	canvases[0].width = canvases[1].width / 2;
-        canvases[0].height = canvases[1].height / 2;
-	frame.width = canvases[0].width;
-	frame.height = canvases[0].height;
-	resizeFrame();
+	recordFrames();
       });
 
       function copyDataUrl(e) {
