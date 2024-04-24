@@ -91,7 +91,7 @@
   <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio" class="light"></gradio-app>
 </div>
       <canvas width="1" height="1" style="display:none;"></canvas>
-      <img src="" id="frame" width="1" height="1" style="display:none;"/>
+      <img src="" id="frame" width="1" height="1" style="display:none;" />
       <div id="canvasContainer"></div>
     </section>
     <script src="https://maps.google.com/maps/api/js"></script>
@@ -225,6 +225,8 @@
         const canvases = document.getElementsByTagName('canvas');
 	canvases[0].width = canvases[1].width / 2;
         canvases[0].height = canvases[1].height / 2;
+	frame.width = canvases[0].width;
+	frame.height = canvases[0].height;
 	      
         intv = setInterval(function() {
 	  if (k < canvases.length) {
@@ -237,6 +239,7 @@
             k++;
 	  } else {
 	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
+	    frame.src = "";
 	    clearInterval(intv);
 	    mediaRecorder.stop();
             k=1;
