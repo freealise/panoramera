@@ -91,6 +91,7 @@
   <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio" class="light"></gradio-app>
 </div>
       <canvas width="1" height="1" style="display:none;"></canvas>
+      <img src="" id="frame" width="1" height="1" style="display:none;"/>
       <div id="canvasContainer"></div>
     </section>
     <script src="https://maps.google.com/maps/api/js"></script>
@@ -111,6 +112,7 @@
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
       const seq = document.getElementById("seq");
+      const frame = document.getElementById("frame");
 
       const stream = canvas.captureStream(1);
       const mediaRecorder = new MediaRecorder(stream);
@@ -141,6 +143,8 @@
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
 				gradio.getElementsByTagName("textarea")[0].value = seq.src;
+				gradio.classList.remove('dark');
+				gradio.getElementsByTagName("button")[0].click();
 			}, { once: true });
 		}
 	    });
@@ -223,9 +227,13 @@
         canvases[0].height = canvases[1].height / 2;
 	      
         intv = setInterval(function() {
-	  if (k < canvases.length) { 
+	  if (k < canvases.length) {
+	    frame.src = canvases[k].toDataURL();
             const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
-            context.drawImage(canvases[k], 0, 0, canvases[0].width, canvases[0].height);
+	    canvases[k].width = canvases[0].width;
+            canvases[k].height = canvases[0].height;
+            ctx.drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
+            context.drawImage(canvases[k], 0, 0);
             k++;
 	  } else {
 	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
@@ -252,10 +260,6 @@
         ids = idParam.split('&')[0].split(',');
         load(ids[0]);
       }
-      document.getElementById('gradio').classList.remove('dark');
-      gradio.getElementsByTagName("textarea")[0].addEventListener('change', function(e) {
-        gradio.getElementsByTagName("button")[0].click();
-      });
     </script>
   </body>
 </html>
