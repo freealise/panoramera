@@ -88,7 +88,7 @@
       <video id="seq" src="" muted controls></video>
 <div style="width:320px;height:256px;overflow-x:visible;overflow-y:scroll">
   <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/3.39.0/gradio.js"></script>
-  <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio"></gradio-app>
+  <gradio-app src="https://freealise-video-frame-interpolation.hf.space?__theme=light" id="gradio"></gradio-app>
 </div>
       <canvas width="1" height="1" style="display:none;"></canvas>
       <div id="canvasContainer"></div>
@@ -229,16 +229,13 @@
             canvases[0].height = canvases[k].height / 2;
             context.drawImage(canvases[k], 0, 0, canvases[0].width, canvases[0].height);
             k++;
-	  } else if (k == canvases.length) {
-	    context.fillRect(0, 0, canvases[0].width, canvases[0].height);
-	    k++;
 	  } else {
 	    clearInterval(intv);
 	    mediaRecorder.stop();
             k=1;
 	  }
         }, 1000);
-        mediaRecorder.start(0);
+        setTimeout(mediaRecorder.start(), 500);
       });
 
       function copyDataUrl(e) {
