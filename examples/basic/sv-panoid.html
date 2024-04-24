@@ -149,6 +149,9 @@
 				  gradio.classList.remove('dark');
 				  gradio.getElementsByTagName("button")[0].click();
 				});
+				var event = document.createEvent('Event');
+				event.initEvent('input', true, false);
+				gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
 			}, { once: true });
 		}
 	    });
