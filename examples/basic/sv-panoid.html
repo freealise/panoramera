@@ -227,11 +227,12 @@
             const ctx = canvases[k].getContext("2d", {willReadFrequently: true});
 	    canvases[0].width = canvases[k].width / 2;
             canvases[0].height = canvases[k].height / 2;
-	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
             context.drawImage(canvases[k], 0, 0, canvases[0].width, canvases[0].height);
             k++;
-	  } else {
+	  } else if (k == canvases.length) {
 	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
+	    k++;
+	  } else {
 	    clearInterval(intv);
 	    mediaRecorder.stop();
             k=1;
