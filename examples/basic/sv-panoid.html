@@ -144,14 +144,18 @@
 			seq.addEventListener("timeupdate", () => {
 				console.log("after workaround:", seq.duration);
 				seq.currentTime = 0;
-				gradio.getElementsByTagName("textarea")[0].value = seq.src;
-				gradio.getElementsByTagName("textarea")[0].addEventListener('input', function(e) {
+				
+				gradio.getElementsByTagName("textarea")[0].addEventListener('change', function(e) {
 				  gradio.classList.remove('dark');
 				  gradio.getElementsByTagName("button")[0].click();
 				});
-				var event = document.createEvent('Event');
+				gradio.getElementsByTagName("textarea")[0].focus();
+				gradio.getElementsByTagName("textarea")[0].value = seq.src;
+				gradio.getElementsByTagName("textarea")[0].blur();
+				
+				/*var event = document.createEvent('Event');
 				event.initEvent('input', true, false);
-				gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
+				gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);*/
 			}, { once: true });
 		}
 	    });
@@ -234,7 +238,7 @@
       });
 
       function resizeFrame() {
-	  showProgress("Resizing" + k + "/" + (canvases.length-1));
+	  showProgress("Resizing " + k + "/" + (canvases.length-1));
 	  ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
 	  frame.src = canvases[k].toDataURL();
 	  frame.onload = function(e) {
