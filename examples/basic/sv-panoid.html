@@ -86,13 +86,13 @@
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
       <video id="seq" src="" muted controls></video>
-<div style="width:320px;height:256px;overflow-x:visible;overflow-y:scroll">
-  <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.29.0/gradio.js"></script>
-  <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio" class="light"></gradio-app>
-</div>
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
+<div style="position:fixed;top:0;right:0;width:320px;height:256px;overflow-x:visible;overflow-y:scroll">
+  <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.29.0/gradio.js"></script>
+  <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio" class="light"></gradio-app>
+</div>
     </section>
     <script src="https://maps.google.com/maps/api/js"></script>
     <script type="module">
