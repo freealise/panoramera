@@ -187,21 +187,7 @@ async function initialize() {
 						);
 				});
 				
-				function createCenterControl() {
-          const controlButton = document.createElement("button");
-
-  controlButton.style.cursor = "pointer";
-  controlButton.style.textAlign = "center";
-  controlButton.textContent = "Center Map";
-  controlButton.title = "Click to recenter the map";
-  controlButton.type = "button";
-  // Setup the click event listeners: simply set the map to Chicago.
-  controlButton.addEventListener("click", () => {
-    window.location.href = "about:blank";
-  });
-  return controlButton;
-}
-        const controlButton = createCenterControl();
+        const controlButton = document.getElementById("loadLink");
         panorama = map.getStreetView(
           addressControl: false,
           panControl: false,
@@ -217,6 +203,7 @@ async function initialize() {
         );
         //panorama.setVisible(true);
 }
+
 window.initialize = initialize;
 
     </script>
