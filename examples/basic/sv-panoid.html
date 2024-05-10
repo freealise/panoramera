@@ -69,6 +69,7 @@
         height: 256px;
         width: 256px;
         filter: invert(1);
+        float:left;
       }
     </style>
   </head>
@@ -99,7 +100,7 @@
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
-<div style="position:fixed;top:0;right:0;width:320px;height:256px;overflow-x:visible;overflow-y:scroll">
+<div style="position:fixed;top:0;right:0;width:320px;height:256px;overflow-x:visible;overflow-y:scroll;display:none;">
   <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.29.0/gradio.js"></script>
   <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio" class="light"></gradio-app>
   <gradio-app src="https://freealise-depth-anything-video.hf.space" class="light"></gradio-app>
