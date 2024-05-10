@@ -107,9 +107,8 @@
 </div>
     </section>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM&loading=async&callback=initialize&v=weekly" defer="defer" async="async"></script
-></script>
-    <script type="module">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM"></script>
+    <script type="module" onload="initialize()">
       import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
       
       var panorama, busMarker, panoDate, panoId, panoLat, panoLng;
