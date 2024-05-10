@@ -188,11 +188,12 @@ async function initialize() {
 				});
 				
         const controlButton = document.getElementById("loadLink");
-        panorama = map.getStreetView(
+        panorama = map.getStreetView(); // TODO fix type
+        panorama.setOptions({
           addressControl: false,
           panControl: false,
           enableCloseButton: true,
-        ); // TODO fix type
+        });
         panorama.controls[google.maps.ControlPosition.TOP_CENTER].push(controlButton);
         panorama.setPosition( pano );
         panorama.setPov(
