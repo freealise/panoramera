@@ -107,11 +107,102 @@
 </div>
     </section>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM"></script>
-    <script type="module" onload="initialize()">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM&loading=async&callback=initialize&v=weekly" defer="defer" async="async"></script>
+    <script>      
+var panorama, busMarker, panoDate, panoId, panoLat, panoLng;
+    
+function processSVData({ data }) {
+  const location = data.location;
+  busMarker.position = location.latLng;
+  busMarker.title = location.description;
+  panorama.setPosition( location.latLng );
+  panorama.setVisible(!panorama.getVisible());
+  panoDate = data.imageDate;
+  panoId = location.pano;
+  panoLat = location.latLng.lat();
+  panoLng = location.latLng.lng();
+
+  panorama.setPano(location.pano);
+  panorama.setPov({
+    heading: 270,
+    pitch: 0,
+  });
+  
+  document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
+  // y=fov, h=theta, t=phi
+  document.getElementById('loadLink').innerText = location.description;
+}
+    
+async function initialize() {
+  const sv = new google.maps.StreetViewService();
+  
+  const pano = { lat: 50.0746800, lng: 14.4335700 };
+  const map = new google.maps.Map(document.getElementById("map"), {
+    center: pano,
+    zoom: 8,
+    streetViewControl: true,
+    //mapId: "4504f8b37365c3d0"
+  });
+
+//const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
+
+        const cafeMarker = new google.maps.Marker({
+          position: { lat: 50.0746800, lng: 14.4335700 },
+          map,
+          //content: pinSvg,
+          icon: "https://freeali.se/assets/images/C-FU.svg",
+          draggable: true,
+          title: "Cafe",
+        });
+        const bankMarker = new google.maps.Marker({
+          position: { lat: 50.0746900, lng: 14.4335800 },
+          map,
+          //content: pinSvg,
+          icon: "https://freeali.se/assets/images/C-FU.svg",
+          draggable: true,
+          title: "Bank",
+        });
+        busMarker = new google.maps.Marker({
+          position: { lat: 50.0746700, lng: 14.4335600 },
+          map,
+          //content: pinSvg,
+          icon: "https://freeali.se/assets/images/C-FU.svg",
+          draggable: true,
+          title: "Bus Stop",
+        });
+        
+//https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
+        
+//https://www.google.com/maps/@50.0741445,14.4332149,3a,75y,219.16h,90t/data=!3m8!1e1!3m6!1svyIt4SOcloKf_5uK_82ZIw!2e0!5s20190601T000000!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fpanoid%3DvyIt4SOcloKf_5uK_82ZIw%26cb_client%3Dmaps_sv.tactile.gps%26w%3D203%26h%3D100%26yaw%3D310.16492%26pitch%3D0%26thumbfov%3D100!7i16384!8i8192?entry=ttu
+
+        var georssLayer = new google.maps.KmlLayer({
+          url: 'https://map.freeali.se/feeds/posts/default?alt=rss'
+        });
+        georssLayer.setMap(map);
+        
+        map.addListener("click", (e) => {
+						sv.getPanorama({ location: e.latLng, radius: 100, preference: google.maps.StreetViewPreference.NEAREST, source: google.maps.StreetViewSource.GOOGLE })
+							.then(processSVData)
+							.catch((error) =>
+								console.error(error),
+						);
+				});
+  
+        panorama = map.getStreetView(); // TODO fix type
+        panorama.setPosition( pano );
+        panorama.setPov(
+          /** @type {google.maps.StreetViewPov} */ {
+            heading: 34,
+            pitch: 10,
+          },
+        );
+        //panorama.setVisible(true);
+}
+window.initialize = initialize;
+
+    </script>
+    <script type="module">
       import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
-      
-      var panorama, busMarker, panoDate, panoId, panoLat, panoLng;
 
       var messageDiv = document.getElementById("messageDiv");
       var errorDiv = document.getElementById("errorDiv");
@@ -292,97 +383,6 @@
         navigator.clipboard.writeText( e.target.toDataURL() );
         showProgress("Copied.");
       }
-      
-
-function processSVData({ data }) {
-  const location = data.location;
-  busMarker.position = location.latLng;
-  busMarker.title = location.description;
-  panorama.setPosition( location.latLng );
-  panorama.setVisible(!panorama.getVisible());
-  panoDate = data.imageDate;
-  panoId = location.pano;
-  panoLat = location.latLng.lat();
-  panoLng = location.latLng.lng();
-
-  panorama.setPano(location.pano);
-  panorama.setPov({
-    heading: 270,
-    pitch: 0,
-  });
-  
-  document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
-  // y=fov, h=theta, t=phi
-  document.getElementById('loadLink').innerText = location.description;
-}
-    
-async function initialize() {
-  const sv = new google.maps.StreetViewService();
-  
-  const pano = { lat: 50.0746800, lng: 14.4335700 };
-  const map = new google.maps.Map(document.getElementById("map"), {
-    center: pano,
-    zoom: 8,
-    streetViewControl: true,
-    //mapId: "4504f8b37365c3d0"
-  });
-
-//const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
-
-        const cafeMarker = new google.maps.Marker({
-          position: { lat: 50.0746800, lng: 14.4335700 },
-          map,
-          //content: pinSvg,
-          icon: "https://freeali.se/assets/images/C-FU.svg",
-          draggable: true,
-          title: "Cafe",
-        });
-        const bankMarker = new google.maps.Marker({
-          position: { lat: 50.0746900, lng: 14.4335800 },
-          map,
-          //content: pinSvg,
-          icon: "https://freeali.se/assets/images/C-FU.svg",
-          draggable: true,
-          title: "Bank",
-        });
-        busMarker = new google.maps.Marker({
-          position: { lat: 50.0746700, lng: 14.4335600 },
-          map,
-          //content: pinSvg,
-          icon: "https://freeali.se/assets/images/C-FU.svg",
-          draggable: true,
-          title: "Bus Stop",
-        });
-        
-//https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
-        
-//https://www.google.com/maps/@50.0741445,14.4332149,3a,75y,219.16h,90t/data=!3m8!1e1!3m6!1svyIt4SOcloKf_5uK_82ZIw!2e0!5s20190601T000000!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fpanoid%3DvyIt4SOcloKf_5uK_82ZIw%26cb_client%3Dmaps_sv.tactile.gps%26w%3D203%26h%3D100%26yaw%3D310.16492%26pitch%3D0%26thumbfov%3D100!7i16384!8i8192?entry=ttu
-
-        var georssLayer = new google.maps.KmlLayer({
-          url: 'https://map.freeali.se/feeds/posts/default?alt=rss'
-        });
-        georssLayer.setMap(map);
-        
-        map.addListener("click", (e) => {
-						sv.getPanorama({ location: e.latLng, radius: 100, preference: google.maps.StreetViewPreference.NEAREST, source: google.maps.StreetViewSource.GOOGLE })
-							.then(processSVData)
-							.catch((error) =>
-								console.error(error),
-						);
-				});
-  
-        panorama = map.getStreetView(); // TODO fix type
-        panorama.setPosition( pano );
-        panorama.setPov(
-          /** @type {google.maps.StreetViewPov} */ {
-            heading: 34,
-            pitch: 10,
-          },
-        );
-        //panorama.setVisible(true);
-}
-window.initialize = initialize;
-
 
       var intv;
       var k=1;
