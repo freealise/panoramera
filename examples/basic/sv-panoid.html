@@ -71,6 +71,12 @@
         filter: invert(1);
         float:left;
       }
+      #loadLink {
+        background-color: rgba(0,0,0,0.75);
+        color: white;
+        text-decoration: none;
+        text-align: center;
+      }
     </style>
   </head>
   <body>
@@ -129,7 +135,7 @@ function processSVData({ data }) {
   
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
   // y=fov, h=theta, t=phi
-  document.getElementById('loadLink').innerText = location.description;
+  document.getElementById('loadLink').innerText = "<b>" + location.description + "</b><br/>View on Google Maps";
 }
     
 async function initialize() {
