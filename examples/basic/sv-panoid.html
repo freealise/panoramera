@@ -92,10 +92,9 @@
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
-      <video id="seq" src="" muted controls></video>
-      
-      <a href="#" id="loadLink" target="_new"></a>
+      <a href="#" id="loadLink"></a>
       <div id="map"></div>
+      <video id="seq" src="" muted controls></video>
       
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
@@ -187,8 +186,28 @@ async function initialize() {
 								console.error(error),
 						);
 				});
-  
-        panorama = map.getStreetView(); // TODO fix type
+				
+				function createCenterControl() {
+          const controlButton = document.createElement("button");
+
+  controlButton.style.cursor = "pointer";
+  controlButton.style.textAlign = "center";
+  controlButton.textContent = "Center Map";
+  controlButton.title = "Click to recenter the map";
+  controlButton.type = "button";
+  // Setup the click event listeners: simply set the map to Chicago.
+  controlButton.addEventListener("click", () => {
+    window.location.href = "about:blank";
+  });
+  return controlButton;
+}
+        const controlButton = createCenterControl();
+        panorama = map.getStreetView(
+          addressControl: false,
+          panControl: false,
+          enableCloseButton: true,
+        ); // TODO fix type
+        panorama.controls[google.maps.ControlPosition.TOP_CENTER].push(controlButton);
         panorama.setPosition( pano );
         panorama.setPov(
           /** @type {google.maps.StreetViewPov} */ {
