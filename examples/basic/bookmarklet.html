@@ -77,7 +77,7 @@
 			xhttp.onload = function() {
 			  document.getElementsByClassName('bookmarklet')[0].href = "javascript:(function(){" + encodeURIComponent(this.responseText) + "})()";
 			}
-			xhttp.open("GET", "index.js");
+			xhttp.open("GET", "bookmarklet.js");
 			xhttp.send();
 		</script>
 	</body>
