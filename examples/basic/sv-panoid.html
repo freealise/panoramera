@@ -88,7 +88,7 @@
         panoId.
         <!-- add bookmarklet and geocoder (with key only), gradio toggle, tooltips -->
       </p>
-      <p><i>Try London, UK<!--3toTZ-zA0QH6HRfvol1QPA--></i></p>
+      <p>Try <i>Hyde Park, London, UK<!--3toTZ-zA0QH6HRfvol1QPA--></i></p>
       <form id="PanoIdForm">
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
@@ -345,7 +345,7 @@ window.initialize = initialize;
 				xhttp.onreadystatechange = function() {
 					if (this.readyState == 4 && this.status == 200) {
 						var coords = this.responseText.split(',');
-			      map.setCenter({ lat: coords[0], lng: coords[1] });
+			      map.setCenter({ lat: parseFloat(coords[0]), lng: parseFloat(coords[1]) });
 					}
 				};
 				xhttp.open("GET", srv + "?a=maps&address=" + PanoIdInput.value.replace(/ /g, '+'), true);
