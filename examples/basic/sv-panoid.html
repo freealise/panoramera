@@ -86,8 +86,9 @@
       <p>
         This example shows how to set GoogleStreetViewLoader to load from a
         panoId.
+        <!-- add bookmarklet and geocoder (with key only), gradio toggle, tooltips -->
       </p>
-      <p><i>Try 3toTZ-zA0QH6HRfvol1QPA</i></p>
+      <p><i>Try London, UK<!--3toTZ-zA0QH6HRfvol1QPA--></i></p>
       <form id="PanoIdForm">
         <input type="text" id="PanoIdInput" />
         <input type="submit" id="PanoIdFormSubmit" />
@@ -136,6 +137,11 @@ function processSVData({ data }) {
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
   // y=fov, h=theta, t=phi
   document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps";
+  
+//https://streetviewpixels-pa.googleapis.com/v1/tile - for panorama
+//https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
+//photosphere - download from report page
+
 }
     
 async function initialize() {
@@ -175,10 +181,6 @@ async function initialize() {
           draggable: true,
           title: "Bus Stop",
         });
-        
-//https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
-        
-//https://www.google.com/maps/@50.0741445,14.4332149,3a,75y,219.16h,90t/data=!3m8!1e1!3m6!1svyIt4SOcloKf_5uK_82ZIw!2e0!5s20190601T000000!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fpanoid%3DvyIt4SOcloKf_5uK_82ZIw%26cb_client%3Dmaps_sv.tactile.gps%26w%3D203%26h%3D100%26yaw%3D310.16492%26pitch%3D0%26thumbfov%3D100!7i16384!8i8192?entry=ttu
 
         var georssLayer = new google.maps.KmlLayer({
           url: 'https://map.freeali.se/feeds/posts/default?alt=rss'
@@ -215,6 +217,8 @@ window.initialize = initialize;
 
     </script>
     <script type="module">
+      var srv = 'https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec';
+      
       import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
 
       var messageDiv = document.getElementById("messageDiv");
@@ -337,7 +341,14 @@ window.initialize = initialize;
       }
 
       PanoIdForm.addEventListener("submit", function (e) {
-        load(PanoIdInput.value);
+        const xhttp = new XMLHttpRequest();
+			  xhttp.onload = function() {
+			    var coords = this.responseText.split(',');
+			    map.setCenter(coords[0], coords[1]);
+			  }
+			  xhttp.open("GET", srv + "?a=maps&address=" + PanoIdInput.value);
+			  xhttp.send();
+        //load(PanoIdInput.value);
         e.preventDefault();
       });
 
