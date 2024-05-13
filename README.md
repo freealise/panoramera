@@ -79,11 +79,6 @@ A more complete example, with Leaflet map control and more:
 
 [Floating Shiny Knot](https://spite.github.io/FloatingShinyKnot/)
 
-# streetview-panoid-bookmarklet
-
-Browser bookmarklet to extract panorama ids from a Google StreetView URL.  
-Bookmarklet originally from: https://sjwilliams.github.io/streetview-panoid-bookmarklet/  
-
 # License
 
 MIT licensed
@@ -91,3 +86,9 @@ MIT licensed
 Copyright (C) 2022 Jaume Sanchez Elias http://twitter.com/thespite
 
 http://www.clicktorelease.com
+
+# streetview-panoid-bookmarklet
+
+Browser toolbar bookmarklet to extract panorama ids from a Google StreetView URL.  
+Is a fork of: https://sjwilliams.github.io/streetview-panoid-bookmarklet/  
+License: MIT  
