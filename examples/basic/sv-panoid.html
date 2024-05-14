@@ -68,8 +68,6 @@
       #map {
         height: 256px;
         width: 256px;
-        filter: invert(1);
-        float:left;
       }
       #loadLink {
         background-color: rgba(0,0,0,0.75);
@@ -83,12 +81,14 @@
         font-weight: bold;
         border: 1px dashed gray;
       }
+      #gr {
+        width:320px;
+        height:256px;
+      }
       .display {            
         position:fixed;
         top:0;
         right:0;
-        max-width:320px;
-        max-height:256px;
         overflow-x:visible;
         overflow-y:scroll;
         display:none;
@@ -173,6 +173,7 @@ function processSVData({ data }) {
     heading: 270,
     pitch: 0,
   });
+  document.getElementById('map').style.filter = 'invert(1)';
   
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
   // y=fov, h=theta, t=phi
@@ -251,6 +252,9 @@ async function initialize() {
           },
         );
         //panorama.setVisible(true);
+        google.maps.event.addListener(panorama, "closeclick", function(event) {
+          document.getElementById('map').style.filter = 'invert(0)';
+        });
 }
 
 window.initialize = initialize;
