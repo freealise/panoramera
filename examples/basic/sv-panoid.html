@@ -94,13 +94,13 @@
         panoId.<br/>
         <!-- add gradio toggle, tooltips -->
         Display
-        <input type="radio" id="display0" name="display" value="map"  onchange="toggleDisplay('map');"/>
+        <input type="radio" id="display0" name="display" value="map"  onchange="toggleDisplay(this.value);"/>
         <label for="display0">map</label>
 
-        <input type="radio" id="display1" name="display" value="video"  onchange="toggleDisplay('seq');"/>
+        <input type="radio" id="display1" name="display" value="seq"  onchange="toggleDisplay(this.value);"/>
         <label for="display1">video</label>
 
-        <input type="radio" id="display2" name="display" value="depth"  onchange="toggleDisplay('gr');"/>
+        <input type="radio" id="display2" name="display" value="gr"  onchange="toggleDisplay(this.value);"/>
         <label for="display2">depth</label>
       </p>
       <p>Try <i>Hyde Park, London, UK<!--3toTZ-zA0QH6HRfvol1QPA--></i>
@@ -134,10 +134,10 @@
     <script>
   function toggleDisplay(id) {
     for (var i=0; i<document.getElementsByClassName('display').length; i++) {
-      if (document.getElementsByClassName('display')[i].id != id) {
-        document.getElementById(id).style.display = 'none';
+      if (document.getElementsByClassName('display')[i].id == id) {
+        document.getElementsByClassName('display')[i].style.display = 'block';
       } else {
-        document.getElementById(id).style.display = 'block';
+        document.getElementsByClassName('display')[i].style.display = 'none';
       }
     }
   }
