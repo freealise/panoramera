@@ -15,17 +15,5 @@ for (var i=1; i<buttons.length; i++) {
 if (result) {
 	window.location.href = 'https://freeali.se/PanomNom.js/examples/basic/sv-panoid.html?ids=' + ids.join(',');
 } else {
-	message = "PanoID not found."
-  messageEl.innerHTML = message;
-	body.appendChild(messageEl);
-	messageEl.style.zIndex = 2147483647;
-	messageEl.style.position = "fixed";
-	messageEl.style.top = "0";
-	messageEl.style.right = "0";
-	messageEl.style.fontFamily = "monospace";
-	messageEl.style.fontWeight = "bold";
-	messageEl.style.fontSize = "24px";
-	messageEl.style.backgroundColor = "#ffffff";
-	messageEl.style.color = '#000000';
-	messageEl.style.padding = "20px 20px 20px 20px";
+	alert("PanoID not found.");
 }
