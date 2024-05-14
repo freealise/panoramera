@@ -83,6 +83,16 @@
         font-weight: bold;
         border: 1px dashed gray;
       }
+      .display {            
+        position:fixed;
+        top:0;
+        right:0;
+        max-width:320px;
+        max-height:256px;
+        overflow-x:visible;
+        overflow-y:scroll;
+        display:none;
+      }
     </style>
   </head>
   <body>
@@ -102,6 +112,9 @@
 
         <input type="radio" id="display2" name="display" value="gr"  onchange="toggleDisplay(this.value);"/>
         <label for="display2">depth</label>
+        
+        <input type="radio" id="display3" name="display" value="none"  onchange="toggleDisplay(this.value);" checked/>
+        <label for="display3">none</label>
       </p>
       <p>Try <i>Hyde Park, London, UK<!--3toTZ-zA0QH6HRfvol1QPA--></i>
         <a class="bookmarklet" href="#">Get StreetView ID</a>
@@ -123,7 +136,7 @@
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
-<div id="gr" class="display" style="position:fixed;top:0;right:0;width:320px;height:256px;overflow-x:visible;overflow-y:scroll;display:none;">
+<div id="gr" class="display">
   <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.29.0/gradio.js"></script>
   <gradio-app src="https://freealise-video-frame-interpolation.hf.space" id="gradio" class="light"></gradio-app>
   <gradio-app src="https://freealise-depth-anything-video.hf.space" class="light"></gradio-app>
