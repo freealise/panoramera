@@ -86,7 +86,7 @@
         height:256px;
       }
       .display {            
-        position:fixed;
+        position:fixed !important;
         top:0;
         right:0;
         overflow-x:visible;
@@ -102,8 +102,8 @@
       <p>
         This example shows how to set GoogleStreetViewLoader to load from a
         panoId.<br/>
-        <!-- add gradio toggle, tooltips -->
-        Display
+        <!-- add tooltips -->
+        Show
         <input type="radio" id="display0" name="display" value="map"  onchange="toggleDisplay(this.value);"/>
         <label for="display0">map</label>
 
