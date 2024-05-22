@@ -410,7 +410,7 @@ window.initialize = initialize;
 						k=1;
 					}
         } else {
-          intv = setTimeout(checkLnk, 1000);
+          intv = setTimeout(checkLnk, 40);
         }
       }
 
@@ -420,7 +420,7 @@ window.initialize = initialize;
         DownloadLink.download = 'pano'+k+'.png';
         lnk = canvases[k].toDataURL();
         DownloadLink.href = lnk;
-        intv = setTimeout(checkLnk, 1000);
+        intv = setTimeout(checkLnk, 40);
       });
 
       function resizeFrame() {
