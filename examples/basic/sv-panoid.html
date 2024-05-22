@@ -440,6 +440,9 @@ window.initialize = initialize;
       function recordFrames() {
 				k=1;
 				intv = setInterval(function() {
+				  if (k == 1) {
+				    mediaRecorder.start();
+				  }
 					if (k < canvases.length) {
 						const imgData = ctxs[k].getImageData(0, 0, canvases[k].width, canvases[k].height);
 						context.putImageData(imgData, 0, 0);
@@ -452,7 +455,6 @@ window.initialize = initialize;
 						k=1;
 					}
         }, 1000);
-        setTimeout(mediaRecorder.start(), 1);
       }
 
       DownloadVideo.addEventListener("click", function (e) {
