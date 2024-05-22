@@ -15,10 +15,9 @@
         padding: 0;
         box-sizing: inherit;
       }
-      body {
-        font: 14px 'Averia Sans Libre', sans-serif;
-        padding: 0;
-        box-sizing: border-box;
+      body, input {
+        font: 12px 'Averia Sans Libre', sans-serif;
+        padding: 2px;
       }
       section {
         max-width: 100%;
@@ -99,9 +98,8 @@
       <h1>PanomNom.js Basic Usage</h1>
       <h2>GoogleStreetViewLoader.load</h2>
       <p>
-        This example shows how to set GoogleStreetViewLoader to load from a
-        panoId.<br/>
-        <!-- fix 'Download images' -->
+        This example shows how to set GoogleStreetViewLoader to load from a set of panorama ids.<p/>
+        <!-- load video into depth estimator -->
         <a class="bookmarklet" href="#">Get StreetView ID</a>
 				<span><- Drag this to your bookmarks bar (or on mobile, tap on it and hold until the link to copy the URL shows up, copy it, then bookmark this page in the browser and tap and hold the saved bookmark to edit it and replace its URL with the link you just copied).</span><p/>
         Show<br/>
@@ -112,15 +110,15 @@
         <label for="display1">video</label> - Once all the images have been loaded, click any of them to copy to clipboard, use the context menu (right click) to download, or the video slideshow button to combine them in a single file which can also be downloaded with the link in its bottom right corner.<p/>
 
         <input type="radio" id="display2" name="display" value="gr"  onchange="toggleDisplay(this.value);"/>
-        <label for="display2">depth</label> - When the slideshow video is available, it is loaded automatically into the depth estimation AI which returns a map of how far each point of a photo is from the camera, also as a video. It should be used to enhance the focus of images and for parallax effect.<br/>
+        <label for="display2">depth</label> - When the slideshow video is available, it is loaded automatically into the depth estimation AI which returns a map of how far each point of a photo is from the camera, also as a video. It should be used to enhance the focus of images and for parallax effect.<p/>
         
         <input type="radio" id="display3" name="display" value="none"  onchange="toggleDisplay(this.value);" checked/>
         <label for="display3">none</label>
       </p>
-      <p>Try <i>Hyde Park, London, UK<!--3toTZ-zA0QH6HRfvol1QPA--></i></p>
+      <!--3toTZ-zA0QH6HRfvol1QPA-->
       <form id="PanoIdForm">
-        <input type="text" id="PanoIdInput" />
-        <input type="submit" id="PanoIdFormSubmit" />
+        <input type="text" id="PanoIdInput" placeholder="Place address"/>
+        <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
         <a href="" id="DownloadLink"></a>
         <input type="button" id="DownloadVideo" value="Video slideshow"/>
@@ -402,65 +400,64 @@ window.initialize = initialize;
       function checkLnk() {
         if (DownloadLink.href == lnk) {
           DownloadLink.click();
-          if (k<canvases.length-1) {
-						k++;
+          k++;
+          if (k<canvases.length) {
 						DownloadImages.click();
 					} else {
 						k=1;
 					}
         } else {
-          intv = setTimeout(checkLnk, 1);
+          intv = setTimeout(checkLnk, 40);
         }
       }
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-        var canvases = document.getElementsByTagName('canvas');
         DownloadLink.download = 'pano'+k+'.png';
         lnk = canvases[k].toDataURL();
         DownloadLink.href = lnk;
-        intv = setTimeout(checkLnk, 1);
+        intv = setTimeout(checkLnk, 40);
       });
 
       function resizeFrame() {
-	  showProgress("Resizing " + k + "/" + (canvases.length-1));
-	  ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
-	  frame.src = canvases[k].toDataURL();
-	  frame.onload = function(e) {
-	    canvases[k].width = canvases[0].width;
-            canvases[k].height = canvases[0].height;
-            ctxs[k].drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
-	    k++;
-	    if (k < canvases.length) {
-		resizeFrame(); 
-	    } else {
-		showProgress("Finished.");
-    k=1;
-	    }
-	  }
+				showProgress("Resizing " + k + "/" + (canvases.length-1));
+				ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
+				frame.src = canvases[k].toDataURL();
+				frame.onload = function(e) {
+					canvases[k].width = canvases[0].width;
+					canvases[k].height = canvases[0].height;
+					ctxs[k].drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
+					k++;
+					if (k < canvases.length) {
+				    resizeFrame(); 
+					} else {
+				    showProgress("Finished.");
+				    k=1;
+					}
+				}
       }
 
       function recordFrames() {
-	k=1;
-	intv = setInterval(function() {
-	  if (k < canvases.length) {
-	    const imgData = ctxs[k].getImageData(0, 0, canvases[k].width, canvases[k].height);
-            context.putImageData(imgData, 0, 0);
-            k++;
-	  } else {
-	    context.clearRect(0, 0, canvases[0].width, canvases[0].height);
-	    frame.src = "";
-	    clearInterval(intv);
-	    mediaRecorder.stop();
-            k=1;
-	  }
+				k=1;
+				intv = setInterval(function() {
+					if (k < canvases.length) {
+						const imgData = ctxs[k].getImageData(0, 0, canvases[k].width, canvases[k].height);
+						context.putImageData(imgData, 0, 0);
+						k++;
+					} else {
+						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
+						frame.src = "";
+						clearInterval(intv);
+						mediaRecorder.stop();
+						k=1;
+					}
         }, 1000);
         setTimeout(mediaRecorder.start(), 1);
       }
 
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
-	recordFrames();
+	      recordFrames();
       });
 
       function copyDataUrl(e) {
