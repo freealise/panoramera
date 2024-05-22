@@ -305,26 +305,28 @@ window.initialize = initialize;
             seq.src = reader.result;
             seq.height = parseInt(256 * canvas.height / canvas.width);
             seq.addEventListener("loadedmetadata", () => {
-		console.log("duration:", seq.duration); // Handle chrome's bug
-		if (seq.duration === Infinity) { // Set it to bigger than the actual duration
-			seq.currentTime = 86400;
-			seq.addEventListener("timeupdate", () => {
-				console.log("after workaround:", seq.duration);
-				seq.currentTime = 0;
-				
-				gradio.getElementsByTagName("textarea")[0].addEventListener('input', function(e) {
-				  gradio.classList.remove('dark');
-				  gradio.getElementsByTagName("button")[0].click();
-				  gradio.getElementsByClassName("progress-text")[0].focus();
-				});
-				gradio.getElementsByTagName("textarea")[0].value = seq.src;
-				
-				var event = document.createEvent('Event');
-				event.initEvent('input', true, false);
-				gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
-			}, { once: true });
-		}
-	    });
+							console.log("duration:", seq.duration); // Handle chrome's bug
+							if (seq.duration === Infinity) { 
+							  // Set it to bigger than the actual duration
+								seq.currentTime = 86400;
+								seq.addEventListener("timeupdate", () => {
+									console.log("after workaround:", seq.duration);
+									seq.currentTime = 0;
+									
+									gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
+									function(e) {
+										gradio.classList.remove('dark');
+										gradio.getElementsByTagName("button")[0].click();
+										gradio.getElementsByClassName("progress-text")[0].focus();
+									});
+									gradio.getElementsByTagName("textarea")[0].value = seq.src;
+									
+									var event = document.createEvent('Event');
+									event.initEvent('input', true, false);
+									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
+								}, { once: true });
+							}
+						});
             recordedChunks = [];
           };
           reader.readAsDataURL(recoveredBlob);
@@ -403,14 +405,12 @@ window.initialize = initialize;
         var canvases = document.getElementsByTagName('canvas');
         DownloadLink.download = 'pano'+k+'.png';
         DownloadLink.href = canvases[k].toDataURL();
-        DownloadLink.onload = function(e) {
-          DownloadLink.click();
-          if (k<canvases.length) {
-            k++;
-            DownloadImages.click();
-          } else {
-            k=1;
-          }
+        DownloadLink.click();
+        if (k<canvases.length-1) {
+          k++;
+          DownloadImages.click();
+        } else {
+          k=1;
         }
       });
 
