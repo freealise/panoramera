@@ -399,19 +399,28 @@ window.initialize = initialize;
         //load(PanoIdInput.value);
         e.preventDefault();
       });
+      
+      function checkLnk() {
+        if (DownloadLink.href == lnk) {
+          DownloadLink.click();
+          if (k<canvases.length-1) {
+						k++;
+						DownloadImages.click();
+					} else {
+						k=1;
+					}
+        } else {
+          intv = setTimeout(checkLnk, 1000);
+        }
+      }
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
         var canvases = document.getElementsByTagName('canvas');
         DownloadLink.download = 'pano'+k+'.png';
-        DownloadLink.href = canvases[k].toDataURL();
-        DownloadLink.click();
-        if (k<canvases.length-1) {
-          k++;
-          DownloadImages.click();
-        } else {
-          k=1;
-        }
+        lnk = canvases[k].toDataURL();
+        DownloadLink.href = lnk;
+        intv = setTimeout(checkLnk, 1000);
       });
 
       function resizeFrame() {
@@ -471,7 +480,7 @@ window.initialize = initialize;
       }
       loadBookmarklet();
 
-      var intv;
+      var intv, lnk;
       var k=1;
       var j=0;
       var ids = [];
