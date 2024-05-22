@@ -5,7 +5,7 @@
     <title>PanomNom.js Basic Usage</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link
-      href="//fonts.googleapis.com/css?family=Roboto:400,700,300"
+      href="//fonts.googleapis.com/css?family=Averia+Sans+Libre:400,700,300"
       rel="stylesheet"
       type="text/css"
     />
@@ -16,13 +16,12 @@
         box-sizing: inherit;
       }
       body {
-        font: 12px/14px Roboto, tahoma, sans-serif;
+        font: 14px 'Averia Sans Libre', sans-serif;
         padding: 0;
         box-sizing: border-box;
-        color: #202020;
       }
       section {
-        width: 800px;
+        max-width: 100%;
         margin: 0 auto;
         padding: 10px;
       }
@@ -410,7 +409,7 @@ window.initialize = initialize;
 						k=1;
 					}
         } else {
-          intv = setTimeout(checkLnk, 40);
+          intv = setTimeout(checkLnk, 1);
         }
       }
 
@@ -420,7 +419,7 @@ window.initialize = initialize;
         DownloadLink.download = 'pano'+k+'.png';
         lnk = canvases[k].toDataURL();
         DownloadLink.href = lnk;
-        intv = setTimeout(checkLnk, 40);
+        intv = setTimeout(checkLnk, 1);
       });
 
       function resizeFrame() {
