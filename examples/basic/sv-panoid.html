@@ -102,7 +102,7 @@
       <p>
         This example shows how to set GoogleStreetViewLoader to load from a
         panoId.<br/>
-        <!-- add tooltips, fix 'Download images' -->
+        <!-- fix 'Download images' -->
         <a class="bookmarklet" href="#">Get StreetView ID</a>
 				<span><- Drag this to your bookmarks bar (or on mobile, tap on it and hold until the link to copy the URL shows up, copy it, then bookmark this page in the browser and tap and hold the saved bookmark to edit it and replace its URL with the link you just copied).</span><p/>
         Show<br/>
@@ -401,10 +401,16 @@ window.initialize = initialize;
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
         var canvases = document.getElementsByTagName('canvas');
-        for (var i=1; i<canvases.length; i++) {
-          DownloadLink.download = 'pano'+i+'.png';
-          DownloadLink.href = canvases[i].toDataURL();
+        DownloadLink.download = 'pano'+k+'.png';
+        DownloadLink.href = canvases[k].toDataURL();
+        DownloadLink.onload = function(e) {
           DownloadLink.click();
+          if (k<canvases.length) {
+            k++;
+            DownloadImages.click();
+          } else {
+            k=1;
+          }
         }
       });
 
@@ -421,6 +427,7 @@ window.initialize = initialize;
 		resizeFrame(); 
 	    } else {
 		showProgress("Finished.");
+    k=1;
 	    }
 	  }
       }
