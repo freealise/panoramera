@@ -355,13 +355,18 @@ window.initialize = initialize;
 
           showProgress("Loaded.");
           showError("");
-          canvasContainer.appendChild(loader.canvas);
+          const l = document.createElement('a');
+          l.download = "pano"+j+".png";
+          l.href = loader.canvas.toDataURL();
+          l.target = "_new";
+          canvasContainer.appendChild(l);
+          l.appendChild(loader.canvas);
           showMessage(
             "Panorama loaded, street view data " +
               loader.metadata.copyright +
               ".<br/>"
           );
-          canvasContainer.lastChild.addEventListener("click", copyDataUrl);
+          canvasContainer.lastChild.addEventListener("contextmenu", copyDataUrl);
           j++;
           if (ids[j]) {
             load(ids[j]);
@@ -394,24 +399,18 @@ window.initialize = initialize;
       });
       
       function checkLnk() {
-        if (DownloadLink.href == lnk) {
-          DownloadLink.click();
+        if (k<canvases.length) {
+          lnks[k-1].click();
           k++;
-          if (k<canvases.length) {
-						DownloadImages.click();
-					} else {
-						k=1;
-					}
-        } else {
           intv = setTimeout(checkLnk, 40);
-        }
+        } else {
+				  k=1;
+				}
       }
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-        DownloadLink.download = 'pano'+k+'.png';
-        lnk = canvases[k].toDataURL();
-        DownloadLink.href = lnk;
+        lnks = canvasContainer.getElementsByTagName('a');
         intv = setTimeout(checkLnk, 40);
       });
 
@@ -460,7 +459,7 @@ window.initialize = initialize;
 
       function copyDataUrl(e) {
         window.focus();
-        navigator.clipboard.writeText( e.target.toDataURL() );
+        navigator.clipboard.writeText( e.target.href );
         showProgress("Copied.");
       }
       
@@ -474,7 +473,7 @@ window.initialize = initialize;
       }
       loadBookmarklet();
 
-      var intv, lnk;
+      var intv, lnk, lnks;
       var k=1;
       var j=0;
       var ids = [];
