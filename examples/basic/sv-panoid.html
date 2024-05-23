@@ -481,8 +481,10 @@ window.initialize = initialize;
       var idParam = document.location.href.split('ids=')[1];
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
-        load(ids[0]);
       }
+      document.body.addEventListener('load', function() {
+        if (ids.length>0) { load(ids[0]); }
+      });
     </script>
   </body>
 </html>
