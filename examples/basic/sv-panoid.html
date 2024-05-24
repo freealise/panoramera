@@ -427,7 +427,7 @@ window.initialize = initialize;
 				    }
           }
           th[k].download = canvases[k].toDataURL();
-          th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
+          th[k].src = dataURLtoBlob( th[k].download );
 				}
       }
 
