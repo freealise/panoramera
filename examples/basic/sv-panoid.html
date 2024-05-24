@@ -368,8 +368,9 @@ window.initialize = initialize;
           if (ids[j]) {
             load(ids[j]);
           } else {
-	    resizeFrame();
-	  }
+            cnvs = canvases.length;
+	          resizeFrame();
+	        }
         } catch (e) {
           if (e === "ZERO_RESULTS") {
             showError("No results");
@@ -400,7 +401,7 @@ window.initialize = initialize;
       });
 
       function resizeFrame() {
-				showProgress("Resizing " + k + "/" + (canvases.length-1));
+				showProgress("Resizing " + k + "/" + (cnvs-1));
 				ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
 				frame.src = canvases[k].toDataURL();
 				frame.onload = function(e) {
@@ -417,7 +418,7 @@ window.initialize = initialize;
             thumbnail.appendChild(th[k]);
             showProgress("Loaded thumbnail "+k);
             k++;
-            if (k < canvases.length) {
+            if (k < cnvs) {
 				      resizeFrame(); 
 					   } else {
 				      showProgress("Finished.");
@@ -490,7 +491,7 @@ window.initialize = initialize;
 				xhttp.send();
       }
 
-      var intv;
+      var intv, cnvs;
       var th = [];
       var k=1;
       var j=0;
