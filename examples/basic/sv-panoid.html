@@ -394,14 +394,34 @@ window.initialize = initialize;
         //load(PanoIdInput.value);
         e.preventDefault();
       });
+      
+      function loadThumb() {
+        if (k<canvases.length) {
+          th[k] = document.createElement('img');
+          th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
+          th[k].style.width = '' + canvases[k].width / 64 + 'px';
+          th[k].style.height = '' + canvases[k].height / 64 + 'px';
+          th[k].onload = function() {
+            showProgress("Loaded thumbnail "+k);
+            k++;
+            loadThumb();
+          }
+          thumbnail.appendChild(th[k]);
+        } else {
+          k=1;
+          thumbnail.style.display = 'block';
+          var uri = "data:text/html,<html><head></head><body>" + encodeURIComponent(thumbnail.innerHTML) + "</body></html>";
+          DownloadLink.href = uri;
+          DownloadLink.download = "page.htm";
+          DownloadLink.target = "_new";
+          DownloadLink.click();
+        }
+      }
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-        var uri = "data:text/html,<html><head></head><body>" + encodeURIComponent(thumbnail.innerHTML) + "</body></html>";
-        DownloadLink.href = uri;
-        DownloadLink.download = "page.htm";
-        DownloadLink.target = "_new";
-        DownloadLink.click();
+        k=1;
+        loadThumb();
       });
 
       function resizeFrame() {
@@ -412,23 +432,13 @@ window.initialize = initialize;
 					canvases[k].width = canvases[0].width;
 					canvases[k].height = canvases[0].height;
 					ctxs[k].drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
-          
-          th[k] = document.createElement('img');
-          th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
-          th[k].style.width = '' + canvases[k].width / 64 + 'px';
-          th[k].style.height = '' + canvases[k].height / 64 + 'px';
-          thumbnail.appendChild(th[k]);
-					
-          th[k].onload = function() {
-					  if (k < canvases.length) {
-				      resizeFrame(); 
-					  } else {
-              thumbnail.style.display = 'block';
-				      showProgress("Finished.");
-				      k=1;
-					  }
-          }
           k++;
+          if (k < canvases.length) {
+				    resizeFrame(); 
+					 } else {
+				    showProgress("Finished.");
+				    k=1;
+				  }
 				}
       }
 
