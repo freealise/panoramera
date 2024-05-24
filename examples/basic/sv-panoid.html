@@ -96,7 +96,7 @@
       <h2>GoogleStreetViewLoader.load</h2>
       <p>
         This example shows how to set GoogleStreetViewLoader to load from a set of panorama ids.<p/>
-        <!-- fix loading and download images on mobile, load video into depth estimator -->
+        <!-- fix 'download images' on mobile, load video into depth estimator -->
         <a class="bookmarklet" href="#">Get StreetView ID</a>
 				<span><- Drag this to your bookmarks bar (or on mobile, tap on it and hold until the link to copy the URL shows up, copy it, then bookmark this page in the browser and tap and hold the saved bookmark to edit it and replace its URL with the link you just copied).</span><p/>
         Show<br/>
@@ -104,7 +104,7 @@
         <label for="display0">map</label> - Move the map and click anywhere to see the panorama, then click the link to view it in Google Maps with timepoints. If on mobile, request the desktop version of the page from your browser. Click the bookmarklet to return to this page and load all the timepoints.<p/>
 
         <input type="radio" id="display1" name="display" value="seq"  onchange="toggleDisplay(this.value);"/>
-        <label for="display1">video</label> - Once all the images have been loaded, click any of them to copy to clipboard and make a thumbnail to download by right click, or the video slideshow button to combine them in a single file which can also be downloaded with the link in its bottom right corner.<p/>
+        <label for="display1">video</label> - Once all the image thumbnails have been loaded, click any of them to copy the image to clipboard, right-click to download it, or the video slideshow button to combine them in a single file which can also be downloaded with the link in its bottom right corner.<p/>
 
         <input type="radio" id="display2" name="display" value="gr"  onchange="toggleDisplay(this.value);"/>
         <label for="display2">depth</label> - When the slideshow video is available, it is loaded automatically into the depth estimation AI which returns a map of how far each point of a photo is from the camera, also as a video. It should be used to enhance the focus of images and for parallax effect.<p/>
