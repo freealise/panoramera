@@ -418,14 +418,17 @@ window.initialize = initialize;
           th[k].style.width = '' + canvases[k].width / 64 + 'px';
           th[k].style.height = '' + canvases[k].height / 64 + 'px';
           thumbnail.appendChild(th[k]);
-					k++;
-					if (k < canvases.length) {
-				    resizeFrame(); 
-					} else {
-            thumbnail.style.display = 'block';
-				    showProgress("Finished.");
-				    k=1;
-					}
+					
+          th[k].onload = function() {
+					  if (k < canvases.length) {
+				      resizeFrame(); 
+					  } else {
+              thumbnail.style.display = 'block';
+				      showProgress("Finished.");
+				      k=1;
+					  }
+          }
+          k++;
 				}
       }
 
