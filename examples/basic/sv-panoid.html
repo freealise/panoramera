@@ -397,9 +397,15 @@ window.initialize = initialize;
       
       function checkLnk() {
         if (k<canvases.length) {
-          lnks[k-1].click();
-          k++;
-          intv = setTimeout(checkLnk, 40);
+          thumbnail.onload = function() {
+            DownloadLink.href = thumbnail.src;
+            DownloadLink.download = "pano"+k+".png";
+            DownloadLink.target = "_new";
+            DownloadLink.click();
+            k++;
+            intv = setTimeout(checkLnk, 40);
+          };
+          canvases[k].click();
         } else {
 				  k=1;
 				}
@@ -407,8 +413,8 @@ window.initialize = initialize;
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-        lnks = canvasContainer.getElementsByTagName('a');
-        intv = setTimeout(checkLnk, 40);
+        k=1;
+        checkLnk();
       });
 
       function resizeFrame() {
