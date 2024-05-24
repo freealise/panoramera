@@ -401,7 +401,7 @@ window.initialize = initialize;
       });
 
       function resizeFrame() {
-				showProgress("Resizing " + k + "/" + (cnvs-1));
+				showProgress("Resizing " + k + "/" + (canvases.length-1));
 				ctxs[k] = canvases[k].getContext("2d", {willReadFrequently: true});
 				frame.src = canvases[k].toDataURL();
 				frame.onload = function(e) {
@@ -413,12 +413,13 @@ window.initialize = initialize;
           th[k].style.width = '' + canvases[k].width / 64 + 'px';
           th[k].style.height = '' + canvases[k].height / 64 + 'px';
           th[k].onload = function() {
-            canvasContainer.removeChild(canvases[k]);
+            canvases[k].width = 1;
+            canvases[k].height = 1;
             ctxs[k] = null;
             thumbnail.appendChild(th[k]);
             showProgress("Loaded thumbnail "+k);
             k++;
-            if (k < cnvs) {
+            if (k < canvases.length) {
 				      resizeFrame(); 
 					   } else {
 				      showProgress("Finished.");
@@ -491,7 +492,7 @@ window.initialize = initialize;
 				xhttp.send();
       }
 
-      var intv, cnvs;
+      var intv;
       var th = [];
       var k=1;
       var j=0;
