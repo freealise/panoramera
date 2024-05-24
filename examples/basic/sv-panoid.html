@@ -403,6 +403,9 @@ window.initialize = initialize;
           th[k].style.height = '' + canvases[k].height / 64 + 'px';
           th[k].onload = function() {
             showProgress("Loaded thumbnail "+k);
+            canvasContainer.removeChild(canvases[k]);
+            ctxs[k] = null;
+            canvases[k] = null;
             k++;
             loadThumb();
           }
