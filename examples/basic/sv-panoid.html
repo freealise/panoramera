@@ -104,7 +104,7 @@
         <label for="display0">map</label> - Move the map and click anywhere to see the panorama, then click the link to view it in Google Maps with timepoints. If on mobile, request the desktop version of the page from your browser. Click the bookmarklet to return to this page and load all the timepoints.<p/>
 
         <input type="radio" id="display1" name="display" value="seq"  onchange="toggleDisplay(this.value);"/>
-        <label for="display1">video</label> - Once all the images have been loaded, click any of them to copy to clipboard, use the context menu (right click) to download, or the video slideshow button to combine them in a single file which can also be downloaded with the link in its bottom right corner.<p/>
+        <label for="display1">video</label> - Once all the images have been loaded, click any of them to copy to clipboard and make a thumbnail to download by right click, or the video slideshow button to combine them in a single file which can also be downloaded with the link in its bottom right corner.<p/>
 
         <input type="radio" id="display2" name="display" value="gr"  onchange="toggleDisplay(this.value);"/>
         <label for="display2">depth</label> - When the slideshow video is available, it is loaded automatically into the depth estimation AI which returns a map of how far each point of a photo is from the camera, also as a video. It should be used to enhance the focus of images and for parallax effect.<p/>
@@ -455,10 +455,11 @@ window.initialize = initialize;
       function copyDataUrl(e) {
         window.focus();
         frame.src = e.target.toDataURL();
-        frame.style.width = '64px';
+        frame.style.width = '' + e.target.width / 64 + 'px';
+        frame.style.height = '' + e.target.height / 64 + 'px';
         frame.style.display = 'block';
         navigator.clipboard.writeText( frame.src );
-        showProgress("Copied.");
+        showProgress("Copied. Paste image from clipboard or right-click on thumbnail to download.");
       }
       
       function loadBookmarklet() {
