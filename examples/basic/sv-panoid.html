@@ -127,6 +127,7 @@
       <div id="map" class="display"></div>
       <video id="seq" src="" muted controls class="display"></video>
       
+      <img src="" id="thumbnail" width="4096" height="2048" style="display:none;" />
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
@@ -272,6 +273,7 @@ window.initialize = initialize;
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
       const seq = document.getElementById("seq");
+      const thumbnail = document.getElementById("thumbnail");
       const frame = document.getElementById("frame");
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
@@ -454,11 +456,11 @@ window.initialize = initialize;
 
       function copyDataUrl(e) {
         window.focus();
-        frame.src = e.target.toDataURL();
-        frame.style.width = '' + e.target.width / 64 + 'px';
-        frame.style.height = '' + e.target.height / 64 + 'px';
-        frame.style.display = 'block';
-        navigator.clipboard.writeText( frame.src );
+        thumbnail.src = e.target.toDataURL();
+        thumbnail.style.width = '' + e.target.width / 64 + 'px';
+        thumbnail.style.height = '' + e.target.height / 64 + 'px';
+        thumbnail.style.display = 'block';
+        navigator.clipboard.writeText( thumbnail.src );
         showProgress("Copied. Paste image from clipboard or right-click on thumbnail to download.");
       }
       
