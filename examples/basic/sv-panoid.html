@@ -494,11 +494,11 @@ window.initialize = initialize;
         const xhttp = new XMLHttpRequest();
 				xhttp.onload = function() {
 					document.getElementsByClassName('bookmarklet')[0].href = "javascript:(function(){" + encodeURIComponent(this.responseText) + "})()";
-				}
+				  if (ids.length>0) { load(ids[0]); }
+        }
 				xhttp.open("GET", "bookmarklet.js");
 				xhttp.send();
       }
-      loadBookmarklet();
 
       var intv, lnk, lnks;
       var k=1;
@@ -508,9 +508,8 @@ window.initialize = initialize;
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
       }
-      window.addEventListener('load', function() {
-        if (ids.length>0) { load(ids[0]); }
-      });
+      loadBookmarklet();
+      
     </script>
   </body>
 </html>
