@@ -363,7 +363,6 @@ window.initialize = initialize;
               loader.metadata.copyright +
               ".<br/>"
           );
-          canvasContainer.lastChild.addEventListener("click", copyDataUrl);
           j++;
           if (ids[j]) {
             load(ids[j]);
@@ -416,6 +415,7 @@ window.initialize = initialize;
             canvases[k].height = 1;
             ctxs[k] = null;
             thumbnail.appendChild(th[k]);
+            th[k].addEventListener("click", copyDataUrl);
             showProgress("Loaded thumbnail "+k);
             k++;
             if (k < canvases.length) {
@@ -426,6 +426,7 @@ window.initialize = initialize;
               thumbnail.style.display = 'block';
 				    }
           }
+          th[k].download = canvases[k].toDataURL();
           th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
 				}
       }
@@ -457,8 +458,7 @@ window.initialize = initialize;
 
       function copyDataUrl(e) {
         window.focus();
-        const durl = e.target.toDataURL();
-        navigator.clipboard.writeText( durl );
+        navigator.clipboard.writeText( e.target.download );
         showProgress("Copied image to clipboard.");
       }
       
