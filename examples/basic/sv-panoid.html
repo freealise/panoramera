@@ -127,7 +127,7 @@
       <div id="map" class="display"></div>
       <video id="seq" src="" muted controls class="display"></video>
       
-      <img src="" id="thumbnail" width="4096" height="2048" style="display:none;" />
+      <div id="thumbnail" style="display:none;"></div>
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
@@ -136,7 +136,6 @@
   <gradio-app src="https://freealise-depth-anything-video.hf.space" id="gradio" class="light"></gradio-app>
 </div>
     </section>
-    <script src="../../src/jszip.min.js"></script>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM&loading=async&callback=initialize&v=weekly" defer="defer" async="async"></script>
     <script>
@@ -395,38 +394,14 @@ window.initialize = initialize;
         //load(PanoIdInput.value);
         e.preventDefault();
       });
-      
-      function checkLnk() {
-        if (k<canvases.length) {
-          thumbnail.onload = function() {
-            
-            try { imgs.file("pano"+k+".png", thumbnail.src, {base64: false}); } catch(e) { alert(e); }
-            URL.revokeObjectURL(thumbnail.src);
-            thumbnail.src = '';
-            /*
-            DownloadLink.href = thumbnail.src;
-            DownloadLink.download = "pano"+k+".png";
-            DownloadLink.target = "_new";
-            DownloadLink.click();
-            */
-            k++;
-            intv = setTimeout(checkLnk, 1000);
-          };
-          canvases[k].click();
-        } else {
-				  k=1;
-          zip.generateAsync({type:"blob"}).then(function(content) {
-            // see FileSaver.js
-            try { saveAs(content, "timepoints.zip"); } catch(e) { alert(e); }
-          });
-				}
-      }
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-        k=1;
-        imgs = zip.folder("images");
-        checkLnk();
+        var uri = "data:text/html,<html><head></head><body>" + encodeURIComponent(thumbnail.innerHTML) + "</body></html>";
+        DownloadLink.href = uri;
+        DownloadLink.download = "page.htm";
+        DownloadLink.target = "_new";
+        DownloadLink.click();
       });
 
       function resizeFrame() {
@@ -437,10 +412,17 @@ window.initialize = initialize;
 					canvases[k].width = canvases[0].width;
 					canvases[k].height = canvases[0].height;
 					ctxs[k].drawImage(frame, 0, 0, canvases[k].width, canvases[k].height);
+          
+          th[k] = document.createElement('img');
+          th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
+          th[k].style.width = '' + canvases[k].width / 64 + 'px';
+          th[k].style.height = '' + canvases[k].height / 64 + 'px';
+          thumbnail.appendChild(th[k]);
 					k++;
 					if (k < canvases.length) {
 				    resizeFrame(); 
 					} else {
+            thumbnail.style.display = 'block';
 				    showProgress("Finished.");
 				    k=1;
 					}
@@ -476,11 +458,7 @@ window.initialize = initialize;
         window.focus();
         const durl = e.target.toDataURL();
         navigator.clipboard.writeText( durl );
-        thumbnail.src = dataURLtoBlob( durl );
-        thumbnail.style.width = '' + e.target.width / 64 + 'px';
-        thumbnail.style.height = '' + e.target.height / 64 + 'px';
-        thumbnail.style.display = 'block';
-        showProgress("Copied. Paste image from clipboard or right-click on thumbnail to download.");
+        showProgress("Copied image to clipboard.");
       }
       
       function dataURLtoBlob(dataURL) {
@@ -512,7 +490,8 @@ window.initialize = initialize;
 				xhttp.send();
       }
 
-      var intv, lnk, lnks;
+      var intv;
+      var th = [];
       var k=1;
       var j=0;
       var ids = [];
@@ -520,8 +499,6 @@ window.initialize = initialize;
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
       }
-      var zip = new JSZip();
-      var imgs = zip.folder("images");
       loadBookmarklet();
       
     </script>
