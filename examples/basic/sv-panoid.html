@@ -424,6 +424,7 @@ window.initialize = initialize;
 				      showProgress("Finished.");
 				      k=1;
               thumbnail.style.display = 'block';
+              frame.src = "";
 				    }
           }
           th[k].download = canvases[k].toDataURL();
@@ -433,6 +434,7 @@ window.initialize = initialize;
 
       function recordFrames() {
 				k=1;
+        canvases[0].style.display = 'block';
 				intv = setInterval(function() {
 				  if (k == 1) {
 				    mediaRecorder.start();
@@ -442,10 +444,10 @@ window.initialize = initialize;
 						k++;
 					} else {
 						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
-						frame.src = "";
 						clearInterval(intv);
 						mediaRecorder.stop();
 						k=1;
+            canvases[0].style.display = 'none';
 					}
         }, 1000);
       }
