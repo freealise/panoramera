@@ -401,11 +401,11 @@ window.initialize = initialize;
           th[k].style.width = '' + canvases[k].width / 64 + 'px';
           th[k].style.height = '' + canvases[k].height / 64 + 'px';
           th[k].onload = function() {
-            thumbnail.appendChild(th[k]);
-            showProgress("Loaded thumbnail "+k);
             canvasContainer.removeChild(canvases[k]);
             ctxs[k] = null;
             canvases[k] = null;
+            thumbnail.appendChild(th[k]);
+            showProgress("Loaded thumbnail "+k);
             k--;
             loadThumb();
           }
