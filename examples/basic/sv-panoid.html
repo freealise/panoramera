@@ -398,10 +398,10 @@ window.initialize = initialize;
       function loadThumb() {
         if (k<canvases.length) {
           th[k] = document.createElement('img');
-          th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
           th[k].style.width = '' + canvases[k].width / 64 + 'px';
           th[k].style.height = '' + canvases[k].height / 64 + 'px';
           th[k].onload = function() {
+            thumbnail.appendChild(th[k]);
             showProgress("Loaded thumbnail "+k);
             canvasContainer.removeChild(canvases[k]);
             ctxs[k] = null;
@@ -409,15 +409,10 @@ window.initialize = initialize;
             k++;
             loadThumb();
           }
-          thumbnail.appendChild(th[k]);
+          th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
         } else {
           k=1;
           thumbnail.style.display = 'block';
-          var uri = "data:text/html,<html><head></head><body>" + encodeURIComponent(thumbnail.innerHTML) + "</body></html>";
-          DownloadLink.href = uri;
-          DownloadLink.download = "page.htm";
-          DownloadLink.target = "_new";
-          DownloadLink.click();
         }
       }
 
