@@ -296,8 +296,8 @@ window.initialize = initialize;
         xhr.onload = function() {
           var recoveredBlob = xhr.response;
           var reader = new FileReader;
-          reader.onload = function() {
-            seq.src = reader.result;
+          reader.addEventListener('loadend', function(e) {
+            seq.src = e.srcElement.result;
             showProgress("Video captured"); 
             seq.height = parseInt(256 * canvas.height / canvas.width);
             seq.addEventListener("loadedmetadata", () => {
@@ -325,7 +325,7 @@ window.initialize = initialize;
 							}
 						});
             recordedChunks = [];
-          };
+          });
           reader.readAsDataURL(recoveredBlob);
         };
         xhr.open('GET', url);
