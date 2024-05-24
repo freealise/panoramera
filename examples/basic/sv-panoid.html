@@ -300,9 +300,10 @@ window.initialize = initialize;
             seq.src = reader.result;
             showProgress("Video captured"); 
             seq.height = parseInt(256 * canvas.height / canvas.width);
-            seq.addEventListener("canplaythrough", () => {
-							showProgress("duration:", seq.duration); // Handle chrome's bug
-							if (seq.duration === Infinity) { 
+            seq.addEventListener("loadedmetadata", () => {
+              showProgress("Metadata loaded"); 
+							if (!seq.duration || seq.duration === Infinity) {
+                showProgress("Handle duration bug");
 							  // Set it to bigger than the actual duration
 								seq.currentTime = 86400;
 								seq.addEventListener("timeupdate", () => {
