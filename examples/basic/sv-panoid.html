@@ -438,8 +438,7 @@ window.initialize = initialize;
 				    mediaRecorder.start();
 				  }
 					if (k < canvases.length) {
-						const imgData = ctxs[k].getImageData(0, 0, canvases[k].width, canvases[k].height);
-						context.putImageData(imgData, 0, 0);
+            context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
 						k++;
 					} else {
 						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
