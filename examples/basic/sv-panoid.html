@@ -401,6 +401,8 @@ window.initialize = initialize;
           thumbnail.onload = function() {
             
             try { imgs.file("pano"+k+".png", thumbnail.src, {base64: false}); } catch(e) { alert(e); }
+            URL.revokeObjectURL(thumbnail.src);
+            thumbnail.src = '';
             /*
             DownloadLink.href = thumbnail.src;
             DownloadLink.download = "pano"+k+".png";
