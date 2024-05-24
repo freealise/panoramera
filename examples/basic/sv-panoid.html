@@ -396,7 +396,7 @@ window.initialize = initialize;
       });
       
       function loadThumb() {
-        if (k<canvases.length) {
+        if (k>0) {
           th[k] = document.createElement('img');
           th[k].style.width = '' + canvases[k].width / 64 + 'px';
           th[k].style.height = '' + canvases[k].height / 64 + 'px';
@@ -406,7 +406,7 @@ window.initialize = initialize;
             canvasContainer.removeChild(canvases[k]);
             ctxs[k] = null;
             canvases[k] = null;
-            k++;
+            k--;
             loadThumb();
           }
           th[k].src = dataURLtoBlob( canvases[k].toDataURL() );
@@ -418,7 +418,7 @@ window.initialize = initialize;
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-        k=1;
+        k=canvases.length-1;
         loadThumb();
       });
 
