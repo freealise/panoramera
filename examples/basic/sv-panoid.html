@@ -299,13 +299,13 @@ window.initialize = initialize;
           reader.onload = function() {
             seq.src = reader.result;
             seq.height = parseInt(256 * canvas.height / canvas.width);
-            seq.addEventListener("loadedmetadata", () => {
-							console.log("duration:", seq.duration); // Handle chrome's bug
+            seq.addEventListener("canplaythrough", () => {
+							showProgress("duration:", seq.duration); // Handle chrome's bug
 							if (seq.duration === Infinity) { 
 							  // Set it to bigger than the actual duration
 								seq.currentTime = 86400;
 								seq.addEventListener("timeupdate", () => {
-									console.log("after workaround:", seq.duration);
+									showProgress("after workaround:", seq.duration);
 									seq.currentTime = 0;
 									
 									gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
