@@ -290,11 +290,11 @@ window.initialize = initialize;
           "type": "video/mp4"
         });
         const url = URL.createObjectURL(blob);
-        var xhr = new XMLHttpRequest;
-        xhr.responseType = 'blob';
+        //var xhr = new XMLHttpRequest;
+        //xhr.responseType = 'blob';
   
-        xhr.onload = function() {
-          var recoveredBlob = xhr.response;
+        //xhr.onload = function() {
+          //var recoveredBlob = xhr.response;
           var reader = new FileReader;
           reader.addEventListener('loadend', function(e) {
             seq.src = e.srcElement.result;
@@ -326,10 +326,10 @@ window.initialize = initialize;
 						});
             recordedChunks = [];
           });
-          reader.readAsDataURL(recoveredBlob);
-        };
-        xhr.open('GET', url);
-        xhr.send();
+          reader.readAsDataURL(url); //recoveredBlob);
+        //};
+        //xhr.open('GET', url);
+        //xhr.send();
       }
 
       function showError(message) {
