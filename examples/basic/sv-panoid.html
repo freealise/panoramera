@@ -355,18 +355,13 @@ window.initialize = initialize;
 
           showProgress("Loaded.");
           showError("");
-          const l = document.createElement('a');
-          l.download = "pano"+j+".png";
-          l.href = loader.canvas.toDataURL();
-          l.target = "_new";
-          canvasContainer.appendChild(l);
-          l.appendChild(loader.canvas);
+          canvasContainer.appendChild(loader.canvas);
           showMessage(
             "Panorama loaded, street view data " +
               loader.metadata.copyright +
               ".<br/>"
           );
-          canvasContainer.lastChild.addEventListener("contextmenu", copyDataUrl);
+          canvasContainer.lastChild.addEventListener("click", copyDataUrl);
           j++;
           if (ids[j]) {
             load(ids[j]);
@@ -459,7 +454,10 @@ window.initialize = initialize;
 
       function copyDataUrl(e) {
         window.focus();
-        navigator.clipboard.writeText( e.target.href );
+        frame.src = e.target.toDataURL();
+        frame.style.width = '64px';
+        frame.style.display = 'block';
+        navigator.clipboard.writeText( frame.src );
         showProgress("Copied.");
       }
       
