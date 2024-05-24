@@ -136,6 +136,7 @@
   <gradio-app src="https://freealise-depth-anything-video.hf.space" id="gradio" class="light"></gradio-app>
 </div>
     </section>
+    <script src="../src/jszip.min.js"></script>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM&loading=async&callback=initialize&v=weekly" defer="defer" async="async"></script>
     <script>
@@ -398,22 +399,31 @@ window.initialize = initialize;
       function checkLnk() {
         if (k<canvases.length) {
           thumbnail.onload = function() {
+            
+            try { imgs.file("pano"+k+".png", thumbnail.src, {base64: false}); } catch(e) { alert(e); }
+            /*
             DownloadLink.href = thumbnail.src;
             DownloadLink.download = "pano"+k+".png";
             DownloadLink.target = "_new";
             DownloadLink.click();
+            */
             k++;
             intv = setTimeout(checkLnk, 1000);
           };
           canvases[k].click();
         } else {
 				  k=1;
+          zip.generateAsync({type:"blob"}).then(function(content) {
+            // see FileSaver.js
+            try { saveAs(content, "timepoints.zip"); } catch(e) { alert(e); }
+          });
 				}
       }
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
         k=1;
+        imgs = zip.folder("images");
         checkLnk();
       });
 
@@ -508,6 +518,8 @@ window.initialize = initialize;
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
       }
+      var zip = new JSZip();
+      var imgs = zip.folder("images");
       loadBookmarklet();
       
     </script>
