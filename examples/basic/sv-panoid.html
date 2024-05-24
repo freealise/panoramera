@@ -438,9 +438,6 @@ window.initialize = initialize;
 				k=1;
         canvases[0].style.display = 'block';
 				intv = setInterval(function() {
-				  if (k == 1) {
-				    mediaRecorder.start();
-				  }
 					if (k < canvases.length) {
             context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
 						k++;
@@ -452,6 +449,7 @@ window.initialize = initialize;
             canvases[0].style.display = 'none';
 					}
         }, 1000);
+        mediaRecorder.start();
       }
 
       DownloadVideo.addEventListener("click", function (e) {
