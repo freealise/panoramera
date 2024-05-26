@@ -254,7 +254,7 @@ async function initialize() {
 window.initialize = initialize;
 
     </script>
-    <script type="module">
+    <script type="module" onload="if (ids.length>0) { load(ids[0]); }">
       var srv = 'https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec';
       
       import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
@@ -489,7 +489,6 @@ window.initialize = initialize;
         const xhttp = new XMLHttpRequest();
 				xhttp.onload = function() {
 					document.getElementsByClassName('bookmarklet')[0].href = "javascript:(function(){" + encodeURIComponent(this.responseText) + "})()";
-				  if (ids.length>0) { load(ids[0]); }
         }
 				xhttp.open("GET", "bookmarklet.js");
 				xhttp.send();
