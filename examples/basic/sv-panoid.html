@@ -254,7 +254,7 @@ async function initialize() {
 window.initialize = initialize;
 
     </script>
-    <script type="module" onload="if (ids.length>0) { load(ids[0]); }">
+    <script type="module">
       var srv = 'https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec';
       
       import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
@@ -386,21 +386,7 @@ window.initialize = initialize;
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-                 gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
-									function(e) {
-										gradio.classList.remove('dark');
-										gradio.getElementsByTagName("button")[0].click();
-										gradio.getElementsByClassName("progress-text")[0].focus();
-								  });
-                  var durl = "";
-                  for (var i=0; i<th.length; i++) {
-                    durl += th[k].download + "\n";
-                  }
-									gradio.getElementsByTagName("textarea")[0].value = durl.slice(0,-1);
-									
-									var event = document.createEvent('Event');
-									event.initEvent('input', true, false);
-									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
+        if (ids.length>0) { load(ids[0]); }
       });
 
       function resizeFrame() {
@@ -457,7 +443,22 @@ window.initialize = initialize;
 
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
-	      recordFrames();
+	      //recordFrames();
+                  gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
+									function(e) {
+										gradio.classList.remove('dark');
+										gradio.getElementsByTagName("button")[0].click();
+										gradio.getElementsByClassName("progress-text")[0].focus();
+								  });
+                  var durl = "";
+                  for (var i=0; i<th.length; i++) {
+                    durl += th[k].download + "\n";
+                  }
+									gradio.getElementsByTagName("textarea")[0].value = durl.slice(0,-1);
+									
+									var event = document.createEvent('Event');
+									event.initEvent('input', true, false);
+									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
       });
 
       function copyDataUrl(e) {
