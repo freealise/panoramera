@@ -298,7 +298,7 @@ window.initialize = initialize;
           var reader = new FileReader;
           reader.addEventListener('loadend', function(e) {
             seq.src = e.srcElement.result;
-            showProgress("Video captured"); 
+            showProgress("Video captured");
             seq.height = parseInt(256 * canvas.height / canvas.width);
             seq.addEventListener("loadedmetadata", () => {
               showProgress("Metadata loaded"); 
@@ -309,18 +309,6 @@ window.initialize = initialize;
 								seq.addEventListener("timeupdate", () => {
 									showProgress("after workaround:", seq.duration);
 									seq.currentTime = 0;
-									
-									gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
-									function(e) {
-										gradio.classList.remove('dark');
-										gradio.getElementsByTagName("button")[0].click();
-										gradio.getElementsByClassName("progress-text")[0].focus();
-									});
-									gradio.getElementsByTagName("textarea")[0].value = seq.src;
-									
-									var event = document.createEvent('Event');
-									event.initEvent('input', true, false);
-									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
 								}, { once: true });
 							}
 						});
@@ -427,6 +415,22 @@ window.initialize = initialize;
 				      k=1;
               thumbnail.style.display = 'block';
               frame.src = "";
+                  
+                  gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
+									function(e) {
+										gradio.classList.remove('dark');
+										gradio.getElementsByTagName("button")[0].click();
+										gradio.getElementsByClassName("progress-text")[0].focus();
+									});
+                  var durl = "";
+                  for (var i=0; i<th.length; i++) {
+                    durl += th[k].download + "\n";
+                  }
+									gradio.getElementsByTagName("textarea")[0].value = durl.slice(0,-1);
+									
+									var event = document.createEvent('Event');
+									event.initEvent('input', true, false);
+									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
 				    }
           }
           th[k].download = canvases[k].toDataURL();
