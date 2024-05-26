@@ -386,6 +386,21 @@ window.initialize = initialize;
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
+                 gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
+									function(e) {
+										gradio.classList.remove('dark');
+										gradio.getElementsByTagName("button")[0].click();
+										gradio.getElementsByClassName("progress-text")[0].focus();
+								  });
+                  var durl = "";
+                  for (var i=0; i<th.length; i++) {
+                    durl += th[k].download + "\n";
+                  }
+									gradio.getElementsByTagName("textarea")[0].value = durl.slice(0,-1);
+									
+									var event = document.createEvent('Event');
+									event.initEvent('input', true, false);
+									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
       });
 
       function resizeFrame() {
@@ -415,22 +430,6 @@ window.initialize = initialize;
 				      k=1;
               thumbnail.style.display = 'block';
               frame.src = "";
-                  
-                  gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
-									function(e) {
-										gradio.classList.remove('dark');
-										gradio.getElementsByTagName("button")[0].click();
-										gradio.getElementsByClassName("progress-text")[0].focus();
-									});
-                  var durl = "";
-                  for (var i=0; i<th.length; i++) {
-                    durl += th[k].download + "\n";
-                  }
-									gradio.getElementsByTagName("textarea")[0].value = durl.slice(0,-1);
-									
-									var event = document.createEvent('Event');
-									event.initEvent('input', true, false);
-									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
 				    }
           }
           th[k].download = canvases[k].toDataURL();
