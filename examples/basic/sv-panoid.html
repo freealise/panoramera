@@ -119,14 +119,15 @@
         <input type="button" id="DownloadImages" value="Download images"/>
         <a href="" id="DownloadLink"></a>
         <input type="button" id="DownloadVideo" value="Video slideshow"/>
-        <input type="checkbox" id="VideoThumbnail"/><label for="VideoThumbnail">smaller</label>
+        <input type="checkbox" id="VideoThumbnail"/>
+        <label for="VideoThumbnail">size/2 (if video fails to load)</label>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
       <a href="#" id="loadLink"></a>
       <div id="map" class="display"></div>
-      <video id="seq" src="" width="320" height="240" muted controls class="display"></video>
+      <video id="seq" src="" width="320" height="160" muted controls class="display"></video>
       
       <div id="thumbnail" style="display:none;"></div>
       <canvas width="4096" height="2048" style="display:none;"></canvas>
@@ -459,7 +460,7 @@ function Recorder(cnvs, fps) {
             rec.stop();
 						k=1;
             canvases[0].style.display = 'none';
-            //rec.download("filename.mp4");
+            rec.download("filename.mp4");
 					}
       }
 
@@ -467,8 +468,8 @@ function Recorder(cnvs, fps) {
         e.preventDefault();
         k=1;
         if (VideoThumbnail.checked) {
-          canvases[0].width = 4096 * 2/3;
-          canvases[0].height = 2048 * 2/3;
+          canvases[0].width = 2048;
+          canvases[0].height = 1024;
         } else {
           canvases[0].width = 4096;
           canvases[0].height = 2048;
