@@ -449,6 +449,7 @@ function Recorder(cnvs, fps) {
       function recordFrames() {
 					if (k <= canvases.length) {
             if (k < canvases.length) {
+              if (k == 1) { rec.start(); }
               context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
             } else {
               context.clearRect(0, 0, canvases[0].width, canvases[0].height);
@@ -473,7 +474,6 @@ function Recorder(cnvs, fps) {
           canvases[0].height = 2048;
         }
         canvases[0].style.display = 'block';
-        rec.start();
 	      recordFrames();
                   /*gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
 									function(e) {
