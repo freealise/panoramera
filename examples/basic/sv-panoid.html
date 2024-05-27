@@ -447,6 +447,7 @@ function Recorder(cnvs, fps) {
       function recordFrames() {
 					if (k < canvases.length) {
             context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
+            if (k == 1) { rec.start(); }
 						k++;
             intv = setTimeout(recordFrames, 1000);
 					} else {
@@ -464,8 +465,7 @@ function Recorder(cnvs, fps) {
         canvases[0].width = 320;
         canvases[0].height = 240;
         canvases[0].style.display = 'block';
-        setTimeout(rec.start, 40);
-	      intv = setTimeout(recordFrames, 40);
+	      recordFrames();
                   /*gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
 									function(e) {
 										gradio.classList.remove('dark');
