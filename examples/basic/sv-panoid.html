@@ -450,14 +450,12 @@ function Recorder(cnvs, fps) {
             if (k == 1) { rec.start(); }
 						k++;
             intv = setTimeout(recordFrames, 1000);
-					} else {
-            intv = setTimeout(function() {
-              rec.stop();
-						  context.clearRect(0, 0, canvases[0].width, canvases[0].height);
-						  k=1;
-              canvases[0].style.display = 'none';
-              //rec.download("filename.mp4");
-            }, 1000);
+				  } else {
+            context.clearRect(0, 0, canvases[0].width, canvases[0].height);
+            rec.stop();
+						k=1;
+            canvases[0].style.display = 'none';
+            //rec.download("filename.mp4");
 					}
       }
 
