@@ -313,17 +313,17 @@ function Recorder(cnvs, fps) {
     myReader.addEventListener("loadend", function(e) {
       seq.src = e.srcElement.result;
       videoURL = seq.src;
-      seq.addEventListener("loadedmetadata", () => {
-        showProgress("Metadata loaded"); 
+      seq.addEventListener("canplaythrough", () => {
+        showProgress("Video loaded"); 
 				if (seq.duration === Infinity) {
-          showProgress("Handle duration bug");
 				  // Set it to bigger than the actual duration
 				  seq.currentTime = 86400;
 				  seq.addEventListener("timeupdate", () => {
-						showProgress("after workaround:", seq.duration);
+						showProgress("Duration after workaround:", seq.duration);
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
+        rec.download("filename.mp4");
 		  });
     });
   }
@@ -459,7 +459,6 @@ function Recorder(cnvs, fps) {
             rec.stop();
 						k=1;
             canvases[0].style.display = 'none';
-            rec.download("filename.mp4");
 					}
       }
 
