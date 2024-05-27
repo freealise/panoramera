@@ -324,6 +324,19 @@ function Recorder(cnvs, fps) {
 				  }, { once: true });
 				}
         rec.download("filename.mp4");
+        if (gradio.getElementsByTagName("textarea")) {
+          gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
+				  function(e) {
+						gradio.classList.remove('dark');
+						gradio.getElementsByTagName("button")[0].click();
+						gradio.getElementsByClassName("progress-text")[0].focus();
+				  });
+				  gradio.getElementsByTagName("textarea")[0].value = videoURL;
+									
+				  var event = document.createEvent('Event');
+				  event.initEvent('input', true, false);
+				  gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
+        }
 		  });
     });
   }
@@ -449,8 +462,8 @@ function Recorder(cnvs, fps) {
       function recordFrames() {
 					if (k <= canvases.length) {
             if (k < canvases.length) {
-              if (k == 1) { rec.start(); }
               context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
+              if (k == 1) { rec.start(); }
             } else {
               context.clearRect(0, 0, canvases[0].width, canvases[0].height);
             }
@@ -475,21 +488,6 @@ function Recorder(cnvs, fps) {
         }
         canvases[0].style.display = 'block';
 	      recordFrames();
-                  /*gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
-									function(e) {
-										gradio.classList.remove('dark');
-										gradio.getElementsByTagName("button")[0].click();
-										gradio.getElementsByClassName("progress-text")[0].focus();
-								  });
-                  var durl = "";
-                  for (var i=0; i<th.length; i++) {
-                    durl += th[k].download + "\n";
-                  }
-									gradio.getElementsByTagName("textarea")[0].value = durl.slice(0,-1);
-									
-									var event = document.createEvent('Event');
-									event.initEvent('input', true, false);
-									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);*/
       });
 
       function copyDataUrl(e) {
