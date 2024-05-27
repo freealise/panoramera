@@ -289,7 +289,7 @@ function Recorder(cnvs, fps) {
   var videoStream = cnvs.captureStream(fps);
   var mediaRecorder = new MediaRecorder(videoStream);
 
-  var videoURL;
+  var videoURL, blobURL;
 
   var chunks = [];
   mediaRecorder.ondataavailable = function(e) {
@@ -308,6 +308,8 @@ function Recorder(cnvs, fps) {
       'type': 'video/mp4'
     });
     chunks = [];
+    blobURL = URL.createObjectURL(blob);
+    
     var myReader = new FileReader();
     myReader.readAsDataURL(blob);
     myReader.addEventListener("loadend", function(e) {
@@ -324,14 +326,18 @@ function Recorder(cnvs, fps) {
 				  }, { once: true });
 				}
         rec.download("filename.mp4");
-        if (gradio.getElementsByTagName("video")) {
-          gradio.getElementsByTagName("video")[1].src = videoURL;
-          gradio.getElementsByTagName("video")[1].addEventListener('canplaythrough', 
+        if (gradio.getElementsByTagName("textarea")) {
+          gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
             function(e) {
               gradio.classList.remove('dark');
 						  gradio.getElementsByTagName("button")[0].click();
 						  gradio.getElementsByClassName("progress-text")[0].focus();
           });
+          gradio.getElementsByTagName("textarea")[0].src = blobURL;
+          
+          var event = document.createEvent('Event');
+				  event.initEvent('input', true, false);
+				  gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
         }
 		  });
     });
