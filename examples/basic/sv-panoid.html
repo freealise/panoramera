@@ -125,7 +125,7 @@
       <div id="errorDiv"></div>
       <a href="#" id="loadLink"></a>
       <div id="map" class="display"></div>
-      <video id="seq" src="" muted controls class="display"></video>
+      <video id="seq" src="" width="320" height="240" muted controls class="display"></video>
       
       <div id="thumbnail" style="display:none;"></div>
       <canvas width="4096" height="2048" style="display:none;"></canvas>
@@ -447,7 +447,6 @@ function Recorder(cnvs, fps) {
       function recordFrames() {
 				k=1;
         canvases[0].style.display = 'block';
-        rec = new Recorder(canvases[0]);
 				intv = setInterval(function() {
 					if (k < canvases.length) {
             context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
@@ -455,7 +454,7 @@ function Recorder(cnvs, fps) {
 					} else {
 						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
 						clearInterval(intv);
-						setTimeout(rec.stop, 40);
+						rec.stop();
 						k=1;
             canvases[0].style.display = 'none';
 					}
@@ -517,7 +516,8 @@ function Recorder(cnvs, fps) {
 				xhttp.send();
       }
 
-      var intv, rec;
+      var intv;
+      var rec = new Recorder(canvas, 1);
       var th = [];
       var k=1;
       var j=0;
