@@ -452,7 +452,6 @@ function Recorder(cnvs, fps) {
 					} else {
             rec.stop();
 						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
-						clearInterval(intv);
 						k=1;
             canvases[0].style.display = 'none';
             rec.download("filename.mp4");
