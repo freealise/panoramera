@@ -460,7 +460,7 @@ function Recorder(cnvs, fps) {
             canvases[0].style.display = 'none';
             rec.download("filename.mp4");
 					}
-        }, 1000);
+        }, 10000);
         setTimeout(rec.start, 40);
       }
 
@@ -519,7 +519,7 @@ function Recorder(cnvs, fps) {
       }
 
       var intv;
-      var rec = new Recorder(canvas, 1);
+      var rec = new Recorder(canvas, 0.1);
       var th = [];
       var k=1;
       var j=0;
