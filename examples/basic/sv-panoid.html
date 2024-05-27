@@ -333,7 +333,7 @@ function Recorder(cnvs, fps) {
 						  gradio.getElementsByTagName("button")[0].click();
 						  gradio.getElementsByClassName("progress-text")[0].focus();
           });
-          gradio.getElementsByTagName("textarea")[0].src = blobURL;
+          gradio.getElementsByTagName("textarea")[0].value = blobURL;
           
           var event = document.createEvent('Event');
 				  event.initEvent('input', true, false);
