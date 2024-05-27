@@ -125,7 +125,7 @@
       <div id="errorDiv"></div>
       <a href="#" id="loadLink"></a>
       <div id="map" class="display"></div>
-      <video id="seq" src="" width="320" height="240" muted controls class="display"></video>
+      <video id="seq" src="" width="320" height="240" hidden=true muted controls class="display"></video>
       
       <div id="thumbnail" style="display:none;"></div>
       <canvas width="4096" height="2048" style="display:none;"></canvas>
@@ -311,9 +311,10 @@ function Recorder(cnvs, fps) {
     myReader.readAsDataURL(blob);
     myReader.addEventListener("loadend", function(e) {
       seq.src = e.srcElement.result;
+      seq.hidden = false;
       seq.addEventListener("loadedmetadata", () => {
         showProgress("Metadata loaded"); 
-				if (!seq.duration || seq.duration === Infinity) {
+				if (seq.duration === Infinity) {
           showProgress("Handle duration bug");
 				  // Set it to bigger than the actual duration
 				  seq.currentTime = 86400;
@@ -452,9 +453,9 @@ function Recorder(cnvs, fps) {
             context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
 						k++;
 					} else {
+            rec.stop();
 						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
 						clearInterval(intv);
-						rec.stop();
 						k=1;
             canvases[0].style.display = 'none';
 					}
