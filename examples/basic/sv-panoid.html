@@ -119,6 +119,7 @@
         <input type="button" id="DownloadImages" value="Download images"/>
         <a href="" id="DownloadLink"></a>
         <input type="button" id="DownloadVideo" value="Video slideshow"/>
+        <input type="checkbox" id="VideoThumbnail" value="thumbnail"/>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -268,6 +269,7 @@ window.initialize = initialize;
       var DownloadImages = document.getElementById("DownloadImages");
       var DownloadLink = document.getElementById("DownloadLink");
       var DownloadVideo = document.getElementById("DownloadVideo");
+      var VideoThumbnail = document.getElementById("VideoThumbnail");
 
       const gradio = document.getElementById("gradio");
       const canvas = document.getElementsByTagName("canvas")[0];
@@ -464,8 +466,13 @@ function Recorder(cnvs, fps) {
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
         k=1;
-        canvases[0].width = 320;
-        canvases[0].height = 240;
+        if (VideoThumbnail.checked) {
+          canvases[0].width = 2048;
+          canvases[0].height = 1024;
+        } else {
+          canvases[0].width = 4096;
+          canvases[0].height = 2048;
+        }
         canvases[0].style.display = 'block';
         rec.start();
 	      recordFrames();
