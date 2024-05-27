@@ -445,14 +445,10 @@ function Recorder(cnvs, fps) {
       }
 
       function recordFrames() {
-				k=1;
-        canvases[0].width = 320;
-        canvases[0].height = 240;
-        canvases[0].style.display = 'block';
-				intv = setInterval(function() {
 					if (k < canvases.length) {
             context.drawImage(th[k], 0, 0, canvases[0].width, canvases[0].height);
 						k++;
+            intv = setTimeout(recordFrames, 1000);
 					} else {
             rec.stop();
 						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
@@ -461,13 +457,16 @@ function Recorder(cnvs, fps) {
             canvases[0].style.display = 'none';
             rec.download("filename.mp4");
 					}
-        }, 1000);
-        setTimeout(rec.start, 40);
       }
 
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
-	      recordFrames();
+        k=1;
+        canvases[0].width = 320;
+        canvases[0].height = 240;
+        canvases[0].style.display = 'block';
+        setTimeout(rec.start, 40);
+	      intv = setTimeout(recordFrames, 40);
                   /*gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
 									function(e) {
 										gradio.classList.remove('dark');
