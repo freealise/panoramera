@@ -451,11 +451,13 @@ function Recorder(cnvs, fps) {
 						k++;
             intv = setTimeout(recordFrames, 1000);
 					} else {
-            rec.stop();
-						context.clearRect(0, 0, canvases[0].width, canvases[0].height);
-						k=1;
-            canvases[0].style.display = 'none';
-            rec.download("filename.mp4");
+            intv = setTimeout(function() {
+              rec.stop();
+						  context.clearRect(0, 0, canvases[0].width, canvases[0].height);
+						  k=1;
+              canvases[0].style.display = 'none';
+              //rec.download("filename.mp4");
+            }, 1);
 					}
       }
 
