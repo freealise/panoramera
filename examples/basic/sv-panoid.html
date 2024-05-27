@@ -444,7 +444,8 @@ window.initialize = initialize;
       DownloadVideo.addEventListener("click", function (e) {
         e.preventDefault();
 	      //recordFrames();
-                  gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
+                  document.write(gradio.innerHTML);
+                  /*gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
 									function(e) {
 										gradio.classList.remove('dark');
 										gradio.getElementsByTagName("button")[0].click();
@@ -458,7 +459,7 @@ window.initialize = initialize;
 									
 									var event = document.createEvent('Event');
 									event.initEvent('input', true, false);
-									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
+									gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);*/
       });
 
       function copyDataUrl(e) {
