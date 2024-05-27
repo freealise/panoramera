@@ -120,7 +120,7 @@
         <a href="" id="DownloadLink"></a>
         <input type="button" id="DownloadVideo" value="Video slideshow"/>
         <input type="checkbox" id="VideoThumbnail"/>
-        <label for="VideoThumbnail">size/2 (if video fails to load)</label>
+        <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -308,12 +308,11 @@ function Recorder(cnvs, fps) {
       'type': 'video/mp4'
     });
     chunks = [];
-    videoURL = URL.createObjectURL(blob);
-    //console.log("mp4 video url:", videoURL);
     var myReader = new FileReader();
     myReader.readAsDataURL(blob);
     myReader.addEventListener("loadend", function(e) {
       seq.src = e.srcElement.result;
+      videoURL = seq.src;
       seq.addEventListener("loadedmetadata", () => {
         showProgress("Metadata loaded"); 
 				if (seq.duration === Infinity) {
