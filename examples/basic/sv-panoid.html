@@ -327,18 +327,10 @@ function Recorder(cnvs, fps) {
 				}
         rec.download("filename.mp4");
         if (gradio.getElementsByTagName("textarea")) {
-          gradio.getElementsByTagName("textarea")[0].addEventListener('input', 
-            function(e) {
-              gradio.classList.remove('dark');
-						  //gradio.getElementsByTagName("button")[0].click();
-						  gradio.getElementsByClassName("progress-text")[0].focus();
-          });
           gradio.getElementsByTagName("textarea")[0].value = videoURL;
-          setTimeout(function() {
-            var event = document.createEvent('Event');
-				    event.initEvent('input', true, false);
-				    gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
-          }, 1000);
+          gradio.classList.remove('dark');
+          gradio.getElementsByTagName("button")[0].click();
+          gradio.getElementsByClassName("progress-text")[0].focus();
         }
 		  });
     });
