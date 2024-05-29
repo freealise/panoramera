@@ -120,7 +120,6 @@
         <input type="button" id="SlideshowVideo" value="Video slideshow"/>
         <input type="checkbox" id="VideoThumbnail"/>
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
-        <input type="button" id="DownloadVideo" value="Download video"/>
         <a href="" id="DownloadLink"></a>
       </form>
       <div id="progressDiv"></div>
@@ -271,7 +270,6 @@ window.initialize = initialize;
       var DownloadImages = document.getElementById("DownloadImages");
       var DownloadLink = document.getElementById("DownloadLink");
       var SlideshowVideo = document.getElementById("SlideshowVideo");
-      var DownloadVideo = document.getElementById("DownloadVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
 
       const canvas = document.getElementsByTagName("canvas")[0];
@@ -319,8 +317,8 @@ function Recorder(cnvs, fps) {
     chunks.push(e.data);
   }
 
-  function download(dataurl, filename) {
-    DownloadLink.href = dataurl;
+  function download(url, filename) {
+    DownloadLink.href = url;
     DownloadLink.download = filename;
     DownloadLink.innerText = "Download video";
     DownloadLink.click();
@@ -364,8 +362,8 @@ function Recorder(cnvs, fps) {
   this.resume = () => mediaRecorder.resume();
   this.getUrl = () => videoURL;
   this.download = (fileName) => {
-    if (videoURL != "")
-      download(videoURL, fileName)
+    if (blobURL != "")
+      download(blobURL, fileName)
   }
 }
 
@@ -501,11 +499,6 @@ function Recorder(cnvs, fps) {
         }
         canvases[0].style.display = 'block';
 	      recordFrames();
-      });
-      
-      DownloadVideo.addEventListener("click", function (e) {
-        e.preventDefault();
-        rec.download("filename.mp4");
       });
 
       function copyDataUrl(e) {
