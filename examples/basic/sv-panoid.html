@@ -118,7 +118,7 @@
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
         <input type="button" id="SlideshowVideo" value="Video slideshow"/>
-        <input type="checkbox" id="VideoThumbnail"/>
+        <input type="checkbox" id="VideoThumbnail" checked/>
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
         <a href="" id="DownloadLink"></a>
       </form>
@@ -133,9 +133,10 @@
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
-<div id="gr" class="display">
-  <video id="depth" src="" width="320" height="160" muted controls></video>
-</div>
+      <div id="gr" class="display">
+        <video id="depth" src="" width="320" height="160" muted controls></video>
+        <a href="" id="DepthLink"></a>
+      </div>
     </section>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM&loading=async&callback=initialize&v=weekly" defer="defer" async="async"></script>
@@ -269,6 +270,7 @@ window.initialize = initialize;
       var PanoIdForm = document.getElementById("PanoIdForm");
       var DownloadImages = document.getElementById("DownloadImages");
       var DownloadLink = document.getElementById("DownloadLink");
+      var DepthLink = document.getElementById("DepthLink");
       var SlideshowVideo = document.getElementById("SlideshowVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
 
@@ -297,9 +299,12 @@ async function loadDepth(blob) {
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
     depth.src = result.data[0].video.url;
-    showProgress("Depth map loaded");
+    depth.addEventListener("canplaythrough", () => {
+      rec.downloadDepth("depth_map_video.mp4");
+      showProgress("Depth map loaded");
+    });
   } catch (error) {
-    showError("Error: " + error);
+    showError(error);
   }
 }
 
@@ -322,6 +327,13 @@ function Recorder(cnvs, fps) {
     DownloadLink.download = filename;
     DownloadLink.innerText = "Download video";
     DownloadLink.click();
+  }
+  
+  function downloadDepth(url, filename) {
+    DepthLink.href = url;
+    DepthLink.download = filename;
+    DepthLink.innerText = "Download depth";
+    DepthLink.click();
   }
 
   mediaRecorder.onstop = function(e) {
@@ -346,7 +358,7 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        rec.download("filename.mp4");
+        rec.download("slideshow_video.mp4");
         loadDepth(blob);
 		  });
     });
