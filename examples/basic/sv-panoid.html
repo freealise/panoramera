@@ -78,7 +78,7 @@
       }
       #gr {
         width:320px;
-        height:160px;
+        height:180px;
       }
       .display {            
         position:fixed !important;
@@ -302,8 +302,16 @@ async function loadDepth(blob) {
 	  ]);
     depth.src = result.data[0].video.url;
     depth.addEventListener("canplaythrough", () => {
-      rec.downloadDepth("depth_map_video.mp4");
       showProgress("Depth map loaded");
+      if (depth.duration === Infinity) {
+				// Set it to bigger than the actual duration
+				depth.currentTime = 86400;
+				depth.addEventListener("timeupdate", () => {
+				  showProgress("Duration after workaround:", depth.duration);
+				  depth.currentTime = 0;
+				}, { once: true });
+		  }
+      rec.downloadDepth("depth_map_video.mp4");
     });
   } catch (error) {
     showError(error);
