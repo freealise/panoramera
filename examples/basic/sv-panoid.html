@@ -118,9 +118,10 @@
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
         <a href="" id="DownloadLink"></a>
-        <input type="button" id="DownloadVideo" value="Video slideshow"/>
+        <input type="button" id="SlideshowVideo" value="Video slideshow"/>
         <input type="checkbox" id="VideoThumbnail"/>
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
+        <input type="button" id="DownloadVideo" value="Download video"/>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -135,8 +136,6 @@
       <div id="canvasContainer"></div>
 <div id="gr" class="display">
   <video id="depth" src="" width="320" height="160" muted controls></video>
-  <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.29.0/gradio.js"></script>
-  <gradio-app src="https://freealise-depth-anything-video.hf.space" id="gradio" class="light"></gradio-app>
 </div>
     </section>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
@@ -271,10 +270,10 @@ window.initialize = initialize;
       var PanoIdForm = document.getElementById("PanoIdForm");
       var DownloadImages = document.getElementById("DownloadImages");
       var DownloadLink = document.getElementById("DownloadLink");
+      var SlideshowVideo = document.getElementById("SlideshowVideo");
       var DownloadVideo = document.getElementById("DownloadVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
 
-      const gradio = document.getElementById("gradio");
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
       const seq = document.getElementById("seq");
@@ -288,7 +287,9 @@ async function loadDepth(blob) {
   try {
     //const response = await fetch("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/examples/streetview.mp4");
     //const exampleVideo = await response.blob({ 'type': 'video/mp4' });
+    showProgress("Connecting to depth estimator..."); 
     const app = await Client.connect("freealise/Depth-Anything-Video");
+    showProgress("Calculating depth map, please wait..."); 
     const result = await app.predict("/on_submit", [
 				{
                   "type": 'video/mp4',
@@ -298,9 +299,9 @@ async function loadDepth(blob) {
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
     depth.src = result.data[0].video.url;
-    rec.download("filename.mp4");
-  } catch (error){
-    alert("Error: "+error);
+    showProgress("Depth map loaded");
+  } catch (error) {
+    showError("Error: " + error);
   }
 }
 
@@ -348,20 +349,6 @@ function Recorder(cnvs, fps) {
 				  }, { once: true });
 				}
         loadDepth(blob);
-        
-        /*if (gradio.getElementsByTagName("textarea")) {
-          gradio.getElementsByTagName("textarea")[0].addEventListener("input", function(e) {
-            gradio.classList.remove('dark');
-            gradio.getElementsByTagName("button")[0].click();
-            gradio.getElementsByClassName("progress-text")[0].focus();
-          });
-          gradio.getElementsByTagName("textarea")[0].style.display = 'none';
-          gradio.getElementsByTagName("textarea")[0].value = videoURL;
-          
-          var event = document.createEvent('Event');
-				  event.initEvent('input', true, false);
-				  gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
-        }*/
 		  });
     });
   }
@@ -501,7 +488,7 @@ function Recorder(cnvs, fps) {
 					}
       }
 
-      DownloadVideo.addEventListener("click", function (e) {
+      SlideshowVideo.addEventListener("click", function (e) {
         e.preventDefault();
         k=1;
         if (VideoThumbnail.checked) {
@@ -513,6 +500,11 @@ function Recorder(cnvs, fps) {
         }
         canvases[0].style.display = 'block';
 	      recordFrames();
+      });
+      
+      DownloadVideo.addEventListener("click", function (e) {
+        e.preventDefault();
+        rec.download("filename.mp4");
       });
 
       function copyDataUrl(e) {
