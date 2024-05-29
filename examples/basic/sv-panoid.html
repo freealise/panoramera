@@ -117,11 +117,11 @@
         <input type="text" id="PanoIdInput" placeholder="Place address"/>
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
-        <a href="" id="DownloadLink"></a>
         <input type="button" id="SlideshowVideo" value="Video slideshow"/>
         <input type="checkbox" id="VideoThumbnail"/>
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
         <input type="button" id="DownloadVideo" value="Download video"/>
+        <a href="" id="DownloadLink"></a>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -320,10 +320,10 @@ function Recorder(cnvs, fps) {
   }
 
   function download(dataurl, filename) {
-    const link = document.createElement("a");
-    link.href = dataurl;
-    link.download = filename;
-    link.click();
+    DownloadLink.href = dataurl;
+    DownloadLink.download = filename;
+    DownloadLink.innerText = "Download video";
+    DownloadLink.click();
   }
 
   mediaRecorder.onstop = function(e) {
@@ -348,6 +348,7 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
+        rec.download("filename.mp4");
         loadDepth(blob);
 		  });
     });
