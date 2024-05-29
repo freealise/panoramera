@@ -297,10 +297,10 @@ async function loadDepth(blob) {
                 }, 	// blob in 'Input Video' Video component		
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
-    return result.data[0].video.url;
+    depth.src = result.data[0].video.url;
+    rec.download("filename.mp4");
   } catch (error){
     alert("Error: "+error);
-    return "";  
   }
 }
 
@@ -347,8 +347,7 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        rec.download("filename.mp4");
-        depth.src = loadDepth(blob);
+        loadDepth(blob);
         
         /*if (gradio.getElementsByTagName("textarea")) {
           gradio.getElementsByTagName("textarea")[0].addEventListener("input", function(e) {
