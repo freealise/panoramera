@@ -346,6 +346,7 @@ function Recorder(cnvs, fps) {
     });
     chunks = [];
     blobURL = URL.createObjectURL(blob);
+    rec.download("slideshow_video.mp4");
     
     var myReader = new FileReader();
     myReader.readAsDataURL(blob);
@@ -362,7 +363,6 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        rec.download("slideshow_video.mp4");
         loadDepth(blob);
 		  });
     });
