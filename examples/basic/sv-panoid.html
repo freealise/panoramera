@@ -134,6 +134,7 @@
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
 <div id="gr" class="display">
+  <video id="depth" src="" width="320" height="160" muted controls class="display"></video>
   <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.29.0/gradio.js"></script>
   <gradio-app src="https://freealise-depth-anything-video.hf.space" id="gradio" class="light"></gradio-app>
 </div>
@@ -260,6 +261,7 @@ window.initialize = initialize;
       var srv = 'https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec';
       
       import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
+      import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client@0.19.4/dist/index.min.js";
 
       var messageDiv = document.getElementById("messageDiv");
       var errorDiv = document.getElementById("errorDiv");
@@ -276,11 +278,31 @@ window.initialize = initialize;
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
       const seq = document.getElementById("seq");
+      const depth = document.getElementById("depth");
       const thumbnail = document.getElementById("thumbnail");
       const frame = document.getElementById("frame");
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
-      
+
+async function loadDepth(blob) {
+  try {
+    //const response = await fetch("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/examples/streetview.mp4");
+    //const exampleVideo = await response.blob({ 'type': 'video/mp4' });
+    const app = await Client.connect("freealise/Depth-Anything-Video");
+    const result = await app.predict("/on_submit", [
+				{
+                  "type": 'video/mp4',
+                  "video": blob,
+                  "subtitles": null
+                }, 	// blob in 'Input Video' Video component		
+				"vits", // string  in 'Model Type' Dropdown component
+	  ]);
+    return result.data[0].video.url;
+  } catch (error){
+    alert("Error: "+error);
+    return "";  
+  }
+}
 
 function Recorder(cnvs, fps) {
   var fps = fps || 1;
@@ -326,7 +348,9 @@ function Recorder(cnvs, fps) {
 				  }, { once: true });
 				}
         rec.download("filename.mp4");
-        if (gradio.getElementsByTagName("textarea")) {
+        depth.src = await loadDepth(blob);
+        
+        /*if (gradio.getElementsByTagName("textarea")) {
           gradio.getElementsByTagName("textarea")[0].addEventListener("input", function(e) {
             gradio.classList.remove('dark');
             gradio.getElementsByTagName("button")[0].click();
@@ -338,7 +362,7 @@ function Recorder(cnvs, fps) {
           var event = document.createEvent('Event');
 				  event.initEvent('input', true, false);
 				  gradio.getElementsByTagName("textarea")[0].dispatchEvent(event);
-        }
+        }*/
 		  });
     });
   }
