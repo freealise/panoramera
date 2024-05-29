@@ -348,7 +348,7 @@ function Recorder(cnvs, fps) {
 				  }, { once: true });
 				}
         rec.download("filename.mp4");
-        depth.src = await loadDepth(blob);
+        depth.src = loadDepth(blob);
         
         /*if (gradio.getElementsByTagName("textarea")) {
           gradio.getElementsByTagName("textarea")[0].addEventListener("input", function(e) {
