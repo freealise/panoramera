@@ -100,16 +100,16 @@
         <a class="bookmarklet" href="#">Get StreetView ID</a>
 				<span><- Drag this to your bookmarks bar (or on mobile, tap on it and hold until the link to copy the URL shows up, copy it, then bookmark this page in the browser and tap and hold the saved bookmark to edit it and replace its URL with the link you just copied).</span><p/>
         Show<br/>
-        <input type="radio" id="display0" name="display" value="map"  onchange="toggleDisplay(this.value);"/>
+        <input type="radio" id="display0" name="display" value="map" onchange="toggleDisplay(this.value);"/>
         <label for="display0">map</label> - Move the map and click anywhere to see the panorama, then click the link to view it in Google Maps with timepoints. If on mobile, request the desktop version of the page from your browser. Click the bookmarklet to return to this page and load all the timepoints.<p/>
 
-        <input type="radio" id="display1" name="display" value="seq"  onchange="toggleDisplay(this.value);"/>
+        <input type="radio" id="display1" name="display" value="seq" onchange="toggleDisplay(this.value);"/>
         <label for="display1">video</label> - Once all the image thumbnails have been loaded, click any of them to copy the image to clipboard, right-click to download it, or the video slideshow button to combine them in a single file which can also be downloaded with the link in its bottom right corner.<p/>
 
-        <input type="radio" id="display2" name="display" value="gr"  onchange="toggleDisplay(this.value);"/>
+        <input type="radio" id="display2" name="display" value="gr" onchange="toggleDisplay(this.value);"/>
         <label for="display2">depth</label> - When the slideshow video is available, it is loaded automatically into the depth estimation AI which returns a map of how far each point of a photo is from the camera, also as a video. It should be used to enhance the focus of images and for parallax effect.<p/>
         
-        <input type="radio" id="display3" name="display" value="none"  onchange="toggleDisplay(this.value);" checked/>
+        <input type="radio" id="display3" name="display" value="none" onchange="toggleDisplay(this.value);" checked/>
         <label for="display3">none</label>
       </p>
       <!--3toTZ-zA0QH6HRfvol1QPA-->
@@ -147,6 +147,7 @@
     for (var i=0; i<document.getElementsByClassName('display').length; i++) {
       if (document.getElementsByClassName('display')[i].id == id) {
         document.getElementsByClassName('display')[i].style.display = 'block';
+        document.getElementById('display'+i).click();
       } else {
         document.getElementsByClassName('display')[i].style.display = 'none';
       }
@@ -311,10 +312,12 @@ async function loadDepth(blob) {
 				  depth.currentTime = 0;
 				}, { once: true });
 		  }
+      toggleDisplay(2);
       rec.downloadDepth("depth_map_video.mp4");
     });
   } catch (error) {
     showError(error);
+    toggleDisplay(2);
     document.getElementById('gradio').style.display = 'block';
     document.getElementById('gradio').focus();
   }
@@ -371,6 +374,7 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
+        toggleDisplay(1);
         loadDepth(blob);
 		  });
     });
