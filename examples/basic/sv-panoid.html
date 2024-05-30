@@ -95,8 +95,9 @@
       <h1>PanomNom.js Basic Usage</h1>
       <h2>GoogleStreetViewLoader.load</h2>
       <p>
-        This example shows how to set GoogleStreetViewLoader to load from a set of panorama ids.<p/>
-        <!-- fix 'download images' on mobile, load video into depth estimator -->
+        Loads Google Street View panorama timepoints from a set of ids out of the Google Maps interface.<br/>
+        You can also download 360° photospheres made by Google Maps users with a click on ⋮ and 'Report a problem'.
+        <p/>
         <a class="bookmarklet" href="#">Get StreetView ID</a>
 				<span><- Drag this to your bookmarks bar (or on mobile, tap on it and hold until the link to copy the URL shows up, copy it, then bookmark this page in the browser and tap and hold the saved bookmark to edit it and replace its URL with the link you just copied).</span><p/>
         Show<br/>
@@ -112,7 +113,10 @@
         <input type="radio" id="display3" name="display" value="none" onchange="toggleDisplay(this.value);" checked/>
         <label for="display3">none</label>
       </p>
-      <!--3toTZ-zA0QH6HRfvol1QPA-->
+      <!--
+      example pano id: 3toTZ-zA0QH6HRfvol1QPA
+      https://streetviewpixels-pa.googleapis.com/v1/tile - current endpoint
+      -->
       <form id="PanoIdForm">
         <input type="text" id="PanoIdInput" placeholder="Place address"/>
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
@@ -176,12 +180,8 @@ function processSVData({ data }) {
   
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
   // y=fov, h=theta, t=phi
+  //https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
   document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps";
-  
-//https://streetviewpixels-pa.googleapis.com/v1/tile - for panorama
-//https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
-//photosphere - download from report page
-
 }
     
 async function initialize() {
