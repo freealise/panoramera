@@ -285,6 +285,13 @@ window.initialize = initialize;
       const frame = document.getElementById("frame");
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
+      
+function downloadDepth(url, filename) {
+    DepthLink.href = url;
+    DepthLink.download = filename;
+    DepthLink.innerText = "Download depth";
+    DepthLink.click();
+}
 
 async function loadDepth(blob) {
   try {
@@ -303,7 +310,7 @@ async function loadDepth(blob) {
 	  ]);
     depth.src = result.data[0].video.url;
     showError(JSON.stringify(result.data));
-    rec.downloadDepth("depth_map_video.mp4");
+    downloadDepth("depth_map_video.mp4");
     
     depth.addEventListener("canplaythrough", () => {
       showProgress("Depth map loaded");
@@ -343,13 +350,6 @@ function Recorder(cnvs, fps) {
     DownloadLink.innerText = "Download video";
     DownloadLink.click();
   }
-  
-  function downloadDepth(url, filename) {
-    DepthLink.href = url;
-    DepthLink.download = filename;
-    DepthLink.innerText = "Download depth";
-    DepthLink.click();
-  }
 
   mediaRecorder.onstop = function(e) {
     var blob = new Blob(chunks, {
@@ -358,6 +358,7 @@ function Recorder(cnvs, fps) {
     chunks = [];
     blobURL = URL.createObjectURL(blob);
     rec.download("slideshow_video.mp4");
+    loadDepth(blob);
     
     var myReader = new FileReader();
     myReader.readAsDataURL(blob);
@@ -374,7 +375,6 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        loadDepth(blob);
 		  });
     });
   }
