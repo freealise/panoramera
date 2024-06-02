@@ -250,6 +250,13 @@ async function initialize() {
             pitch: 10,
           },
         );
+        panorama.addListener("position_changed", () => {
+            sv.getPanorama({ location: e.latLng, radius: 100, preference: google.maps.StreetViewPreference.NEAREST, source: google.maps.StreetViewSource.GOOGLE })
+							.then(processSVData)
+							.catch((error) =>
+								console.error(error),
+				    );
+        });
         //panorama.setVisible(true);
         google.maps.event.addListener(panorama, "closeclick", function(event) {
           document.getElementById('map').style.filter = 'invert(0)';
