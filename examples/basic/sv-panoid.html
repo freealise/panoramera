@@ -352,7 +352,7 @@ function Recorder(cnvs, fps) {
   }
 
   mediaRecorder.onstop = function(e) {
-    var blob = new Blob(chunks, {
+    blob = new Blob(chunks, {
       'type': 'video/mp4'
     });
     chunks = [];
@@ -365,7 +365,7 @@ function Recorder(cnvs, fps) {
       seq.src = e.srcElement.result;
       videoURL = seq.src;
       seq.addEventListener("canplaythrough", () => {
-        showProgress("Video loaded"); 
+        showProgress("Video loaded");
 				if (seq.duration === Infinity) {
 				  // Set it to bigger than the actual duration
 				  seq.currentTime = 86400;
@@ -374,9 +374,7 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        setTimeout(function(blob){
-          loadDepth(blob);
-        }, 40);
+        setTimeout(loadDepth, 40);
 		  });
     });
   }
@@ -564,7 +562,7 @@ function Recorder(cnvs, fps) {
 				xhttp.send();
       }
 
-      var intv;
+      var intv, blob;
       var rec = new Recorder(canvas, 1);
       var th = [];
       var k=1;
