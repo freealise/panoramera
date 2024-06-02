@@ -302,6 +302,9 @@ async function loadDepth(blob) {
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
     depth.src = result.data[0].video.url;
+    showError(JSON.stringify(result.data));
+    rec.downloadDepth("depth_map_video.mp4");
+    
     depth.addEventListener("canplaythrough", () => {
       showProgress("Depth map loaded");
       if (depth.duration === Infinity) {
@@ -312,12 +315,9 @@ async function loadDepth(blob) {
 				  depth.currentTime = 0;
 				}, { once: true });
 		  }
-      toggleDisplay(2);
-      rec.downloadDepth("depth_map_video.mp4");
     });
   } catch (error) {
     showError(error);
-    toggleDisplay(2);
     document.getElementById('gradio').style.display = 'block';
     document.getElementById('gradio').focus();
   }
@@ -374,7 +374,6 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        toggleDisplay(1);
         loadDepth(blob);
 		  });
     });
