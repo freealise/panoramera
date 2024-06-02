@@ -358,7 +358,6 @@ function Recorder(cnvs, fps) {
     chunks = [];
     blobURL = URL.createObjectURL(blob);
     rec.download("slideshow_video.mp4");
-    loadDepth(blob);
     
     var myReader = new FileReader();
     myReader.readAsDataURL(blob);
@@ -375,6 +374,9 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
+        setTimeout(function(blob){
+          loadDepth(blob);
+        }, 40);
 		  });
     });
   }
