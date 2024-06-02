@@ -250,7 +250,7 @@ async function initialize() {
             pitch: 10,
           },
         );
-        panorama.addListener("position_changed", () => {
+        google.maps.event.addListener(panorama, "position_changed", function(event) {
             sv.getPanorama({ location: e.latLng, radius: 100, preference: google.maps.StreetViewPreference.NEAREST, source: google.maps.StreetViewSource.GOOGLE })
 							.then(processSVData)
 							.catch((error) =>
