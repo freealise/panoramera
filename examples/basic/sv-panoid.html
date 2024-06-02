@@ -319,8 +319,8 @@ async function loadDepth() {
 				  depth.currentTime = 0;
 				}, { once: true });
 		  }
-      downloadDepth("depth_map_video.mp4");
-      showError(JSON.stringify(result));
+      downloadDepth(depth.src, "depth_map_video.mp4");
+      showError(JSON.stringify(result.data[1].url));
     });
   } catch (error) {
     showError(error);
