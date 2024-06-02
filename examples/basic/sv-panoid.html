@@ -309,9 +309,6 @@ async function loadDepth() {
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
     depth.src = result.data[0].video.url;
-    showError(result.data);
-    downloadDepth("depth_map_video.mp4");
-    
     depth.addEventListener("canplaythrough", () => {
       showProgress("Depth map loaded");
       if (depth.duration === Infinity) {
@@ -322,6 +319,8 @@ async function loadDepth() {
 				  depth.currentTime = 0;
 				}, { once: true });
 		  }
+      downloadDepth("depth_map_video.mp4");
+      showError(JSON.stringify(result));
     });
   } catch (error) {
     showError(error);
