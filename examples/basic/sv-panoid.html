@@ -251,8 +251,8 @@ async function initialize() {
           },
         );
         google.maps.event.addListener(panorama, "position_changed", function(event) {
-            document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+event.latLng.lat()+','+event.latLng.lng()+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
-            document.getElementById('loadLink').innerHTML = "<b>" + event.description + "</b><br/>View on Google Maps";
+            document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panorama.getPosition().lat()+','+panorama.getPosition().lng()+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panorama.getPano()+'!2e0!5s'+document.getElementById('loadLink').href.split('!2e0!5s')[1];
+            document.getElementById('loadLink').innerHTML = "<b>" + panorama.getLocation().description + "</b><br/>View on Google Maps";
         });
         //panorama.setVisible(true);
         google.maps.event.addListener(panorama, "closeclick", function(event) {
