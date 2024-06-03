@@ -159,24 +159,26 @@
   }
        
 var map, panorama, busMarker, panoDate, panoId, panoLat, panoLng;
-    
+
 function processSVData({ data }) {
   const location = data.location;
   busMarker.position = location.latLng;
   busMarker.title = location.description;
-  panorama.setPosition( location.latLng );
-  panorama.setVisible(!panorama.getVisible());
   panoDate = data.imageDate;
   panoId = location.pano;
   panoLat = location.latLng.lat();
   panoLng = location.latLng.lng();
 
-  panorama.setPano(location.pano);
-  panorama.setPov({
-    heading: 270,
-    pitch: 0,
-  });
-  document.getElementById('map').style.filter = 'invert(1)';
+  if (panorama.getVisible() === false) {
+    panorama.setPosition( location.latLng );
+    panorama.setVisible(!panorama.getVisible());
+    panorama.setPano(location.pano);
+    panorama.setPov({
+      heading: 270,
+      pitch: 0,
+    });
+    document.getElementById('map').style.filter = 'invert(1)';
+  }
   
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
   // y=fov, h=theta, t=phi
