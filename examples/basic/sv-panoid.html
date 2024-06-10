@@ -88,6 +88,12 @@
         overflow-y:scroll;
         display:none;
       }
+      #SvgLink {
+        display:inline-block;
+        width:4em;
+        height:1em;
+        overflow:scroll;
+      }
     </style>
   </head>
   <body>
@@ -125,7 +131,7 @@
         <input type="checkbox" id="VideoThumbnail" checked/>
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
         <a href="" id="DownloadLink"></a>
-        <a href="" id="SvgLink"></a>
+        <div id="SvgLink"></div>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -298,10 +304,7 @@ window.initialize = initialize;
       const ctxs = [];
       
 function downloadSvg(filename) {
-    SvgLink.href = svg;
-    SvgLink.download = filename;
-    SvgLink.innerText = "Download SVG";
-    SvgLink.click();
+    SvgLink.innerHTML = svg;
 }
       
 function downloadDepth(url, filename) {
