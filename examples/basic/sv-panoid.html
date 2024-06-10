@@ -91,8 +91,8 @@
       #SvgLink {
         display:inline-block;
         width:4em;
-        height:1em;
-        overflow:scroll;
+        height:4em;
+        overflow:hidden;
         border:1px solid lightgray;
       }
     </style>
@@ -306,6 +306,7 @@ window.initialize = initialize;
       
 function downloadSvg(filename) {
     SvgLink.innerHTML = svg;
+    document.body.innerText += '<br/>' + svg;
 }
       
 function downloadDepth(url, filename) {
