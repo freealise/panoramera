@@ -502,7 +502,6 @@ function Recorder(cnvs, fps) {
             showProgress("Loaded thumbnail "+k);
             k++;
             if (k < canvases.length) {
-              svg += '<image xlink:href="' + th[k].download + '" height="4096" width="2048" />';
 				      resizeFrame(); 
 					   } else {
 				      showProgress("Finished.");
@@ -513,8 +512,10 @@ function Recorder(cnvs, fps) {
               downloadSvg('frames_svg.svg');
 				    }
           }
-          th[k].download = canvases[k].toDataURL();
-          th[k].src = dataURLtoBlob( th[k].download );
+          var durl = canvases[k].toDataURL();
+          th[k].download = durl;
+          svg += '<image xlink:href="' + durl + '" height="4096" width="2048" />';
+          th[k].src = dataURLtoBlob( durl );
 				}
       }
 
