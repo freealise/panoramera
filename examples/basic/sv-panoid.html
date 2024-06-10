@@ -125,6 +125,7 @@
         <input type="checkbox" id="VideoThumbnail" checked/>
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
         <a href="" id="DownloadLink"></a>
+        <a href="" id="SvgLink"></a>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -283,6 +284,7 @@ window.initialize = initialize;
       var DownloadImages = document.getElementById("DownloadImages");
       var DownloadLink = document.getElementById("DownloadLink");
       var DepthLink = document.getElementById("DepthLink");
+      var SvgLink = document.getElementById("SvgLink");
       var SlideshowVideo = document.getElementById("SlideshowVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
 
@@ -294,6 +296,12 @@ window.initialize = initialize;
       const frame = document.getElementById("frame");
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
+      
+function downloadSvg(filename) {
+    SvgLink.href = svg;
+    SvgLink.download = filename;
+    SvgLink.innerText = "Download SVG";
+}
       
 function downloadDepth(url, filename) {
     DepthLink.href = url;
@@ -467,7 +475,10 @@ function Recorder(cnvs, fps) {
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
-        if (ids.length>0) { load(ids[0]); }
+        if (ids.length>0) {
+          svg = '<svg width="4096" height="2048" xmlns="http://www.w3.org/2000/svg">';
+          load(ids[0]);
+        }
       });
 
       function resizeFrame() {
@@ -491,12 +502,15 @@ function Recorder(cnvs, fps) {
             showProgress("Loaded thumbnail "+k);
             k++;
             if (k < canvases.length) {
+              svg += '<image href="' + th[k].download + '" height="4096" width="2048" />';
 				      resizeFrame(); 
 					   } else {
 				      showProgress("Finished.");
 				      k=1;
               thumbnail.style.display = 'block';
               frame.src = "";
+              svg += '</svg>';
+              downloadSvg('frames_svg.svg');
 				    }
           }
           th[k].download = canvases[k].toDataURL();
@@ -569,7 +583,7 @@ function Recorder(cnvs, fps) {
 				xhttp.send();
       }
 
-      var intv, blob;
+      var intv, blob, svg;
       var rec = new Recorder(canvas, 1);
       var th = [];
       var k=1;
