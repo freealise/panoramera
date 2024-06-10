@@ -301,6 +301,7 @@ function downloadSvg(filename) {
     SvgLink.href = svg;
     SvgLink.download = filename;
     SvgLink.innerText = "Download SVG";
+    SvgLink.click();
 }
       
 function downloadDepth(url, filename) {
@@ -510,6 +511,7 @@ function Recorder(cnvs, fps) {
               frame.src = "";
               svg += '</svg>';
               downloadSvg('frames_svg.svg');
+              durl = "";
 				    }
           }
           var durl = canvases[k].toDataURL();
