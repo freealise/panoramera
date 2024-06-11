@@ -132,7 +132,9 @@
         <input type="checkbox" id="VideoThumbnail" checked/>
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
         <a href="" id="DownloadLink"></a>
-        <div id="SvgLink"></div>
+        <div id="SvgLink">
+          <svg width="4096" height="2048" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"></svg>
+        </div>
       </form>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
@@ -292,6 +294,7 @@ window.initialize = initialize;
       var DownloadLink = document.getElementById("DownloadLink");
       var DepthLink = document.getElementById("DepthLink");
       var SvgLink = document.getElementById("SvgLink");
+      var svg = document.getElementsByTagName('svg')[0];
       var SlideshowVideo = document.getElementById("SlideshowVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
 
@@ -305,8 +308,6 @@ window.initialize = initialize;
       const ctxs = [];
       
 function downloadSvg(filename) {
-    SvgLink.innerHTML = svg;
-    document.body.innerText += '<br/>' + svg;
 }
       
 function downloadDepth(url, filename) {
@@ -482,7 +483,7 @@ function Recorder(cnvs, fps) {
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
         if (ids.length>0) {
-          svg = '<svg width="4096" height="2048" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">';
+          svg.innerHTML = '';
           load(ids[0]);
         }
       });
@@ -514,14 +515,17 @@ function Recorder(cnvs, fps) {
 				      k=1;
               thumbnail.style.display = 'block';
               frame.src = "";
-              svg += '</svg>';
               downloadSvg('frames_svg.svg');
               durl = "";
 				    }
           }
           var durl = canvases[k].toDataURL();
           th[k].download = durl;
-          svg += '<image xlink:href="' + durl + '" height="4096" width="2048" />';
+          var newElement = document.createElementNS("http://www.w3.org/2000/svg", 'image');
+          newElement.setAttribute("xlink:href", durl);
+          newElement.setAttribute("height", '2048');
+          newElement.setAttribute("width", '4096');
+          svg.appendChild(newElement);
           th[k].src = dataURLtoBlob( durl );
 				}
       }
@@ -591,7 +595,7 @@ function Recorder(cnvs, fps) {
 				xhttp.send();
       }
 
-      var intv, blob, svg;
+      var intv, blob;
       var rec = new Recorder(canvas, 1);
       var th = [];
       var k=1;
