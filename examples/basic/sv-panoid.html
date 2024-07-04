@@ -312,7 +312,6 @@ async function loadDepth() {
     showProgress("Connecting to depth estimator..."); 
     const app = await Client.connect("freealise/Depth-Anything-Video");
     showProgress("Calculating depth map, please wait..."); 
-    sblob = new Blob(["WEBVTT\n\n" + subs.value], {type: "text/vtt"});
     const result = await app.predict("/on_submit", [
 				{
                   "type": 'video/mp4',
@@ -320,6 +319,7 @@ async function loadDepth() {
                   "subtitles": sblob
                 }, 	// blob in 'Input Video' Video component		
 				"vits", // string  in 'Model Type' Dropdown component
+        subs.value
 	  ]);
     depth.src = result.data[0].video.url;
     depth.addEventListener("canplaythrough", () => {
@@ -581,7 +581,7 @@ function dataURLtoBlob(dataURL) {
 				xhttp.send();
       }
 
-      var intv, blob, sblob;
+      var intv, blob;
       var rec = new Recorder(canvas, 1);
       var th = [];
       var k=1;
