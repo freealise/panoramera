@@ -437,6 +437,7 @@ function Recorder(cnvs, fps) {
               loader.metadata.copyright +
               ".<br/>"
           );
+          alert(JSON.stringify(loader.metadata));
           stt += loader.metadata.location.latLng.lat + "," + loader.metadata.location.latLng.lat + "\n";
           j++;
           if (ids[j]) {
