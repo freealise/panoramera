@@ -316,7 +316,7 @@ async function loadDepth() {
 				{
                   "type": 'video/mp4',
                   "video": blob,
-                  "subtitles": dataURLtoBlob("data:text/vtt;base64," + btoa("WEBVTT\n\n" + subs.value))
+                  "subtitles": "data:text/vtt;base64," + btoa("WEBVTT\n\n" + subs.value)
                 }, 	// blob in 'Input Video' Video component		
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
