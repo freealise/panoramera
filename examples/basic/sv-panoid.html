@@ -319,7 +319,7 @@ async function loadDepth() {
                   "subtitles": null
                 }, 	// blob in 'Input Video' Video component		
 				        "vits", // string  in 'Model Type' Dropdown component
-                subs.value
+                subs.value.trim()
 	  ]);
     depth.src = result.data[0].video.url;
     depth.addEventListener("canplaythrough", () => {
@@ -439,7 +439,7 @@ function Recorder(cnvs, fps) {
               ".<br/>"
           );
           //alert(JSON.stringify(loader.metadata));
-          stt += loader.metadata.location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + "\n";
+          stt += loader.metadata.location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
           j++;
           if (ids[j]) {
             load(ids[j]);
