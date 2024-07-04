@@ -316,7 +316,7 @@ async function loadDepth() {
 				{
                   "type": 'video/mp4',
                   "video": blob,
-                  "subtitles": "data:text/vtt;base64," + btoa("WEBVTT\n\n" + subs.value)
+                  "subtitles": dataURLtoBlob("data:text/vtt;base64," + btoa("WEBVTT\n\n" + subs.value))
                 }, 	// blob in 'Input Video' Video component		
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
@@ -552,7 +552,7 @@ function Recorder(cnvs, fps) {
         showProgress("Copied image to clipboard.");
       }
       
-      function dataURLtoBlob(dataURL) {
+function dataURLtoBlob(dataURL) {
   // convert base64 to raw binary data held in a string
   // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
   var byteString = atob(dataURL.split(',')[1]);
@@ -568,8 +568,12 @@ function Recorder(cnvs, fps) {
   }
   // write the ArrayBuffer to a blob, and you're done
   var blob = new Blob([ab], {type: mimeString});
-  return URL.createObjectURL(blob);
-      }
+  if (mimeString.indexOf("mp4") > -1) {
+    return URL.createObjectURL(blob);
+  } else {
+    return blob;
+  }
+}
       
       function loadBookmarklet() {
         const xhttp = new XMLHttpRequest();
