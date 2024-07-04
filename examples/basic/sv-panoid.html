@@ -312,11 +312,12 @@ async function loadDepth() {
     showProgress("Connecting to depth estimator..."); 
     const app = await Client.connect("freealise/Depth-Anything-Video");
     showProgress("Calculating depth map, please wait..."); 
+    sblob = new Blob(["WEBVTT\n\n" + subs.value], {type: "text/vtt"});
     const result = await app.predict("/on_submit", [
 				{
                   "type": 'video/mp4',
                   "video": blob,
-                  "subtitles": dataURLtoBlob("data:text/vtt;base64," + btoa("WEBVTT\n\n" + subs.value))
+                  "subtitles": sblob
                 }, 	// blob in 'Input Video' Video component		
 				"vits", // string  in 'Model Type' Dropdown component
 	  ]);
@@ -568,11 +569,7 @@ function dataURLtoBlob(dataURL) {
   }
   // write the ArrayBuffer to a blob, and you're done
   var blob = new Blob([ab], {type: mimeString});
-  if (mimeString.indexOf("mp4") > -1) {
-    return URL.createObjectURL(blob);
-  } else {
-    return blob;
-  }
+  return URL.createObjectURL(blob);
 }
       
       function loadBookmarklet() {
@@ -584,7 +581,7 @@ function dataURLtoBlob(dataURL) {
 				xhttp.send();
       }
 
-      var intv, blob;
+      var intv, blob, sblob;
       var rec = new Recorder(canvas, 1);
       var th = [];
       var k=1;
