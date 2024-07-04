@@ -187,8 +187,6 @@ function processSVData({ data }) {
 }
     
 async function initialize() {
-  const sv = new google.maps.StreetViewService();
-  
   const pano = { lat: 50.0746800, lng: 14.4335700 };
   map = new google.maps.Map(document.getElementById("map"), {
     center: pano,
@@ -265,6 +263,7 @@ async function initialize() {
         });
 }
 
+const sv = new google.maps.StreetViewService();
 window.initialize = initialize;
 
     </script>
@@ -436,6 +435,7 @@ function Recorder(cnvs, fps) {
               loader.metadata.copyright +
               ".<br/>"
           );
+          alert(JSON.stringify(loader.metadata));
           j++;
           if (ids[j]) {
             load(ids[j]);
