@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>PanomNom.js Basic Usage</title>
+    <title>Panoramera Basic Usage</title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
     <link
       href="//fonts.googleapis.com/css?family=Averia+Sans+Libre:400,700,300"
@@ -126,6 +126,7 @@
         <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
         <a href="" id="DownloadLink"></a>
       </form>
+      <textarea id="subs"></textarea>
       <div id="progressDiv"></div>
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
@@ -286,6 +287,7 @@ window.initialize = initialize;
       var svg = document.getElementsByTagName('svg')[0];
       var SlideshowVideo = document.getElementById("SlideshowVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
+      var subs = document.getElementById("subs");
 
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
@@ -435,7 +437,7 @@ function Recorder(cnvs, fps) {
               loader.metadata.copyright +
               ".<br/>"
           );
-          alert(JSON.stringify(loader.metadata));
+          stt += loader.metadata.location.latLng.lat + "," + loader.metadata.location.latLng.lat + "\n";
           j++;
           if (ids[j]) {
             load(ids[j]);
@@ -502,6 +504,8 @@ function Recorder(cnvs, fps) {
               thumbnail.style.display = 'block';
               frame.src = "";
               durl = "";
+              subs.value = stt;
+              stt = "";
 				    }
           }
           var durl = canvases[k].toDataURL();
@@ -581,6 +585,7 @@ function Recorder(cnvs, fps) {
       var k=1;
       var j=0;
       var ids = [];
+      var stt = '';
       var idParam = document.location.href.split('ids=')[1];
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
