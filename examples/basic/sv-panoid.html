@@ -438,8 +438,8 @@ function Recorder(cnvs, fps) {
               loader.metadata.copyright +
               ".<br/>"
           );
-          alert(JSON.stringify(loader.metadata));
-          stt += loader.metadata.location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
+          //alert(JSON.stringify(loader.metadata));
+          stt.push(loader.metadata); //location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
           j++;
           if (ids[j]) {
             load(ids[j]);
@@ -506,8 +506,8 @@ function Recorder(cnvs, fps) {
               thumbnail.style.display = 'block';
               frame.src = "";
               durl = "";
-              subs.value = stt;
-              stt = "";
+              subs.value = JSON.stringify(stt);
+              stt = [];
 				    }
           }
           var durl = canvases[k].toDataURL();
@@ -587,7 +587,7 @@ function dataURLtoBlob(dataURL) {
       var k=1;
       var j=0;
       var ids = [];
-      var stt = '';
+      var stt = [];
       var idParam = document.location.href.split('ids=')[1];
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
