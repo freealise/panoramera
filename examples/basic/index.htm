@@ -82,6 +82,10 @@
                 // Our built-in 'ground' shape. Params: name, options, scene
                 var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 6, height: 6 }, scene);
                 scene.debugLayer.show();
+                try {
+                  alert(UtilityLayerRenderer.DefaultUtilityLayer); // for overlays like position/scale gizmos
+                  alert(UtilityLayerRenderer.DefaultKeepDepthUtilityLayer); // for occluded gizmos like bounding box)
+                } catch(e) {alert(e);}
                 return scene;
             }
         }
