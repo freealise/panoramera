@@ -71,19 +71,10 @@
                 var camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
-                // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-                var light = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(0, 1, 0), scene);
-                // Default intensity is 1. Let's dim the light a small amount
-                light.intensity = 0.7;
-                // Our built-in 'sphere' shape. Params: name, options, scene
-                var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2, segments: 32 }, scene);
-                // Move the sphere upward 1/2 its height
-                sphere.position.y = 1;
-                sphere.position.x = -10;
-                // Our built-in 'ground' shape. Params: name, options, scene
-                var ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 6, height: 6 }, scene);
-                ground.position.y = -1;
-                ground.position.x = 0;
+                
+                BABYLON.SceneLoader.Append("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/", "example.glb", scene, function (scene) {
+  // do something with the scene
+});
 
                 scene.debugLayer.show();
                 
@@ -116,7 +107,7 @@ window.scene = createScene();};
             engine.resize();
         });
     </script>
-<input type='number' id='fnum' value='0' style='position:absolute;bottom:0;right:0;'/>
+<input type='number' id='fnum' value='0' style='position:absolute;bottom:100px;right:0;'/>
 <input type='text' id='kbrd' style='position:absolute;bottom:0;left:0;height:128px;width:256px;user-select:none;touch-action:none;color:auto;background-color:transparent;border:1px solid gray;'/>
 <pre id='keymap' style='position:absolute;bottom:0;right:0;color:white;'>
 `  1  2  3  4  5  6  7  8  9  0  -  =  
@@ -147,8 +138,8 @@ document.getElementById('kbrd').addEventListener('pointerup', function(event){
 document.getElementById('kbrd').addEventListener('pointermove', function(event){
                 if (event.target.style.color!="auto" && BABYLON) {
                   event.preventDefault();
-                  if (BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotationQuaternion) {
-                    BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotationQuaternion = null;
+                  if (BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotationQuaternion) {
+                    BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotationQuaternion = null;
                   }
                   const dir = BABYLON.Engine.LastCreatedScene.activeCamera.getForwardRay().direction;
                   dir.y = 0; dir.normalize();
@@ -158,8 +149,8 @@ document.getElementById('kbrd').addEventListener('pointermove', function(event){
                   y_ = event.clientY-event.target.getBoundingClientRect().y-yold;
                   angle_ = Math.atan2(y_, x_);
                   r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.z += r * Math.sin(angle-angle_);
-                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.x += r * Math.cos(angle-angle_);
+                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
+                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
                   xold = event.clientX-event.target.getBoundingClientRect().x;
                   yold = event.clientY-event.target.getBoundingClientRect().y;
                 }
@@ -168,19 +159,19 @@ document.getElementById('kbrd').addEventListener('pointermove', function(event){
 document.getElementById('kbrd').addEventListener('keydown', function(event){
   if (BABYLON) {
     event.preventDefault();
-    if (BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotationQuaternion) {
-                    BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotationQuaternion = null;
+    if (BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotationQuaternion) {
+                    BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotationQuaternion = null;
     }
     const dir = BABYLON.Engine.LastCreatedScene.activeCamera.getForwardRay().direction;
     dir.y = 0; dir.normalize();
     const angle = BABYLON.Vector3.GetAngleBetweenVectors(dir, BABYLON.Vector3.Forward(), BABYLON.Vector3.Up());
     switch(event.key) {
                     case "w":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.y += 1;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y += 1;
                       event.target.value = "w ⬆ x";
                       break;
                     case "x":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.y -= 1;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y -= 1;
                       event.target.value = "w ⬇ x";
                       break;
                     case "a":
@@ -188,8 +179,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = 0;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
                       event.target.value = "a ⬅ d";
                       break;
                     case "d":
@@ -197,8 +188,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = 0;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
                       event.target.value = "a ➡ d";
                       break;
                     case "e":
@@ -206,8 +197,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = -1;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
                       event.target.value = "z ↗ e";
                       break;
                     case "z":
@@ -215,74 +206,74 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = 1;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
                       event.target.value = "z ↙ e";
                       break;
                     case "s":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.x = 0;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.y = 0;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].position.z = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z = 0;
                       event.target.value = "";
                       break;
                     case "t":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.z += Math.PI/256;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.z += Math.PI/256;
                       event.target.value = "t 🔃 b";
                       break;
                     case "b":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.z -= Math.PI/256;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.z -= Math.PI/256;
                       event.target.value = "t 🔃 b";
                       break;
                     case "f":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.y -= Math.PI/256;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y -= Math.PI/256;
                       event.target.value = "f 🔁 h";
                       break;
                     case "h":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.y += Math.PI/256;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y += Math.PI/256;
                       event.target.value = "f 🔁 h";
                       break;
                     case "y":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.x -= Math.PI/256;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.x -= Math.PI/256;
                       event.target.value = "v 🔄 y";
                       break;
                     case "v":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.x += Math.PI/256;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.x += Math.PI/256;
                       event.target.value = "v 🔄 y";
                       break;
                     case "g":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.x = 0;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.y = 0;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].rotation.z = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.x = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.z = 0;
                       event.target.value = "";
                       break;
                     case "i":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.y *= 256/255;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.y *= 256/255;
                       event.target.value = "i ↕ ,";
                       break;
                     case ",":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.y /= 256/255;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.y /= 256/255;
                       event.target.value = "i ↕ ,";
                       break;
                     case "j":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.z /= 256/255;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.z /= 256/255;
                       event.target.value = "j ↔ l";
                       break;
                     case "l":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.z *= 256/255;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.z *= 256/255;
                       event.target.value = "j ↔ l";
                       break;
                     case "o":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.x /= 256/255;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.x /= 256/255;
                       event.target.value = "m ⤢ o";
                       break;
                     case "m":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.x *= 256/255;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.x *= 256/255;
                       event.target.value = "m ⤢ o";
                       break;
                     case "k":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.x = 1;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.y = 1;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)+1].scaling.z = 1;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.x = 1;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.y = 1;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].scaling.z = 1;
                       event.target.value = "";
                       break;
                     default:
