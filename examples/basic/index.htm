@@ -174,7 +174,7 @@ window.scene = createScene();};
       <a id='move' href='#'>move</a>    <a id='rotate' href='#'>rotate</a>    <a id='scale' href='#'>scale</a>
 </pre>
 
-<a href='#' onclick='snapshot();'/>snapshot</a><br/><img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
+<a href='#' onclick='record_video();'/>record</a> <a href='#' onclick='snapshot();'/>snapshot</a><br/><img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'/>
 </div>
 <script>
@@ -395,6 +395,14 @@ BABYLON.Tools.CreateScreenshotUsingRenderTarget(BABYLON.Engine.LastCreatedScene.
                   // https://forum.babylonjs.com/t/best-way-to-save-to-jpeg-snapshots-of-scene/17663/11
                 }
           });
+}
+
+
+function record_video() {
+  if (BABYLON.VideoRecorder.IsSupported(engine)) {
+    var recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4' });
+    recorder.startRecording();
+  }
 }
             
 </script>
