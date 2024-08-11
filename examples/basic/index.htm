@@ -401,7 +401,7 @@ BABYLON.Tools.CreateScreenshotUsingRenderTarget(BABYLON.Engine.LastCreatedScene.
 function record_video() {
   if (BABYLON.VideoRecorder.IsSupported(engine)) {
     var recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4' });
-    recorder.startRecording();
+    recorder.startRecording('video.mp4');
   }
 }
             
