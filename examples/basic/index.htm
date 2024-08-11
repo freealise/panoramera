@@ -30,6 +30,7 @@
                 height: 100%;
                 margin: 0;
                 padding: 0;
+                user-select:none;
             }
             a {
               color: gray;
@@ -43,6 +44,30 @@
             #canvasZone {
                 width: 100%;
                 height: 100%;
+            }
+            #box {
+              position:absolute;
+              bottom:0;
+              left:0;
+              width:320px;
+              height:256px;
+              overflow:scroll;
+            }
+            input[type=range] {
+              width:128px;
+              height:1em;
+            }
+            label {
+              font-family:monospace;
+            }
+            #kbrd {
+              height:128px;
+              width:256px;
+              user-select:none;
+              touch-action:none;
+              color:auto;
+              background-color:transparent;
+              border:1px solid gray;
             }
         </style>
     </head>
@@ -62,6 +87,7 @@
         var engine = null;
         var scene = null;
         var sceneToRender = null;
+        var pipeline = null;
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
         class Playground {
             static CreateScene(engine, canvas) {
@@ -73,7 +99,32 @@
                 camera.attachControl(canvas, true);
                 
                 BABYLON.SceneLoader.Append("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/", "example.glb", scene, function (scene) {
-  // do something with the scene
+
+  scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
+
+  for (var i=0; i<scene.getNodes().length; i++) {
+    if (scene.getNodes()[i].material) {
+      scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/BABYLON.Engine.LastCreatedScene.activeCamera.fov));
+    }
+  }
+  pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
+  pipeline.samples = 4;
+  pipeline.imageProcessing.contrast = document.getElementById("contrast").value;
+  pipeline.imageProcessing.exposure = document.getElementById("exposure").value;
+
+  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
+  BABYLON.Engine.LastCreatedScene.activeCamera.fov = document.getElementById("zoom").value;
+    
+  document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0 + "px)";
+  document.getElementById("renderCanvas").oncontextmenu = function(e){e.preventDefault();}
+  document.getElementById("renderCanvas").ondrag = function(e){e.preventDefault();}
+              
+  document.getElementById("move").onclick = function(event) {
+                }
+  document.getElementById("rotate").onclick = function(event) {
+                }
+  document.getElementById("scale").onclick = function(event) {
+                }
 });
 
                 scene.debugLayer.show();
@@ -107,15 +158,25 @@ window.scene = createScene();};
             engine.resize();
         });
     </script>
-<input type='number' id='fnum' value='0' style='position:absolute;bottom:100px;right:0;'/>
-<input type='text' id='kbrd' style='position:absolute;bottom:0;left:0;height:128px;width:256px;user-select:none;touch-action:none;color:auto;background-color:transparent;border:1px solid gray;'/>
-<pre id='keymap' style='position:absolute;bottom:0;right:0;color:white;'>
+<div id='box'>
+<div><label for='zoom'>Zoom &nbsp; &nbsp;</label><input id='zoom' type='range' value='0.8' min='0.157' max='1.57' step='0.001'/><span>0.8</span></div>
+<div><label for='exposure'>Exposure</label><input id='exposure' type='range' value='0.5' min='0' max='2' step='0.001'/><span>0.5</span></div>
+<div><label for='contrast'>Contrast</label><input id='contrast' type='range' value='2.0' min='0' max='2' step='0.001'/><span>2.0</span></div>
+<a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a><br/>
+
+<input type='number' id='fnum' value='1'/><br/>
+<input type='text' id='kbrd'/><br/>
+<pre id='keymap' style='color:white;'>
 `  1  2  3  4  5  6  7  8  9  0  -  =  
        W  E     T  Y     I  O     {  }
      A-`S´-D  F-`G´-H  J-`K´-L  ;  '
       Z´ X̀     V´ B̀     M´ `,  .  /
       <a id='move' href='#'>move</a>    <a id='rotate' href='#'>rotate</a>    <a id='scale' href='#'>scale</a>
 </pre>
+
+<a href='#' onclick='snapshot();'/>snapshot</a><br/><img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
+<canvas id='cnv_out'/>
+</div>
 <script>
 
 var x_ = 0.0;
@@ -124,6 +185,7 @@ var angle_ = 0;
 var r = 0;
 var xold = 128;
 var yold = 64;
+var screenshot = false;
 
 document.getElementById('kbrd').addEventListener('pointerdown', function(event){
   xold = event.clientX-event.target.getBoundingClientRect().x;
@@ -281,6 +343,60 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                   }
   }
 });
+
+document.getElementById('zoom').addEventListener('input', function(event){
+try {
+              BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value));
+              BABYLON.Engine.LastCreatedScene.activeCamera.fov = event.target.value;
+              event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
+              document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0*Math.sqrt(2.0) + "px)";
+} catch(e) {alert(e)}
+});
+
+document.getElementById('exposure').addEventListener('input', function(event) {
+    pipeline.imageProcessing.exposure = event.target.value;
+    event.target.parentNode.childNodes[2].innerText = pipeline.imageProcessing.exposure;
+});
+
+document.getElementById('contrast').addEventListener('input', function(event) {
+    pipeline.imageProcessing.contrast = event.target.value;
+    event.target.parentNode.childNodes[2].innerText = pipeline.imageProcessing.contrast;
+});
+
+
+function reset_cam() {
+    BABYLON.Engine.LastCreatedScene.activeCamera.radius = 0;
+}
+
+
+function snapshot() {
+    screenshot = true;
+BABYLON.Engine.LastCreatedScene.getEngine().onEndFrameObservable.add(function() {
+    if (screenshot === true) {
+    screenshot = false;
+    try {
+BABYLON.Tools.CreateScreenshotUsingRenderTarget(BABYLON.Engine.LastCreatedScene.getEngine(), BABYLON.Engine.LastCreatedScene.activeCamera, 
+        { precision: 1.0 }, (durl) => { 
+             var cnvs = document.getElementById("renderCanvas"); //.getContext("webgl2");
+             var svgd = `<svg id="svg_out" viewBox="0 0 ` + cnvs.width + ` ` + cnvs.height + `" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                          <defs>
+                            <filter id="blur" x="0" y="0" xmlns="http://www.w3.org/2000/svg">
+                              <feGaussianBlur in="SourceGraphic" stdDeviation="` + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById('fnum').value)].material.pointSize/2.0*Math.sqrt(2.0) + `" />
+                            </filter>
+                          </defs>
+                          <image filter="url(#blur)" id="svg_img" x="0" y="0" width="` + cnvs.width + `" height="` + cnvs.height + `" xlink:href=\"` + durl + `\"/>
+                        </svg>`;
+                        document.getElementById("cnv_out").width = cnvs.width;
+                        document.getElementById("cnv_out").height = cnvs.height;
+                        document.getElementById("img_out").src = "data:image/svg+xml;base64," + btoa(svgd);        
+                      }
+                    );
+                  } catch(e) { alert(e); }
+                  // https://forum.babylonjs.com/t/best-way-to-save-to-jpeg-snapshots-of-scene/17663/11
+                }
+          });
+}
+            
 </script>
 </body>
 </html>
