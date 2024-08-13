@@ -88,6 +88,11 @@
         overflow-y:scroll;
         display:none;
       }
+      iframe {
+        width:320px;
+        height:256px;
+        overflow:scroll;
+      }
     </style>
   </head>
   <body>
@@ -110,8 +115,11 @@
         <input type="radio" id="display2" name="display" value="gr" onchange="toggleDisplay(this.value);"/>
         <label for="display2">depth</label> - When the slideshow video is available, it is loaded automatically into the depth estimation AI which returns a map of how far each point of a photo is from the camera, also as a video. It should be used to enhance the focus of images and for parallax effect.<p/>
         
-        <input type="radio" id="display3" name="display" value="none" onchange="toggleDisplay(this.value);" checked/>
-        <label for="display3">none</label>
+        <input type="radio" id="display3" name="display" value="3d" onchange="toggleDisplay(this.value);"/>
+        <label for="display3">model</label> - <p/>
+        
+        <input type="radio" id="display4" name="display" value="none" onchange="toggleDisplay(this.value);" checked/>
+        <label for="display4">none</label>
       </p>
       <!--
       example pano id: 3toTZ-zA0QH6HRfvol1QPA
@@ -157,10 +165,12 @@
         <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.31.5/gradio.js"></script>
         <gradio-app src="https://freealise-depth-anything-video.hf.space" id="gradio" style="display:none"></gradio-app>
       </div>
+      <iframe src='index.htm' class="display"></iframe>
     </section>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM&loading=async&callback=initialize&v=weekly" defer="defer" async="async"></script>
     <script>
+    
   function toggleDisplay(id) {
     for (var i=0; i<document.getElementsByClassName('display').length; i++) {
       if (document.getElementsByClassName('display')[i].id == id) {
