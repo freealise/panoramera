@@ -69,6 +69,11 @@
               background-color:transparent;
               border:1px solid gray;
             }
+            iframe {
+                width:320px;
+                height:256px;
+                overflow:scroll;
+            }
         </style>
     </head>
 <body>
@@ -104,7 +109,7 @@
 
   for (var i=0; i<scene.getNodes().length; i++) {
     if (scene.getNodes()[i].material) {
-      scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/BABYLON.Engine.LastCreatedScene.activeCamera.fov));
+      scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
     }
   }
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
@@ -112,9 +117,8 @@
   pipeline.imageProcessing.contrast = document.getElementById("contrast").value;
   pipeline.imageProcessing.exposure = document.getElementById("exposure").value;
 
-  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
   BABYLON.Engine.LastCreatedScene.activeCamera.fov = document.getElementById("zoom").value;
-    
+  
   document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0 + "px)";
   document.getElementById("renderCanvas").oncontextmenu = function(e){e.preventDefault();}
   document.getElementById("renderCanvas").ondrag = function(e){e.preventDefault();}
@@ -159,6 +163,7 @@ window.scene = createScene();};
         });
     </script>
 <div id='box'>
+<iframe src='sv-panoid.html'></iframe>
 <div><label for='zoom'>Zoom &nbsp; &nbsp;</label><input id='zoom' type='range' value='0.8' min='0.157' max='1.57' step='0.001'/><span>0.8</span></div>
 <div><label for='exposure'>Exposure</label><input id='exposure' type='range' value='0.5' min='0' max='2' step='0.001'/><span>0.5</span></div>
 <div><label for='contrast'>Contrast</label><input id='contrast' type='range' value='2.0' min='0' max='2' step='0.001'/><span>2.0</span></div>
