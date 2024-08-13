@@ -413,26 +413,32 @@ window.initialize = initialize;
       const ctxs = [];
       
 async function loadModel(app, result, num) {
-  try {
       var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'blob:'+result.data[3].background.url, true);
+      xhr.open('GET', result.data[3].background.url, true);
       xhr.responseType = 'blob';
       xhr.onload = async function(e) {
         if (this.status == 200) {
+          try {
           var blob = this.response;
           showProgress("...");
           var result = await app.predict("/get_mesh", [
-				        th[num+1].src,
-				        blob,
+                {
+                  "type": 'image/png',
+                  "image": th[num+1].src
+                },
+                {
+                  "type": 'image/png',
+                  "image": blob
+                },
                 blur_in.value.trim(),
                 true
 	        ]);
           showProgress(JSON.stringify(result.data));
           //showProgress("Complete.");
+          } catch(error) { showError(error); }
         }
       };
       xhr.send();
-  } catch(error) { showError(error); }
 }
       
 function downloadDepth(url, filename) {
