@@ -444,8 +444,8 @@ async function loadDepth() {
 				  depth.currentTime = 0;
 				}, { once: true });
 		  }
-      downloadDepth(result.data[1].url, "depth_frames.zip");
       alert(JSON.stringify(result.data));
+      downloadDepth(result.data[1].url, "depth_frames.zip");
       /*
       const mesh = await app.predict("/get_mesh", [
 				        result.data[2],
