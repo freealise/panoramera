@@ -247,7 +247,7 @@
     event.target.parentNode.childNodes[2].innerText = event.target.value;
   });
        
-var map, panorama, busMarker, panoDate, panoId, panoLat, panoLng;
+var sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng;
 
 function processSVData({ data }) {
   const location = data.location;
@@ -276,6 +276,7 @@ function processSVData({ data }) {
 }
     
 async function initialize() {
+  sv = new google.maps.StreetViewService();
   const pano = { lat: 50.0746800, lng: 14.4335700 };
   map = new google.maps.Map(document.getElementById("map"), {
     center: pano,
@@ -352,8 +353,6 @@ async function initialize() {
           document.getElementById('map').style.filter = 'invert(0)';
         });
 }
-
-const sv = new google.maps.StreetViewService();
 window.initialize = initialize;
 
     </script>
