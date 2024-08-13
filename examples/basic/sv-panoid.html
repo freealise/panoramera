@@ -420,7 +420,8 @@ async function loadModel(app, result, num) {
       xhr.onload = async function(e) {
         if (this.status == 200) {
           var blob = this.response;
-          result = await app.predict("/get_mesh", [
+          showProgress("...");
+          var result = await app.predict("/get_mesh", [
 				        th[num+1].src,
 				        blob,
                 blur_in.value.trim(),
