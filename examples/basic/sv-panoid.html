@@ -446,9 +446,9 @@ async function loadDepth() {
 				}, { once: true });
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
-      /*
-      showProgress("Loading 3D model, please wait..."); 
+      showProgress("Loading 3D model, please wait...");
       const model = document.getElementById("model").getElementsByTagName("iframe")[0];
+      try {
       model.onload = function(e) {
         var fnum = model.contentDocument.getElementById("fnum").value;
         const mesh = await app.predict("/get_mesh", [
@@ -459,7 +459,7 @@ async function loadDepth() {
 	      ]);
       }
       toggleDisplay("model");
-      */
+      } catch(e) {alert(e);}
     });
   } catch (error) {
     showError(error);
