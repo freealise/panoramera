@@ -188,9 +188,10 @@
     for (var i=0; i<document.getElementsByClassName('display').length; i++) {
       if (document.getElementsByClassName('display')[i].id == id) {
         document.getElementsByClassName('display')[i].style.display = 'block';
-        document.getElementById('display'+i).click();
+        document.getElementById('display'+i).checked = true;
       } else {
         document.getElementsByClassName('display')[i].style.display = 'none';
+        document.getElementById('display'+i).checked = false;
       }
     }
   }
@@ -444,15 +445,19 @@ async function loadDepth() {
 				  depth.currentTime = 0;
 				}, { once: true });
 		  }
-      alert(JSON.stringify(result.data));
       downloadDepth(result.data[1].url, "depth_frames.zip");
-      /*
-      const mesh = await app.predict("/get_mesh", [
-				        result.data[2],
-				        result.data[3],
+      showProgress("Loading 3D model, please wait..."); 
+      const model = document.getElementById("model").getElementsByTagName("iframe")[0];
+      model.onload = function(e) {
+        var fnum = model.contentDocument.getElementById("fnum").value;
+        const mesh = await app.predict("/get_mesh", [
+				        result.data[2][fnum].image.url,
+				        result.data[3][fnum].image.url,
                 blur_in.value.trim(),
                 true
-	    ]);*/
+	      ]);
+      };
+      toggleDisplay('model');
     });
   } catch (error) {
     showError(error);
