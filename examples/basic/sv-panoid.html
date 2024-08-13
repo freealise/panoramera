@@ -417,7 +417,7 @@ async function loadModel(app, result, num) {
       showProgress(JSON.stringify(result.data[3]));
       result = await app.predict("/get_mesh", [
 				        result.data[2][num].image.url,
-				        result.data[3][num].image.url,
+				        result.data[3].background.url,
                 blur_in.value.trim(),
                 true
 	    ]);
