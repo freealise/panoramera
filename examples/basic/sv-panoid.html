@@ -401,6 +401,7 @@ window.initialize = initialize;
       var VideoThumbnail = document.getElementById("VideoThumbnail");
       var subs = document.getElementById("subs");
       var blur_in = document.getElementById("blur_in");
+      var model = document.getElementById("model").getElementsByTagName("iframe")[0];
 
       const canvas = document.getElementsByTagName("canvas")[0];
       const context = canvas.getContext("2d", {willReadFrequently: true});
@@ -447,7 +448,6 @@ async function loadDepth() {
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
       showProgress("Loading 3D model, please wait...");
-      const model = document.getElementById("model").getElementsByTagName("iframe")[0];
       try {
       model.onload = function(e) {
         var fnum = model.contentDocument.getElementById("fnum").value;
@@ -457,7 +457,7 @@ async function loadDepth() {
                 blur_in.value.trim(),
                 true
 	      ]);
-      }
+      };
       toggleDisplay("model");
       } catch(e) {alert(e);}
     });
