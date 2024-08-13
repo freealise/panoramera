@@ -317,6 +317,7 @@ async function initialize() {
         georssLayer.setMap(map);
         
         map.addListener("click", (e) => {
+          console.log('!');
 						sv.getPanorama({ location: e.latLng, radius: 100, preference: google.maps.StreetViewPreference.NEAREST, source: google.maps.StreetViewSource.GOOGLE })
 							.then(processSVData)
 							.catch((error) =>
