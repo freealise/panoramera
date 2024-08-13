@@ -450,11 +450,11 @@ async function loadDepth() {
       showProgress("Loading 3D model, please wait...");
       toggleDisplay("model");
       var fnum = 0; //model.contentDocument.getElementById("fnum").value;
-      const mesh = await app.predict("/get_mesh", [
+      const result = await app.predict("/get_mesh", [
 				        result.data[2][fnum].image.url,
 				        result.data[3][fnum].image.url,
                 blur_in.value.trim(),
-                true
+                "true"
 	    ]);
     });
   } catch (error) {
