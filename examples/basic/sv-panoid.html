@@ -412,15 +412,7 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
       
-async function loadModel(app, result, num) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', result.data[3].background.url, true);
-      xhr.responseType = 'blob';
-      xhr.onload = async function(e) {
-        if (this.status == 200) {
-          try {
-          var blob = this.response;
-          showProgress("...");
+async function loadMesh(app, blob, num) {
           var result = await app.predict("/get_mesh", [
                 {
                   "type": 'image/png',
@@ -434,10 +426,19 @@ async function loadModel(app, result, num) {
                 true
 	        ]);
           showProgress(JSON.stringify(result.data));
+}
+      
+function loadModel(app, result, num) {
+      var xhr = new XMLHttpRequest();
+      xhr.responseType = 'blob';
+      xhr.onload = function(e) {
+        if (this.status == 200) {
+          showProgress(result.data[3].background.url);
+          loadMesh(app, this.response, num);
           //showProgress("Complete.");
-          } catch(error) { showError(error); }
         }
       };
+      xhr.open('GET', result.data[3].background.url, true);
       xhr.send();
 }
       
