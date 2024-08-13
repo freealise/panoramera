@@ -412,6 +412,16 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
       
+      model.addEventListener("load", function(e) {
+        var fnum = model.contentDocument.getElementById("fnum").value;
+        const mesh = await app.predict("/get_mesh", [
+				        result.data[2][fnum].image.url,
+				        result.data[3][fnum].image.url,
+                blur_in.value.trim(),
+                true
+	      ]);
+      });
+      
 function downloadDepth(url, filename) {
     DepthLink.href = url;
     DepthLink.download = filename;
@@ -448,15 +458,6 @@ async function loadDepth() {
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
       showProgress("Loading 3D model, please wait...");
-      /*model.onload = function(e) {
-        var fnum = model.contentDocument.getElementById("fnum").value;
-        const mesh = await app.predict("/get_mesh", [
-				        result.data[2][fnum].image.url,
-				        result.data[3][fnum].image.url,
-                blur_in.value.trim(),
-                true
-	      ]);
-      };*/
       toggleDisplay("model");
     });
   } catch (error) {
