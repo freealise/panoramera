@@ -412,7 +412,7 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
       
-async function loadModel(result, num) {
+async function loadModel(app, result, num) {
   try {
       result = await app.predict("/get_mesh", [
 				        result.data[2][num].image.url,
@@ -420,9 +420,9 @@ async function loadModel(result, num) {
                 blur_in.value.trim(),
                 true
 	    ]);
+      alert(JSON.stringify(result.data));
+      showProgress("Complete.");
   } catch(error) { showError(error); }
-  alert(JSON.stringify(result.data));
-  showProgress("Complete.");
 }
       
 function downloadDepth(url, filename) {
@@ -463,7 +463,7 @@ async function loadDepth() {
       showProgress("Loading 3D model, please wait...");
       toggleDisplay("model");
       //var fnum = model.contentDocument.getElementById("fnum").value;
-      loadModel(result, 0);
+      loadModel(app, result, 0);
     });
   } catch (error) {
     showError(error);
