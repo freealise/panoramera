@@ -417,7 +417,7 @@ async function loadModel(app, result, num) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'blob:'+result.data[3].background.url, true);
       xhr.responseType = 'blob';
-      xhr.onload = function(e) {
+      xhr.onload = async function(e) {
         if (this.status == 200) {
           var blob = this.response;
           result = await app.predict("/get_mesh", [
