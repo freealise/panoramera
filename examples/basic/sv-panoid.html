@@ -415,13 +415,14 @@ window.initialize = initialize;
 async function loadModel(result, num) {
   try {
       result = await app.predict("/get_mesh", [
-				        result.data[2][fnum].image.url,
-				        result.data[3][fnum].image.url,
+				        result.data[2][num].image.url,
+				        result.data[3][num].image.url,
                 blur_in.value.trim(),
-                "true"
+                true
 	    ]);
-  } catch(e) {alert(e);}
-  return result;
+  } catch(error) { showError(error); }
+  alert(JSON.stringify(result.data));
+  showProgress("Complete.");
 }
       
 function downloadDepth(url, filename) {
@@ -462,7 +463,7 @@ async function loadDepth() {
       showProgress("Loading 3D model, please wait...");
       toggleDisplay("model");
       //var fnum = model.contentDocument.getElementById("fnum").value;
-      alert(loadModel(result, 0));
+      loadModel(result, 0);
     });
   } catch (error) {
     showError(error);
