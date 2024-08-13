@@ -172,7 +172,7 @@
       </div>
       <div id="3d" class="display">
         <iframe src="index.htm"></iframe>
-        <a href='#' id='fullscreen' onclick='alert(this.parentNode.childNodes[0].style.width);const model=this.parentNode.childNodes[0];if(model.style.width!="100vw"){model.style.width="100vw";model.style.height="80vh";}else{model.style.width="320px";model.style.height="256px";}'>[+]</a>
+        <a href='#' id='fullscreen' onclick='try{alert(this.parentNode.childNodes[0].style.width);const model=this.parentNode.childNodes[0];if(model.style.width!="100vw"){model.style.width="100vw";model.style.height="80vh";}else{model.style.width="320px";model.style.height="256px";}}catch(e){alert(e);}'>[+]</a>
       </div>
     </section>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
