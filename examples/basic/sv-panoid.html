@@ -414,15 +414,23 @@ window.initialize = initialize;
       
 async function loadModel(app, result, num) {
   try {
-      showProgress(JSON.stringify(result.data[3]));
-      result = await app.predict("/get_mesh", [
-				        result.data[2][num].image.url,
-				        result.data[3].background.url,
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', 'blob:'+result.data[3].background.url, true);
+      xhr.responseType = 'blob';
+      xhr.onload = function(e) {
+        if (this.status == 200) {
+          var blob = this.response;
+          result = await app.predict("/get_mesh", [
+				        th[num+1].src,
+				        blob,
                 blur_in.value.trim(),
                 true
-	    ]);
-      showProgress(JSON.stringify(result.data));
-      //showProgress("Complete.");
+	        ]);
+          showProgress(JSON.stringify(result.data));
+          //showProgress("Complete.");
+        }
+      };
+      xhr.send();
   } catch(error) { showError(error); }
 }
       
