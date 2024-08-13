@@ -411,7 +411,8 @@ window.initialize = initialize;
       const frame = document.getElementById("frame");
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
-      
+
+      try {
       model.addEventListener("load", function(e) {
         var fnum = model.contentDocument.getElementById("fnum").value;
         const mesh = await app.predict("/get_mesh", [
@@ -421,6 +422,7 @@ window.initialize = initialize;
                 true
 	      ]);
       });
+      } catch(e) {alert(e);}
       
 function downloadDepth(url, filename) {
     DepthLink.href = url;
