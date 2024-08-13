@@ -708,7 +708,7 @@ function dataURLtoBlob(dataURL) {
       var j=0;
       var ids = [];
       var stt = [];
-      var idParam = document.location.href.split('ids=')[1];
+      var idParam = document.location.href.split('ids=')[1].replace('#', '');
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
       }
