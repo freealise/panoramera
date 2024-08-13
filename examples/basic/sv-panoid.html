@@ -412,7 +412,7 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
       
-function loadModel(result, num) {
+async function loadModel(result, num) {
   try {
       result = await app.predict("/get_mesh", [
 				        result.data[2][fnum].image.url,
