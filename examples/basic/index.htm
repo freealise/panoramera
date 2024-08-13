@@ -173,7 +173,7 @@ window.scene = createScene();};
       <a id='move' href='#'>move</a>    <a id='rotate' href='#'>rotate</a>    <a id='scale' href='#'>scale</a>
 </pre>
 
-<a href='#' onclick='record_video();'/>record</a> <a href='#' onclick='snapshot();'/>snapshot</a><br/><img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
+<a href='#' onclick='if(!scene.debugLayer.isVisible()){scene.debugLayer.show();}else{scene.debugLayer.hide();}'/>inspector</a> <a href='#' onclick='record_video();'/>record</a> <a href='#' onclick='snapshot();'/>snapshot</a><br/><img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'/>
 </div>
 <script>
