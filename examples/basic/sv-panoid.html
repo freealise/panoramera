@@ -451,8 +451,6 @@ async function loadDepth() {
     });
   } catch (error) {
     showError(error);
-    document.getElementById('gradio').style.display = 'block';
-    document.getElementById('gradio').focus();
   }
 }
 
@@ -500,7 +498,19 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        setTimeout(loadDepth, 40);
+        //setTimeout(loadDepth, 40);
+        toggleDisplay("gr");
+        document.getElementById('gradio').style.display = 'block';
+        document.getElementById('gradio').focus();
+        var intv = setInterval(function(){
+          if (document.getElementById("url") && document.getElementById("url").value) {
+            document.getElementById("url").value = blobURL;
+            var evt = document.createEvent("Event");
+            evt.initEvent("input", true, false);
+            document.getElementById("url").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+            clearInterval(intv);
+          }
+        }, 40);
 		  });
     });
   }
