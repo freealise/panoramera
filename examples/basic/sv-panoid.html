@@ -437,9 +437,9 @@ function loadModel(result, num) {
     showProgress("Loading...");
     context.drawImage(frame, 0, 0, canvas.width, canvas.height);
     loadMesh(num);
-  }
+  };
   frame.src = result.data[3].background.url;
-  showProgress(frame.src);
+  showProgress('Loading '+frame.src);
   } catch(error) {alert(error);}
 }
       
@@ -653,6 +653,7 @@ function Recorder(cnvs, fps) {
 				      k=1;
               thumbnail.style.display = 'block';
               frame.src = "";
+              frame.onload = null;
               durl = "";
               subs.value = JSON.stringify(stt);
               stt = [];
