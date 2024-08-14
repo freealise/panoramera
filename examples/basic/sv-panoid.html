@@ -438,10 +438,11 @@ function loadModel(result, num) {
     try {
     showProgress("Loading...");
     context.drawImage(depth_frame, 0, 0, canvas.width, canvas.height);
-    loadMesh(num);
+    //loadMesh(num);
     } catch(error) {alert(error);}
   }
-  depth_frame.src = encodeURIComponent(result.data[3].background.url);
+  var depth_url = ''+result.data[3].background.url;
+  depth_frame.src = depth_url;
   showProgress('|'+depth_frame.src+'|');
 }
       
