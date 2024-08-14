@@ -441,7 +441,7 @@ function loadModel(result, num) {
     loadMesh(num);
     } catch(error) {alert(error);}
   }
-  depth_frame.src = result.data[3].background.url;
+  depth_frame.src = JSON.stringify(result.data[3].background.url);
   showProgress(depth_frame.src);
 }
       
