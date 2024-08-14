@@ -429,17 +429,12 @@ async function loadMesh(app, blob, num) {
 }
       
 function loadModel(app, result, num) {
-      var xhr = new XMLHttpRequest();
-      xhr.responseType = 'blob';
-      xhr.onload = function(e) {
-        if (this.status == 200) {
-          showProgress(result.data[3].background.url);
-          loadMesh(app, this.response, num);
-          //showProgress("Complete.");
-        }
-      };
-      xhr.open('GET', result.data[3].background.url, true);
-      xhr.send();
+  frame.onload = function(e) {
+    context.drawImage(frame, 0, 0, canvas.width, canvas.height);
+    showProgress(result.data[3].background.url);
+    loadMesh(app, canvas.toDataURL(), num);
+  }
+  frame.src = result.data[3].background.url;
 }
       
 function downloadDepth(url, filename) {
