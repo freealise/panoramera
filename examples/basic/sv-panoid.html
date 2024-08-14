@@ -411,32 +411,28 @@ window.initialize = initialize;
       const frame = document.getElementById("frame");
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
-      
-async function loadMesh(app, blob, num) {
-          var result = await app.predict("/get_mesh", [
+           
+async function loadModel(app, result, num) {
+  try {
+  frame.onload = async function(e) {
+    showProgress("Loading 3D model, please wait...");
+    context.drawImage(frame, 0, 0, canvas.width, canvas.height);
+    var result = await app.predict("/get_mesh", [
                 {
                   "type": 'image/png',
                   "image": th[num+1].src
                 },
                 {
                   "type": 'image/png',
-                  "image": blob
+                  "image": dataURLtoBlob(canvas.toDataURL())
                 },
                 blur_in.value.trim(),
                 true
 	        ]);
           showProgress(JSON.stringify(result.data));
-}
-      
-function loadModel(app, result, num) {
-  try {
-  frame.onload = function(e) {
-    showProgress("Loading 3D model, please wait...");
-    context.drawImage(frame, 0, 0, canvas.width, canvas.height);
-    loadMesh(app, canvas.toDataURL(), num);
   }
-  showProgress(result.data[3].background.url);
   frame.src = result.data[3].background.url;
+  showProgress(frame.src);
   } catch(error) {alert(error);}
 }
       
