@@ -412,12 +412,11 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
            
-async function loadModel(app, result, num) {
-  try {
-  frame.onload = async function(e) {
-    showProgress("Loading 3D model, please wait...");
-    context.drawImage(frame, 0, 0, canvas.width, canvas.height);
-    var result = await app.predict("/get_mesh", [
+async function loadMesh(num) {
+  showProgress("Connecting to server..."); 
+  const app = await Client.connect("freealise/Depth-Anything-Video");
+  showProgress("Loading 3D model, please wait...");
+  const result = await app.predict("/get_mesh", [
                 {
                   "type": 'image/png',
                   "image": th[num+1].src
@@ -430,6 +429,14 @@ async function loadModel(app, result, num) {
                 true
 	        ]);
           showProgress(JSON.stringify(result.data));
+}
+          
+function loadModel(result, num) {
+  try {
+  frame.onload = function(e) {
+    showProgress("Loading...");
+    context.drawImage(frame, 0, 0, canvas.width, canvas.height);
+    loadMesh(num);
   }
   frame.src = result.data[3].background.url;
   showProgress(frame.src);
@@ -473,7 +480,7 @@ async function loadDepth() {
       downloadDepth(result.data[1].url, "depth_frames.zip");
       toggleDisplay("model");
       //var fnum = model.contentDocument.getElementById("fnum").value;
-      loadModel(app, result, 0);
+      loadModel(result, 0);
     });
   } catch (error) {
     showError(error);
