@@ -168,8 +168,8 @@
       <div id="thumbnail" style="display:none;"></div>
       <canvas width="4096" height="2048" style="display:none;"></canvas>
       <img src="" id="frame" width="4096" height="2048" style="display:none;" />
-      <img src="" id="depth_frame" width="4096" height="2048" style="display:none;" />
       <div id="canvasContainer"></div>
+      <img src="" id="depth_frame" width="4096" height="2048" />
       <div id="gr" class="display">
         <video id="depth" src="" width="320" height="160" muted controls></video>
         <a href="" id="DepthLink"></a>
@@ -434,15 +434,15 @@ async function loadMesh(num) {
 }
           
 function loadModel(result, num) {
-  try {
   depth_frame.onload = function(e) {
+    try {
     showProgress("Loading...");
     context.drawImage(depth_frame, 0, 0, canvas.width, canvas.height);
     loadMesh(num);
-  };
+    } catch(error) {alert(error);}
+  }
   depth_frame.src = result.data[3].background.url;
   showProgress(depth_frame.src);
-  } catch(error) {alert(error);}
 }
       
 function downloadDepth(url, filename) {
