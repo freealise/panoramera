@@ -429,12 +429,15 @@ async function loadMesh(app, blob, num) {
 }
       
 function loadModel(app, result, num) {
+  try {
   frame.onload = function(e) {
+    showProgress("Loading 3D model, please wait...");
     context.drawImage(frame, 0, 0, canvas.width, canvas.height);
-    showProgress(result.data[3].background.url);
     loadMesh(app, canvas.toDataURL(), num);
   }
+  showProgress(result.data[3].background.url);
   frame.src = result.data[3].background.url;
+  } catch(error) {alert(error);}
 }
       
 function downloadDepth(url, filename) {
@@ -472,7 +475,6 @@ async function loadDepth() {
 				}, { once: true });
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
-      showProgress("Loading 3D model, please wait...");
       toggleDisplay("model");
       //var fnum = model.contentDocument.getElementById("fnum").value;
       loadModel(app, result, 0);
