@@ -504,7 +504,7 @@ function Recorder(cnvs, fps) {
         document.getElementById('gradio').focus();
         var intv = setInterval(function(){
           try {
-          if (document.getElementById("url").getElementsByTagName("textarea")[0] && document.getElementById("url").getElementsByTagName("textarea")[0].value) {
+          if (document.getElementById("url") && document.getElementById("url").getElementsByTagName("textarea")[0] && document.getElementById("url").getElementsByTagName("textarea")[0].value) {
             document.getElementById("url").getElementsByTagName("textarea")[0].value = videoURL;
             var evt = document.createEvent("Event");
             evt.initEvent("input", true, false);
