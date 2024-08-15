@@ -447,11 +447,11 @@ async function loadDepth() {
 				}, { once: true });
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
-      document.getElementById("url_in").getElementsByTagName("textarea")[0].value = JSON.stringify(result.data);
+      document.getElementById("json_in").getElementsByTagName("textarea")[0].value = JSON.stringify(result.data);
       setTimeout(function(){
         var evt = document.createEvent("Event");
         evt.initEvent("input", true, false);
-        document.getElementById("url_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+        document.getElementById("json_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
       }, 40);
     });
   } catch (error) {
@@ -507,7 +507,7 @@ function Recorder(cnvs, fps) {
         document.getElementById('gradio').style.display = 'block';
         document.getElementById('gradio').focus();
         var intv = setInterval(function(){
-          if (document.getElementById("file_in")) {
+          if (document.getElementById("json_in")) {
             clearInterval(intv);
             setTimeout(loadDepth, 40);
           }
