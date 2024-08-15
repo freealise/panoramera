@@ -504,18 +504,13 @@ function Recorder(cnvs, fps) {
         document.getElementById('gradio').focus();
         var intv = setInterval(function(){
           try {
-          if (document.getElementById("file_in") && document.getElementById("file_in").getElementsByTagName("input")[0]) {
+          if (document.getElementById("file_in") && document.getElementById("file_in").getElementsByTagName("textarea")[0]) {
             clearInterval(intv);
-            
-            let file = new File([blob], "video.mp4",{type:"video/mp4", lastModified:new Date().getTime()});
-            let container = new DataTransfer();
-            container.items.add(file);
-            document.getElementById("file_in").getElementsByTagName("input")[0].files = container.files;
+            document.getElementById("file_in").getElementsByTagName("textarea")[0].value = videoURL;
             
             var evt = document.createEvent("Event");
-            evt.initEvent("change", true, false);
-            document.getElementById("file_in").getElementsByTagName("input")[0].dispatchEvent(evt);
-            alert('file uploaded');
+            evt.initEvent("input", true, false);
+            document.getElementById("file_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
           }
           } catch(e) {showError(e);}
         }, 40);
