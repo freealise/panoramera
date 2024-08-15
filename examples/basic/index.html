@@ -414,42 +414,34 @@ window.initialize = initialize;
       
       var app, imgUrl, dptUrl;
       
-      async function loadUrl(url) {
-        const xhttp = new XMLHttpRequest();
-        xhttp.responseType = "blob";
-				xhttp.onload = function() {
-          if (this.status === 200) {
-            alert(URL.createObjectURL(this.response));
-					  return this.response;
-          }
-        }
-				xhttp.open("GET", url);
-				xhttp.send();
-      }
-      
 async function loadModel() {
   try {
     //const response = await fetch("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/examples/streetview.mp4");
     //const exampleVideo = await response.blob({ 'type': 'video/mp4' });
     showProgress(imgUrl+' '+dptUrl);
-    const img = await loadUrl(imgUrl);
-    const dpt = await loadUrl(dptUrl);
-    //app = await Client.connect("freealise/Depth-Anything-Video");
-    showProgress("Loading 3D model, please wait...");
-    const result = await app.predict("/get_mesh", [
+    const blob_ = URL.getFromObjectURL( th[1].src );
+    frame.style.display = 'block';
+    frame.onload = function() {
+      context.drawImage(frame, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(function(b) { blob = b; }, "image/png", 1.0);
+      //app = await Client.connect("freealise/Depth-Anything-Video");
+      showProgress("Loading 3D model, please wait...");
+      const result = await app.predict("/get_mesh", [
                 {
                   "type": 'image/png',
-                  "image": img
+                  "image": blob_
                 },
                 {
                   "type": 'image/png',
-                  "image": dpt
+                  "image": blob
                 },
                 blur_in.value.trim(),
                 true
-	  ]);
-    showProgress(result.data);
-    toggleDisplay("model");
+	    ]);
+      showProgress(result.data);
+      toggleDisplay("model");
+    }
+    frame.src = dptUrl;
   } catch (error) {
     showError(error);
   }
