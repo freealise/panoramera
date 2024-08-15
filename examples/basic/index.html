@@ -461,7 +461,7 @@ function Recorder(cnvs, fps) {
   var videoStream = cnvs.captureStream(fps);
   var mediaRecorder = new MediaRecorder(videoStream);
 
-  var videoURL, blobURL;
+  var videoURL, blobURL, fileText;
 
   var chunks = [];
   mediaRecorder.ondataavailable = function(e) {
@@ -506,11 +506,15 @@ function Recorder(cnvs, fps) {
           try {
           if (document.getElementById("file_in") && document.getElementById("file_in").getElementsByTagName("textarea")[0]) {
             clearInterval(intv);
-            document.getElementById("file_in").getElementsByTagName("textarea")[0].value = videoURL;
+            myReader.readAsText(blob);
+            myReader.addEventListener("loadend", function(e) {
+              fileText = e.srcElement.result;
+              document.getElementById("file_in").getElementsByTagName("textarea")[0].value = fileText;
             
-            var evt = document.createEvent("Event");
-            evt.initEvent("input", true, false);
-            document.getElementById("file_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+              var evt = document.createEvent("Event");
+              evt.initEvent("input", true, false);
+              document.getElementById("file_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+            });
           }
           } catch(e) {showError(e);}
         }, 40);
