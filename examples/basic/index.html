@@ -447,15 +447,12 @@ async function loadDepth() {
 				}, { once: true });
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
-      var csv = "";
-      for (var i=0; i<result.data[2].length; i++) {
-        csv += result.data[2][i].image.url.split("=")[1] + ",";
-      }
-      document.getElementById("url_in").getElementsByTagName("textarea")[0].value = csv.slice(0,-1);
-      
-      var evt = document.createEvent("Event");
-      evt.initEvent("input", true, false);
-      document.getElementById("url_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+      document.getElementById("url_in").getElementsByTagName("textarea")[0].value = JSON.stringify(result.data);
+      setTimeout(function(){
+        var evt = document.createEvent("Event");
+        evt.initEvent("input", true, false);
+        document.getElementById("url_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+      }, 40);
     });
   } catch (error) {
     showError(error);
