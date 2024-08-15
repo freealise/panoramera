@@ -461,7 +461,7 @@ function Recorder(cnvs, fps) {
   var videoStream = cnvs.captureStream(fps);
   var mediaRecorder = new MediaRecorder(videoStream);
 
-  var videoURL, blobURL, fileText;
+  var videoURL, blobURL;
 
   var chunks = [];
   mediaRecorder.ondataavailable = function(e) {
@@ -498,7 +498,6 @@ function Recorder(cnvs, fps) {
 						seq.currentTime = 0;
 				  }, { once: true });
 				}
-        //setTimeout(loadDepth, 40);
         toggleDisplay("gr");
         document.getElementById('gradio').style.display = 'block';
         document.getElementById('gradio').focus();
@@ -506,15 +505,14 @@ function Recorder(cnvs, fps) {
           try {
           if (document.getElementById("file_in") && document.getElementById("file_in").getElementsByTagName("textarea")[0]) {
             clearInterval(intv);
-            myReader.readAsText(blob);
-            myReader.addEventListener("loadend", function(e) {
-              fileText = e.srcElement.result;
-              document.getElementById("file_in").getElementsByTagName("textarea")[0].value = fileText;
+            setTimeout(loadDepth, 40);
+            /*
+            document.getElementById("file_in").getElementsByTagName("textarea")[0].value = fileText;
             
-              var evt = document.createEvent("Event");
-              evt.initEvent("input", true, false);
-              document.getElementById("file_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
-            });
+            var evt = document.createEvent("Event");
+            evt.initEvent("input", true, false);
+            document.getElementById("file_in").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+            */
           }
           } catch(e) {showError(e);}
         }, 40);
