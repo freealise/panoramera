@@ -414,7 +414,7 @@ window.initialize = initialize;
       
       var app, imgUrl, dptUrl;
       
-      function loadUrl(url) {
+      async function loadUrl(url) {
         const xhttp = new XMLHttpRequest();
         xhttp.responseType = "blob";
 				xhttp.onload = function() {
