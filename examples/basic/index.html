@@ -510,14 +510,12 @@ function Recorder(cnvs, fps) {
             let file = new File([blob], "video.mp4",{type:"video/mp4", lastModified:new Date().getTime()});
             let container = new DataTransfer();
             container.items.add(file);
-
-            document.getElementById("file_in").getElementsByTagName("input")[0].onchange = function(e) {
-              alert('changed');
-              var evt = document.createEvent("Event");
-              evt.initEvent("input", true, false);
-              document.getElementById("file_in").getElementsByTagName("input")[0].dispatchEvent(evt);
-            }
             document.getElementById("file_in").getElementsByTagName("input")[0].files = container.files;
+            
+            var evt = document.createEvent("Event");
+            evt.initEvent("input", true, false);
+            document.getElementById("file_in").getElementsByTagName("input")[0].dispatchEvent(evt);
+            alert('file uploaded');
           }
           } catch(e) {showError(e);}
         }, 40);
