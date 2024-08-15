@@ -412,6 +412,25 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
       
+async function loadModel(result) {
+  try {
+    //const response = await fetch("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/examples/streetview.mp4");
+    //const exampleVideo = await response.blob({ 'type': 'video/mp4' });
+    showProgress("Connecting to server..."); 
+    const app = await Client.connect("freealise/Depth-Anything-Video");
+    showProgress("Loading 3D model, please wait..."); 
+    var result = await app.predict("/get_mesh", [
+				        result.data[2][0].image.url,
+				        result.data[3].background.url,
+                blur_in.value.trim(),
+                true
+	  ]);
+    showProgress(result.data);
+  } catch (error) {
+    showError(error);
+  }
+}
+      
 function downloadDepth(url, filename) {
     DepthLink.href = url;
     DepthLink.download = filename;
@@ -447,7 +466,8 @@ async function loadDepth() {
 				}, { once: true });
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
-      toggleDisplay("model");
+      toggleDisplay("gr");
+      loadModel(result);
     });
   } catch (error) {
     showError(error);
