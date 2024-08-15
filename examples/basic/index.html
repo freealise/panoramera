@@ -412,6 +412,8 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
       
+      var imgUrl, dptUrl;
+      
       function loadUrl(url) {
         const xhttp = new XMLHttpRequest();
         xhttp.responseType = "blob";
@@ -424,13 +426,13 @@ window.initialize = initialize;
 				xhttp.send();
       }
       
-async function loadModel(img, dpt) {
+async function loadModel() {
   try {
     //const response = await fetch("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/examples/streetview.mp4");
     //const exampleVideo = await response.blob({ 'type': 'video/mp4' });
-    showProgress(img+' '+dpt);
-    const img = await loadUrl(img);
-    const dpt = await loadUrl(dpt);
+    showProgress(imgUrl+' '+dptUrl);
+    const img = await loadUrl(imgUrl);
+    const dpt = await loadUrl(dptUrl);
     showProgress("Connecting to server..."); 
     const app = await Client.connect("freealise/Depth-Anything-Video");
     showProgress("Loading 3D model, please wait...");
@@ -483,7 +485,9 @@ async function loadDepth() {
 		  }
       downloadDepth(result.data[1].url, "depth_frames.zip");
       toggleDisplay("gr");
-      loadModel(result.data[2][0].image.url, result.data[3].background.url);
+      imgUrl = result.data[2][0].image.url;
+      dptUrl = result.data[3].background.url;
+      setTimeout(loadModel, 40);
     });
   } catch (error) {
     showError(error);
@@ -541,10 +545,9 @@ function Recorder(cnvs, fps) {
           try {
           if (document.getElementById("file_in")) {
             clearInterval(intv);
-            document.getElementById("file_in").focus();
             setTimeout(loadDepth, 40);
             /*
-            document.getElementById("file_in").getElementsByTagName("textarea")[0].value = fileText;
+            document.getElementById("file_in").getElementsByTagName("textarea")[0].value = videoURL;
             
             var evt = document.createEvent("Event");
             evt.initEvent("input", true, false);
