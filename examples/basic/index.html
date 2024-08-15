@@ -503,8 +503,9 @@ function Recorder(cnvs, fps) {
         document.getElementById('gradio').focus();
         var intv = setInterval(function(){
           try {
-          if (document.getElementById("file_in") && document.getElementById("file_in").getElementsByTagName("textarea")[0]) {
+          if (document.getElementById("file_in")) {
             clearInterval(intv);
+            document.getElementById("file_in").focus();
             setTimeout(loadDepth, 40);
             /*
             document.getElementById("file_in").getElementsByTagName("textarea")[0].value = fileText;
