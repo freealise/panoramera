@@ -412,20 +412,36 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
       
+      function loadUrl(url) {
+        const xhttp = new XMLHttpRequest();
+        xhttp.responseType = "blob";
+				xhttp.onload = function() {
+          if (this.status === 200) {
+					  return this.response;
+          }
+        }
+				xhttp.open("GET", url);
+				xhttp.send();
+      }
+      
 async function loadModel(result) {
   try {
     //const response = await fetch("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/examples/streetview.mp4");
     //const exampleVideo = await response.blob({ 'type': 'video/mp4' });
+    showProgress(result.data[2][0].image.url+'<br/>'+result.data[3].background.url);
+    const img = await loadUrl(result.data[2][0].image.url);
+    const depth = await loadUrl(result.data[3].background.url);
     showProgress("Connecting to server..."); 
     const app = await Client.connect("freealise/Depth-Anything-Video");
-    showProgress("Loading 3D model, please wait..."); 
+    showProgress("Loading 3D model, please wait...");
     var result = await app.predict("/get_mesh", [
-				        result.data[2][0].image.url,
-				        result.data[3].background.url,
+				        img,
+				        depth,
                 blur_in.value.trim(),
                 true
 	  ]);
     showProgress(result.data);
+    toggleDisplay("model");
   } catch (error) {
     showError(error);
   }
