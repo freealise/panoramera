@@ -419,6 +419,7 @@ window.initialize = initialize;
         xhttp.responseType = "blob";
 				xhttp.onload = function() {
           if (this.status === 200) {
+            alert(URL.createObjectURL(this.response));
 					  return this.response;
           }
         }
@@ -436,8 +437,14 @@ async function loadModel() {
     //app = await Client.connect("freealise/Depth-Anything-Video");
     showProgress("Loading 3D model, please wait...");
     const result = await app.predict("/get_mesh", [
-				        img,
-				        dpt,
+                {
+                  "type": 'image/png',
+                  "image": img
+                },
+                {
+                  "type": 'image/png',
+                  "image": dpt
+                },
                 blur_in.value.trim(),
                 true
 	  ]);
