@@ -503,17 +503,24 @@ function Recorder(cnvs, fps) {
         document.getElementById('gradio').style.display = 'block';
         document.getElementById('gradio').focus();
         var intv = setInterval(function(){
-          if (document.getElementById("url") && document.getElementById("url").getElementsByTagName("textarea")[0] && document.getElementById("url").getElementsByTagName("textarea")[0].value) {
+          try {
+          if (document.getElementById("file_in") && document.getElementById("file_in").getElementsByTagName("input")[0]) {
             clearInterval(intv);
-            document.getElementById("url").getElementsByTagName("textarea")[0].onchange = function(e) {
+            
+            let file = new File([blob], "video.mp4",{type:"video/mp4", lastModified:new Date().getTime()});
+            let container = new DataTransfer();
+            container.items.add(file);
+
+            document.getElementById("file_in").getElementsByTagName("input")[0].onchange = function(e) {
               alert('changed');
               var evt = document.createEvent("Event");
               evt.initEvent("input", true, false);
-              document.getElementById("url").getElementsByTagName("textarea")[0].dispatchEvent(evt);
+              document.getElementById("file_in").getElementsByTagName("input")[0].dispatchEvent(evt);
             }
-            document.getElementById("url").getElementsByTagName("textarea")[0].value = videoURL;
+            document.getElementById("file_in").getElementsByTagName("input")[0].files = container.files;
           }
-        }, 200);
+          } catch(e) {showError(e);}
+        }, 40);
 		  });
     });
   }
