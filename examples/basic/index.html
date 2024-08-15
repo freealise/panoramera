@@ -513,7 +513,7 @@ function Recorder(cnvs, fps) {
             document.getElementById("file_in").getElementsByTagName("input")[0].files = container.files;
             
             var evt = document.createEvent("Event");
-            evt.initEvent("input", true, false);
+            evt.initEvent("change", true, false);
             document.getElementById("file_in").getElementsByTagName("input")[0].dispatchEvent(evt);
             alert('file uploaded');
           }
