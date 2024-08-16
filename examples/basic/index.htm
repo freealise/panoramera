@@ -109,8 +109,9 @@
                 
                 if (location.href.split("?url=")[1]) {
                     var url = location.href.split("?url=")[1];
+                    alert(url);
                     var fln = url.slice(url.lastIndexOf("/")+1);
-                    var path = url.slice(0, url.lastIndexOf("/")+1); 
+                    var path = "https://freealise-depth-anything-video.hf.space/file=" + url.slice(0, url.lastIndexOf("/")+1); 
                 } else {
                     var fln = "example.glb";
                     var path = "https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/"; 
