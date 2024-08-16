@@ -643,12 +643,16 @@ function Recorder(cnvs, fps) {
       }
 
       function recordFrames() {
-					if (k < canvases.length-1) {
+					if (k < canvases.length) {
             if (k == 1) { rec.start(); }
             videoStream.getVideoTracks()[0].requestFrame();
             k++;
-            context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
-            setTimeout(recordFrames, 1000);
+            if (k < canvases.length) {
+              setTimeout(function() {
+                context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
+              }, 40);
+              setTimeout(recordFrames, 1000);
+            }
 				  } else {
             rec.stop();
             context.clearRect(0, 0, canvas.width, canvas.height);
