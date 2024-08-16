@@ -643,7 +643,7 @@ function Recorder(cnvs, fps) {
       }
 
       function recordFrames() {
-					if (k < canvases.length) {
+					if (k < canvases.length-1) {
             if (k == 1) { rec.start(); }
             videoStream.getVideoTracks()[0].requestFrame();
             k++;
