@@ -107,7 +107,16 @@
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
                 
-                BABYLON.SceneLoader.Append("https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/", "example.glb", scene, function (scene) {
+                if (location.href.split("?url=")[1]) {
+                    var url = location.href.split("?url=")[1];
+                    var fln = url.slice(url.lastIndexOf("/")+1);
+                    var path = url.slice(0, url.lastIndexOf("/")+1); 
+                } else {
+                    var fln = "example.glb";
+                    var path = "https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/"; 
+                }
+
+BABYLON.SceneLoader.Append(path, fln, scene, function (scene) {
 
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
 
