@@ -463,7 +463,7 @@ function Recorder(cnvs, fps) {
   var fps = fps || 1;
   var ctx = cnvs.getContext("2d");
 
-  videoStream = cnvs.captureStream();
+  videoStream = cnvs.captureStream(); //0
   var mediaRecorder = new MediaRecorder(videoStream);
 
   var videoURL, blobURL;
@@ -647,8 +647,8 @@ function Recorder(cnvs, fps) {
             if (k == 1) { rec.start(); }
             context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
             //videoStream.getVideoTracks()[0].requestFrame();
-            k++;
             setTimeout(function() {
+              k++;
               requestAnimationFrame(recordFrames);
             }, 40);
 				  } else {
