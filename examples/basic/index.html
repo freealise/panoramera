@@ -645,14 +645,10 @@ function Recorder(cnvs, fps) {
       function recordFrames() {
 					if (k < canvases.length) {
             if (k == 1) { rec.start(); }
+            context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
             videoStream.getVideoTracks()[0].requestFrame();
             k++;
-            if (k < canvases.length) {
-              setTimeout(function() {
-                context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
-              }, 40);
-              setTimeout(recordFrames, 1000);
-            }
+            requestAnimationFrame(recordFrames);
 				  } else {
             rec.stop();
             context.clearRect(0, 0, canvas.width, canvas.height);
@@ -672,8 +668,7 @@ function Recorder(cnvs, fps) {
           canvases[0].height = 2048;
         }
         canvases[0].style.display = 'block';
-        context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
-	      setTimeout(recordFrames, 1000);
+	      requestAnimationFrame(recordFrames);
       });
 
       function copyDataUrl(e) {
