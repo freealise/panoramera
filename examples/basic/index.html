@@ -646,7 +646,9 @@ function Recorder(cnvs, fps) {
 					if (k < canvases.length) {
             if (k == 1) { rec.start(); }
             context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
-            setTimeout(videoStream.getVideoTracks()[0].requestFrame, 40);
+            setTimeout(function() {
+              videoStream.getVideoTracks()[0].requestFrame();
+            }, 40);
 						k++;
             setTimeout(recordFrames, 1000);
 				  } else {
