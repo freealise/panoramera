@@ -648,7 +648,9 @@ function Recorder(cnvs, fps) {
             context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
             //videoStream.getVideoTracks()[0].requestFrame();
             k++;
-            requestAnimationFrame(recordFrames);
+            setTimeout(function() {
+              requestAnimationFrame(recordFrames);
+            }, 40);
 				  } else {
             rec.stop();
             context.clearRect(0, 0, canvas.width, canvas.height);
