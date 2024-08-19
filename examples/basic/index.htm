@@ -121,10 +121,14 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("order").value);
+  
+  const axes = new BABYLON.Debug.AxesViewer(scene, 10);
+  const l_axes = new BABYLON.Debug.AxesViewer(scene, 5);
 
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
     if (scene.getNodes()[i].material) {
+      l_axes.parent = scene.getNodes()[i];
       scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
       scene.getNodes()[i].position.z = coords[parseInt(order[j])].lat;
       scene.getNodes()[i].position.x = coords[parseInt(order[j])].lng;
