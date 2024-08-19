@@ -107,6 +107,7 @@
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
                 
+                alert(location.href);
                 if (location.href.split("&file=")[1]) {
                     var coords = decodeURIComponent(location.href.split("&file=")[0].split("&c=")[1]);
                     var order = decodeURIComponent(location.href.split("&c=")[0].split("?o=")[1]);
