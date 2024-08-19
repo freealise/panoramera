@@ -107,14 +107,17 @@
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
                 
-                if (location.href.split("?file=")[1]) {
-                    var path = location.href.split("?file=")[1];
+                if (location.href.split("&file=")[1]) {
+                    var coords = decodeURIComponent(location.href.split("&file=")[0].split("?c=")[1]);
+                    var path = location.href.split("&file=")[1];
                     var fln = path.slice(path.lastIndexOf("/")+1);
                     var url = "https://freealise-depth-anything-video.hf.space/file=" + path.slice(0, path.lastIndexOf("/")+1); 
                 } else {
+                    var coords = "{}";
                     var fln = "example.glb";
                     var url = "https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/"; 
                 }
+                alert(coords);
 
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 
