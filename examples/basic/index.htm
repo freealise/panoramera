@@ -122,13 +122,15 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("order").value);
   
-  const axes = new BABYLON.Debug.AxesViewer(scene, 10);
-  const l_axes = new BABYLON.Debug.AxesViewer(scene, 5);
+  var axes = new BABYLON.Debug.AxesViewer(scene, 512);
+  var l_axes = new BABYLON.Debug.AxesViewer(scene, 256);
 
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
     if (scene.getNodes()[i].material) {
-      l_axes.parent = scene.getNodes()[i];
+      l_axes.xAxis.parent = scene.getNodes()[i];
+      l_axes.yAxis.parent = scene.getNodes()[i];
+      l_axes.zAxis.parent = scene.getNodes()[i];
       scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
       scene.getNodes()[i].position.z = coords[parseInt(order[j])].lat;
       scene.getNodes()[i].position.x = coords[parseInt(order[j])].lng;
