@@ -122,8 +122,8 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
   
-  var axes = new BABYLON.Debug.AxesViewer(scene, 256);
-  var l_axes = new BABYLON.Debug.AxesViewer(scene, 128);
+  var axes = new BABYLON.Debug.AxesViewer(scene, 10);
+  var l_axes = new BABYLON.Debug.AxesViewer(scene, 5);
 
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
