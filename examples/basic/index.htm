@@ -134,7 +134,8 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
       j++;
     }
   }
-  var l_axes = new BABYLON.Debug.AxesViewer(scene, 255);
+  var axes = new BABYLON.Debug.AxesViewer(scene, 32);
+  var l_axes = new BABYLON.Debug.AxesViewer(scene, 16);
   l_axes.xAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
   l_axes.yAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
   l_axes.zAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
