@@ -122,12 +122,13 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("order").value);
   
-  var axes = new BABYLON.Debug.AxesViewer(scene, 512);
-  var l_axes = new BABYLON.Debug.AxesViewer(scene, 256);
+  var axes = new BABYLON.Debug.AxesViewer(scene, 256);
+  var l_axes = new BABYLON.Debug.AxesViewer(scene, 128);
 
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
     if (scene.getNodes()[i].material) {
+      scene.getNodes()[i].rotationQuaternion = null;
       l_axes.xAxis.parent = scene.getNodes()[i];
       l_axes.yAxis.parent = scene.getNodes()[i];
       l_axes.zAxis.parent = scene.getNodes()[i];
