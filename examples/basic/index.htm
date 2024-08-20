@@ -120,8 +120,8 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
-  
-  var l_axes = new BABYLON.Debug.AxesViewer(scene, 16);
+  try {
+  const l_axes = new BABYLON.Debug.AxesViewer(scene, 1);
 
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
@@ -138,6 +138,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
       j++;
     }
   }
+  } catch(e) {alert(e);}
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
   pipeline.imageProcessing.contrast = document.getElementById("contrast").value;
@@ -404,6 +405,7 @@ function reset_cam() {
     BABYLON.Engine.LastCreatedScene.activeCamera.position.x = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.y = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.z = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z;
+    BABYLON.Engine.LastCreatedScene.activeCamera.rebuildAnglesAndRadius();
 }
 
 
