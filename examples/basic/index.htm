@@ -102,7 +102,6 @@
             static CreateScene(engine, canvas) {
                 // This creates a basic Babylon Scene object (non-mesh)
                 var scene = new BABYLON.Scene(engine);
-                // This creates and positions a free camera (non-mesh)
                 var camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
@@ -400,12 +399,11 @@ document.getElementById('contrast').addEventListener('input', function(event) {
 
 function reset_cam() {
     BABYLON.Engine.LastCreatedScene.activeCamera.radius = 0;
+    BABYLON.Engine.LastCreatedScene.activeCamera.alpha = 0;
+    BABYLON.Engine.LastCreatedScene.activeCamera.beta = Math.PI / 2;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.x = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.y = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.z = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z;
-    BABYLON.Engine.LastCreatedScene.activeCamera.rotation.x = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.x;
-    BABYLON.Engine.LastCreatedScene.activeCamera.rotation.y = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
-    BABYLON.Engine.LastCreatedScene.activeCamera.rotation.z = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.z;
 }
 
 
