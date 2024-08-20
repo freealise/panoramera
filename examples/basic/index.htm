@@ -120,12 +120,8 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
+  
   try {
-  var l_axes = new BABYLON.Debug.AxesViewer(scene, 1);
-        l_axes.xAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
-        l_axes.yAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
-        l_axes.zAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
-
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
     if (scene.getNodes()[i].material) {
@@ -138,7 +134,12 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
       j++;
     }
   }
+  var l_axes = new BABYLON.Debug.AxesViewer(scene, 255);
+  l_axes.xAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
+  l_axes.yAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
+  l_axes.zAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
   } catch(e) {alert(e);}
+
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
   pipeline.imageProcessing.contrast = document.getElementById("contrast").value;
