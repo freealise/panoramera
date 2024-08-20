@@ -122,13 +122,16 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
   
-  var axes = new BABYLON.Debug.AxesViewer(scene, 10);
+  var axes = new BABYLON.Debug.AxesViewer(scene, 1);
   var l_axes = new BABYLON.Debug.AxesViewer(scene, 5);
   var CoT = new BABYLON.TransformNode("root");
   CoT.rotationQuaternion = null;
   axes.xAxis.parent = CoT;
   axes.yAxis.parent = CoT;
   axes.zAxis.parent = CoT;
+  CoT.rotation.x = 0;
+  CoT.rotation.y = 0;
+  CoT.rotation.z = 0;
 
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
@@ -141,7 +144,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
       scene.getNodes()[i].position.z = coords[parseInt(order[j])].lat;
       scene.getNodes()[i].position.x = coords[parseInt(order[j])].lng;
       scene.getNodes()[i].rotation.y = coords[parseInt(order[j])].heading / 180 * Math.PI;
-      scene.getNodes()[i].rotation.z = -(Math.PI/4+coords[parseInt(order[j])].pitch / 180 * Math.PI);
+      scene.getNodes()[i].rotation.z = -coords[parseInt(order[j])].pitch / 180 * Math.PI;
       j++;
     }
   }
