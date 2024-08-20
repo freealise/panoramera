@@ -316,9 +316,9 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       event.target.value = "z ↙ e";
                       break;
                     case "s":
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x = coords[parseInt(order[parseInt(document.getElementById("fnum").value)-1])].lng;
                       BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y = 0;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z = coords[parseInt(order[parseInt(document.getElementById("fnum").value)-1])].lat;
                       event.target.value = "";
                       break;
                     case "t":
@@ -347,8 +347,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       break;
                     case "g":
                       BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.x = 0;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y = 0;
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.z = 0;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y = coords[parseInt(order[parseInt(document.getElementById("fnum").value)-1])].heading / 180 * Math.PI;
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.z = -coords[parseInt(order[parseInt(document.getElementById("fnum").value)-1])].pitch / 180 * Math.PI;
                       event.target.value = "";
                       break;
                     case "i":
