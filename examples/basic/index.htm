@@ -122,16 +122,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
   
-  var axes = new BABYLON.Debug.AxesViewer(scene, 1);
-  var l_axes = new BABYLON.Debug.AxesViewer(scene, 5);
-  var CoT = new BABYLON.TransformNode("root");
-  CoT.rotationQuaternion = null;
-  axes.xAxis.parent = CoT;
-  axes.yAxis.parent = CoT;
-  axes.zAxis.parent = CoT;
-  CoT.rotation.x = 0;
-  CoT.rotation.y = 0;
-  CoT.rotation.z = 0;
+  var l_axes = new BABYLON.Debug.AxesViewer(scene, 16);
 
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
@@ -409,6 +400,12 @@ document.getElementById('contrast').addEventListener('input', function(event) {
 
 function reset_cam() {
     BABYLON.Engine.LastCreatedScene.activeCamera.radius = 0;
+    BABYLON.Engine.LastCreatedScene.activeCamera.position.x = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x;
+    BABYLON.Engine.LastCreatedScene.activeCamera.position.y = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y;
+    BABYLON.Engine.LastCreatedScene.activeCamera.position.z = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z;
+    BABYLON.Engine.LastCreatedScene.activeCamera.rotation.x = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.x;
+    BABYLON.Engine.LastCreatedScene.activeCamera.rotation.y = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
+    BABYLON.Engine.LastCreatedScene.activeCamera.rotation.z = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.z;
 }
 
 
