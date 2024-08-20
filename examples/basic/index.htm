@@ -125,6 +125,9 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
     if (scene.getNodes()[i].material) {
+      if (j==0) {
+        document.getElementById("fnum").value = i;
+      }
       scene.getNodes()[i].rotationQuaternion = null;
       scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
       scene.getNodes()[i].position.z = coords[parseInt(order[j])].lat;
@@ -134,11 +137,15 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
       j++;
     }
   }
-  var axes = new BABYLON.Debug.AxesViewer(scene, 32);
   var l_axes = new BABYLON.Debug.AxesViewer(scene, 16);
   l_axes.xAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
   l_axes.yAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
   l_axes.zAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
+  
+  var axes = new BABYLON.Debug.AxesViewer(scene, 32);
+  var CoT = new BABYLON.TransformNode("root");
+  CoT.rotationQuaternion = null;
+  axes.parent = CoT;
   } catch(e) {alert(e);}
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
@@ -195,7 +202,7 @@ window.scene = createScene();};
 
 <input type='text' id='coords'/>
 <input type='text' id='order'/>
-<input type='number' id='fnum' value='1'/>
+<input type='number' id='fnum' value='0'/>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a><br/>
 <input type='text' id='kbrd'/><br/>
 <pre id='keymap' style='color:white;'>
