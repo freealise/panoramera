@@ -120,7 +120,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
   var order = document.getElementById("order").value.split(",");
-  var coords = JSON.parse(document.getElementById("order").value);
+  var coords = JSON.parse(document.getElementById("coords").value);
   
   var axes = new BABYLON.Debug.AxesViewer(scene, 256);
   var l_axes = new BABYLON.Debug.AxesViewer(scene, 128);
