@@ -123,6 +123,13 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var coords = JSON.parse(document.getElementById("coords").value);
   
   var axes = new BABYLON.Debug.AxesViewer(scene, 10);
+  axes.rotationQuaternion = null;
+  axes.xAxis.parent = scene;
+  axes.yAxis.parent = scene;
+  axes.zAxis.parent = scene;
+  axes.rotation.x = 0;
+  axes.rotation.y = 0;
+  axes.rotation.z = 0;
   var l_axes = new BABYLON.Debug.AxesViewer(scene, 5);
 
   var j=0;
