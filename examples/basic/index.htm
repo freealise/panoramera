@@ -136,7 +136,7 @@ try {
   
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
-    if (scene.getNodes()[i].material) {
+    if (scene.getNodes()[i].material && scene.getNodes()[i].material.pointSize) {
       if (j==0) {
         document.getElementById("fnum").value = i;
       }
@@ -404,14 +404,14 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
 
 document.getElementById('zoom').addEventListener('input', function(event){
 try {
-    for (var i=0; i<scene.getNodes().length; i++) {
-        if (scene.getNodes()[i].material) {
+    for (var i=0; i<BABYLON.Engine.LastCreatedScene.getNodes().length; i++) {
+        if (BABYLON.Engine.LastCreatedScene.getNodes()[i].material && BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize) {
               BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value));
         }
     }
     BABYLON.Engine.LastCreatedScene.activeCamera.fov = event.target.value;
     event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
-    document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0*Math.sqrt(2.0) + "px)";
+    document.getElementById("renderCanvas").style.filter = "blur(" + Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value))/2.0*Math.sqrt(2.0) + "px)";
 } catch(e) {alert(e)}
 });
 
