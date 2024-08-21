@@ -91,7 +91,6 @@
 
         var startRenderLoop = function (engine, canvas) {
             engine.runRenderLoop(function () {
-                then = new Date().getTime();
                 now = new Date().getTime();
                 delta = now - then;
                 then = now - (delta % interval);
@@ -124,7 +123,7 @@
                 }
 
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
-  
+try {
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
   scene.autoClear = false; // Color buffer
   scene.autoClearDepthAndStencil = false;
@@ -134,7 +133,6 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
   
-  try {
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
     if (scene.getNodes()[i].material) {
@@ -159,7 +157,6 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var CoT = new BABYLON.TransformNode("root");
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
-  } catch(e) {alert(e);}
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
@@ -193,6 +190,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   optimizer.onFailureObservable.add(function() {
     alert('slow');
   });
+} catch(e) {alert(e);}
                 
 });
                 return scene;
