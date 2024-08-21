@@ -84,10 +84,18 @@
     <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
     <script>
         var canvas = document.getElementById("renderCanvas");
+        var then = new Date().getTime();
+        var now, delta;
+        const interval = 1000 / 25;
+        const tolerance = 0.1;
 
         var startRenderLoop = function (engine, canvas) {
             engine.runRenderLoop(function () {
-                if (sceneToRender && sceneToRender.activeCamera) {
+                then = new Date().getTime();
+                now = new Date().getTime();
+                delta = now - then;
+                then = now - (delta % interval);
+                if (delta >= interval - tolerance && sceneToRender && sceneToRender.activeCamera) {
                     sceneToRender.render();
                 }
             });
@@ -97,7 +105,7 @@
         var scene = null;
         var sceneToRender = null;
         var pipeline = null;
-        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}); };
+        var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
             static CreateScene(engine, canvas) {
                 // This creates a basic Babylon Scene object (non-mesh)
@@ -118,6 +126,11 @@
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
+  scene.autoClear = false; // Color buffer
+  scene.autoClearDepthAndStencil = false;
+  scene.blockMaterialDirtyMechanism = true;
+  scene.getAnimationRatio();
+
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
   
@@ -389,10 +402,14 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
 
 document.getElementById('zoom').addEventListener('input', function(event){
 try {
-              BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value));
-              BABYLON.Engine.LastCreatedScene.activeCamera.fov = event.target.value;
-              event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
-              document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0*Math.sqrt(2.0) + "px)";
+    for (var i=0; i<scene.getNodes().length; i++) {
+        if (scene.getNodes()[i].material) {
+              BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value));
+        }
+    }
+    BABYLON.Engine.LastCreatedScene.activeCamera.fov = event.target.value;
+    event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
+    document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0*Math.sqrt(2.0) + "px)";
 } catch(e) {alert(e)}
 });
 
