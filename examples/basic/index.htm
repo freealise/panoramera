@@ -125,10 +125,11 @@
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 try {
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
-  //scene.autoClear = false;
-  //scene.autoClearDepthAndStencil = false;
+  scene.autoClear = false;
+  scene.autoClearDepthAndStencil = false;
   //scene.blockMaterialDirtyMechanism = true;
   scene.getAnimationRatio();
+  //engine.setHardwareScalingLevel(1.0);
 
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
@@ -175,8 +176,6 @@ try {
                 }
   document.getElementById("scale").onclick = function(event) {
                 }
-                
-  engine.setHardwareScalingLevel(1.0);
 
   var options = new BABYLON.SceneOptimizerOptions(25);
   var optimizer = new BABYLON.SceneOptimizer(scene, options);
