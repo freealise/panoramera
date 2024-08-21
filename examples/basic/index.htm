@@ -187,6 +187,9 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   optimizer.onSuccessObservable.add(function() {
     alert('ok');
   });
+  optimizer.onNewOptimizationAppliedObservable.add(function (optim) {
+    alert(optim.getDescription());
+  });
   optimizer.onFailureObservable.add(function() {
     alert('slow');
   });
