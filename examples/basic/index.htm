@@ -129,7 +129,7 @@ try {
   //scene.autoClearDepthAndStencil = false;
   //scene.blockMaterialDirtyMechanism = true;
   //scene.getAnimationRatio();
-  engine.setHardwareScalingLevel(1.0);
+  //engine.setHardwareScalingLevel(1.0);
 
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
@@ -176,19 +176,6 @@ try {
                 }
   document.getElementById("scale").onclick = function(event) {
                 }
-
-  var options = new BABYLON.SceneOptimizerOptions(25);
-  var optimizer = new BABYLON.SceneOptimizer(scene, options);
-  optimizer.start();
-  optimizer.onSuccessObservable.add(function() {
-    alert('ok');
-  });
-  optimizer.onNewOptimizationAppliedObservable.add(function (optim) {
-    alert(optim.getDescription());
-  });
-  optimizer.onFailureObservable.add(function() {
-    alert('slow');
-  });
 } catch(e) {alert(e);}
                 
 });
@@ -229,7 +216,9 @@ window.scene = createScene();};
 <input type='text' id='coords'/>
 <input type='text' id='order'/>
 <input type='number' id='fnum' value='0'/>
-<a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a><br/>
+<a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
+<a href='#' id='optimize' onclick='optimize();'>optimize</a>
+<br/>
 <input type='text' id='kbrd'/><br/>
 <pre id='keymap' style='color:white;'>
 `  1  2  3  4  5  6  7  8  9  0  -  =  
@@ -445,6 +434,22 @@ function reset_cam() {
     BABYLON.Engine.LastCreatedScene.activeCamera.position.y = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.z = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z;
     BABYLON.Engine.LastCreatedScene.activeCamera.rebuildAnglesAndRadius();
+}
+
+
+function optimize() {
+  var options = new BABYLON.SceneOptimizerOptions(25);
+  var optimizer = new BABYLON.SceneOptimizer(scene, options);
+  optimizer.onSuccessObservable.add(function() {
+    alert('ok');
+  });
+  optimizer.onNewOptimizationAppliedObservable.add(function (optim) {
+    alert(optim.getDescription());
+  });
+  optimizer.onFailureObservable.add(function() {
+    alert('slow');
+  });
+  optimizer.start();
 }
 
 
