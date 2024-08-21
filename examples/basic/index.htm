@@ -124,7 +124,7 @@
                 }
 
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
-
+  
   scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
   scene.autoClear = false; // Color buffer
   scene.autoClearDepthAndStencil = false;
@@ -178,6 +178,19 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
                 }
   document.getElementById("scale").onclick = function(event) {
                 }
+                
+  engine.setHardwareScalingLevel(1.0);
+
+  var options = new BABYLON.SceneOptimizerOptions(25);
+  var optimizer = new BABYLON.SceneOptimizer(scene, options);
+  optimizer.start();
+  optimizer.onSuccessObservable.add(function() {
+    alert('ok');
+  });
+  optimizer.onFailureObservable.add(function() {
+    alert('slow');
+  });
+                
 });
                 return scene;
             }
