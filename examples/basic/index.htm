@@ -129,7 +129,7 @@ try {
   //scene.autoClearDepthAndStencil = false;
   //scene.blockMaterialDirtyMechanism = true;
   //scene.getAnimationRatio();
-  //engine.setHardwareScalingLevel(1.0);
+  engine.setHardwareScalingLevel(1.0);
 
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
@@ -141,7 +141,7 @@ try {
         document.getElementById("fnum").value = i;
       }
       scene.getNodes()[i].rotationQuaternion = null;
-      scene.getNodes()[i].material.pointSize = Math.ceil(2*Math.log2(Math.PI/document.getElementById("zoom").value));
+      scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
       scene.getNodes()[i].position.z = coords[parseInt(order[j])].lat;
       scene.getNodes()[i].position.x = coords[parseInt(order[j])].lng;
       scene.getNodes()[i].rotation.y = coords[parseInt(order[j])].heading / 180 * Math.PI;
@@ -406,12 +406,12 @@ document.getElementById('zoom').addEventListener('input', function(event){
 try {
     for (var i=0; i<BABYLON.Engine.LastCreatedScene.getNodes().length; i++) {
         if (BABYLON.Engine.LastCreatedScene.getNodes()[i].material && BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize) {
-              BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize = Math.ceil(2*Math.log2(Math.PI/event.target.value));
+              BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value));
         }
     }
     BABYLON.Engine.LastCreatedScene.activeCamera.fov = event.target.value;
     event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
-    document.getElementById("renderCanvas").style.filter = "blur(" + Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value)) + "px)";
+    document.getElementById("renderCanvas").style.filter = "blur(" + Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value)/2.0) + "px)";
 } catch(e) {alert(e)}
 });
 
