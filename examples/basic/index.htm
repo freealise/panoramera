@@ -279,11 +279,12 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
   if (BABYLON) {
     event.preventDefault();
     if (BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotationQuaternion) {
-                    BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotationQuaternion = null;
+        BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotationQuaternion = null;
     }
     const dir = BABYLON.Engine.LastCreatedScene.activeCamera.getForwardRay().direction;
     dir.y = 0; dir.normalize();
     const angle = BABYLON.Vector3.GetAngleBetweenVectors(dir, BABYLON.Vector3.Forward(), BABYLON.Vector3.Up());
+    const node_r = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
     switch(event.key) {
                     case "w":
                       BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y += 1;
@@ -298,8 +299,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = 0;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_-node_r);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_-node_r);
                       event.target.value = "a ⬅ d";
                       break;
                     case "d":
@@ -307,8 +308,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = 0;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_-node_r);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_-node_r);
                       event.target.value = "a ➡ d";
                       break;
                     case "e":
@@ -316,8 +317,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = -1;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_-node_r);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_-node_r);
                       event.target.value = "z ↗ e";
                       break;
                     case "z":
@@ -325,8 +326,8 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
                       y_ = 1;
                       angle_ = Math.atan2(y_, x_);
                       r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
-                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_-node_r);
+                      BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_-node_r);
                       event.target.value = "z ↙ e";
                       break;
                     case "s":
