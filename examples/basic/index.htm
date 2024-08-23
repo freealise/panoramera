@@ -263,13 +263,14 @@ document.getElementById('kbrd').addEventListener('pointermove', function(event){
                   const dir = BABYLON.Engine.LastCreatedScene.activeCamera.getForwardRay().direction;
                   dir.y = 0; dir.normalize();
                   const angle = BABYLON.Vector3.GetAngleBetweenVectors(dir, BABYLON.Vector3.Forward(), BABYLON.Vector3.Up());
+                  const node_r = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
                   console.log(angle);
                   x_ = event.clientX-event.target.getBoundingClientRect().x-xold;
                   y_ = event.clientY-event.target.getBoundingClientRect().y-yold;
                   angle_ = Math.atan2(y_, x_);
                   r = Math.sqrt(Math.pow(y_,2) + Math.pow(x_,2));
-                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_);
-                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_);
+                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z += r * Math.sin(angle-angle_-node_r);
+                  BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x += r * Math.cos(angle-angle_-node_r);
                   xold = event.clientX-event.target.getBoundingClientRect().x;
                   yold = event.clientY-event.target.getBoundingClientRect().y;
                 }
