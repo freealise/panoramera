@@ -125,7 +125,11 @@
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 try {
   engine.setHardwareScalingLevel(1.0);
-  scene.clearColor = new BABYLON.Color4(0.5, 0.5, 0.5, 1.0);
+  var bg = JSON.parse(document.getElementById("bgcolor").value);
+  for (var i=0; i<bg.length; i++) {
+    bg[i] /= 255;
+  }
+  scene.clearColor = new BABYLON.Color4(bg[0], bg[1], bg[2], bg[3]);
   scene.autoClear = false;
   scene.autoClearDepthAndStencil = false;
   scene.getAnimationRatio();
@@ -214,6 +218,7 @@ window.scene = createScene();};
 
 <input type='text' id='coords' value='[{"lat":0.0, "lng":0.0, "heading":0.0, "pitch":0.0}]'/>
 <input type='text' id='order' value='0'/>
+<input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
 <input type='number' id='fnum' value='0'/>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a>
