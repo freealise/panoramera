@@ -131,15 +131,9 @@ try {
     bg[i] /= 255;
   }
   scene.clearColor = new BABYLON.Color4(bg[0], bg[1], bg[2], bg[3]);
-  scene.autoClear = false;
-  scene.autoClearDepthAndStencil = false;
+  //scene.autoClear = false;
+  //scene.autoClearDepthAndStencil = false;
   scene.getAnimationRatio();
-        
-  var dome = new BABYLON.PhotoDome("dome", document.getElementById("bgimage").value, 
-    {
-        resolution: 32,
-        size: 256
-    }, scene);
 
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
@@ -168,6 +162,12 @@ try {
   var CoT = new BABYLON.TransformNode("root");
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
+
+  var dome = new BABYLON.PhotoDome("dome", document.getElementById("bgimage").value, 
+    {
+        resolution: 32,
+        size: 256
+    }, scene);
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
