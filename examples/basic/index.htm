@@ -168,6 +168,7 @@ try {
         resolution: 16,
         size: 512
     }, scene);
+  dome.applyDisplacementMap(document.getElementById("bgdepth").value, 0, 255, null, null, null, true, function(e){alert(e);});
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
@@ -227,6 +228,7 @@ window.scene = createScene();};
 <input type='text' id='order' value='0'/>
 <input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg'/>
+<input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg'/>
 <input type='number' id='fnum' value='0'/>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a>
