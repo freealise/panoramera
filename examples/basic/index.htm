@@ -168,7 +168,7 @@ try {
         resolution: 16,
         size: 512
     }, scene);
-  dome.applyDisplacementMap(document.getElementById("bgdepth").value, 0, 255, null, null, null, true, function(e){alert(e);});
+  scene.getMeshByName("dome_mesh").applyDisplacementMap(document.getElementById("bgdepth").value, 0, 255, null, null, null, true, function(e){alert(e);});
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
