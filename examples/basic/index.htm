@@ -112,6 +112,7 @@
                 var camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
+                //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
                     var path = location.href.split("?file=")[1];
@@ -133,6 +134,12 @@ try {
   scene.autoClear = false;
   scene.autoClearDepthAndStencil = false;
   scene.getAnimationRatio();
+        
+  var dome = new BABYLON.PhotoDome("dome", document.getElementById("bgimage").value, 
+    {
+        resolution: 32,
+        size: 256
+    }, scene);
 
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
@@ -219,6 +226,7 @@ window.scene = createScene();};
 <input type='text' id='coords' value='[{"lat":0.0, "lng":0.0, "heading":0.0, "pitch":0.0}]'/>
 <input type='text' id='order' value='0'/>
 <input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
+<input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg'/>
 <input type='number' id='fnum' value='0'/>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a>
