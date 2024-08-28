@@ -165,8 +165,8 @@ try {
 
   var dome = new BABYLON.PhotoDome("dome", document.getElementById("bgimage").value, 
     {
-        resolution: 32,
-        size: 256
+        resolution: 16,
+        size: 512
     }, scene);
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
