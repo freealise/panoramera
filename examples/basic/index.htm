@@ -131,8 +131,8 @@ try {
     bg[i] /= 255;
   }
   scene.clearColor = new BABYLON.Color4(bg[0], bg[1], bg[2], bg[3]);
-  //scene.autoClear = false;
-  //scene.autoClearDepthAndStencil = false;
+  scene.autoClear = false;
+  scene.autoClearDepthAndStencil = false;
   scene.getAnimationRatio();
 
   var order = document.getElementById("order").value.split(",");
