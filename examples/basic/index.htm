@@ -247,8 +247,7 @@ window.scene = createScene();};
 
 <a href='#' onclick='if(!scene.debugLayer.isVisible()){scene.debugLayer.show();}else{scene.debugLayer.hide();}'>inspector</a>
 <a href='#' onclick='record_video();'>record</a>
-<a href='#' onclick='snapshot();'>snapshot</a>
-<a href='#' onclick='download3D("scene", BABYLON.Engine.LastCreatedScene);'>download</a><a href='' id='dl'></a><br/>
+<a href='#' onclick='snapshot();'>snapshot</a><br/>
 <img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'/>
 </div>
@@ -508,30 +507,6 @@ function record_video() {
     recorder.startRecording('video.mp4');
   }
 }
-
-
-        var objectUrl;
-        function download3D(filename, scene) {
-            try {
-            if(objectUrl) {
-                window.URL.revokeObjectURL(objectUrl);
-            }
-            var serializedScene = BABYLON.SceneSerializer.Serialize(scene);
-            var strMesh = JSON.stringify(serializedScene);
-            if (filename.toLowerCase().lastIndexOf(".babylon") !== filename.length - 8 || filename.length < 9){
-                filename += ".babylon";
-            }
-        	var blob = new Blob ( [ strMesh ], { type : "octet/stream" } );
-            // turn blob into an object URL; saved as a member, so can be cleaned out later
-            objectUrl = (window.webkitURL || window.URL).createObjectURL(blob);
-            var link = document.getElementById("dl");
-            link.href = objectUrl;
-            link.download = filename;
-            var click = document.createEvent("MouseEvents");
-            click.initEvent("click", true, false);
-            link.dispatchEvent(click);
-            } catch(e) {alert(e);}      
-        }
             
 </script>
 </body>
