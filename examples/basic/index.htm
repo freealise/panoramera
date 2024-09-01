@@ -168,6 +168,11 @@ try {
         resolution: 16,
         size: 512
     }, scene);
+  for (i = 0; i < scene.getMeshByName("dome_mesh")._children.length; i++) {
+    let mesh = scene.getMeshByName("dome_mesh")._children[i];
+    alert(mesh.name);
+    mesh.dispose(false, true);
+  }
   scene.getMeshByName("dome_mesh").applyDisplacementMap(document.getElementById("bgdepth").value, 0, 255, null, null, null, true, function(e){alert(e);});
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
