@@ -247,8 +247,7 @@ window.scene = createScene();};
 
 <a href='#' onclick='if(!scene.debugLayer.isVisible()){scene.debugLayer.show();}else{scene.debugLayer.hide();}'>inspector</a>
 <a href='#' onclick='record_video();'>record</a>
-<a href='#' onclick='snapshot();'>snapshot</a>
-<a href='#' onclick='download3D();'>download</a><br/>
+<a href='#' onclick='snapshot();'>snapshot</a><br/>
 <img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'/>
 </div>
@@ -507,15 +506,6 @@ function record_video() {
     var recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25 });
     recorder.startRecording('video.mp4');
   }
-}
-
-
-function download3D() {
-  try {
-  BABYLON.GLTF2Export.GLBAsync(BABYLON.Engine.LastCreatedScene, "scene").then((glb) => {
-    glb.downloadFiles();
-  });
-  } catch(e) {alert(e);}
 }
             
 </script>
