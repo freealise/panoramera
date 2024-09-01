@@ -122,9 +122,8 @@
                     var fln = "example.glb";
                     var url = "https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/"; 
                 }
-
-BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 try {
+BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   engine.setHardwareScalingLevel(1.0);
   var bg = JSON.parse(document.getElementById("bgcolor").value);
   for (var i=0; i<bg.length; i++) {
@@ -192,9 +191,8 @@ try {
                 }
   document.getElementById("scale").onclick = function(event) {
                 }
-} catch(e) {alert(e);}
-                
 });
+} catch(e) {alert(e);}
                 return scene;
             }
         }
