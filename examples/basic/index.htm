@@ -136,10 +136,29 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 
   var order = document.getElementById("order").value.split(",");
   var coords = JSON.parse(document.getElementById("coords").value);
+
+  var bgi = document.getElementById("bgimage").value.slice(0,-1).split(",");
+  var bgd = document.getElementById("bgdepth").value.slice(0,-1).split(",");
+  var dome = [];
+  for (var j=0; j<bgi.length; j++) {
+    dome[j] = new BABYLON.PhotoDome("dome"+j, bgi[j], 
+      {
+        resolution: 16,
+        size: 512
+      }, scene);
+    var q = scene.meshes[scene.meshes.length-2]._children;
+    for (i = 0; i < q.length; i++) {
+      let mesh = q[i];
+      alert(mesh.name);
+      mesh.dispose(false, true);
+    }
+    scene.meshes[scene.meshes.length-1].applyDisplacementMap(bgd[j], 0, 255, null, null, null, true, function(e){alert(e);});
+    scene.meshes[scene.meshes.length-1].name = "dome"+j;
+  }
   
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
-    if (scene.getNodes()[i].material && scene.getNodes()[i].material.pointSize) {
+    if (scene.getNodes()[i].name.indexOf("dome") == 0 && scene.getNodes()[i].material && scene.getNodes()[i].material.pointSize) {
       if (j==0) {
         document.getElementById("fnum").value = i;
       }
@@ -161,18 +180,6 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var CoT = new BABYLON.TransformNode("root");
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
-
-  var dome = new BABYLON.PhotoDome("dome", document.getElementById("bgimage").value, 
-    {
-        resolution: 16,
-        size: 512
-    }, scene);
-  for (i = 0; i < scene.getMeshByName("dome_mesh")._children.length; i++) {
-    let mesh = scene.getMeshByName("dome_mesh")._children[i];
-    alert(mesh.name);
-    mesh.dispose(false, true);
-  }
-  scene.getMeshByName("dome_mesh").applyDisplacementMap(document.getElementById("bgdepth").value, 0, 255, null, null, null, true, function(e){alert(e);});
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
