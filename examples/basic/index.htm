@@ -158,7 +158,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   
   var j=0;
   for (var i=0; i<scene.getNodes().length; i++) {
-    if (scene.getNodes()[i].name.indexOf("dome") == 0 && scene.getNodes()[i].material && scene.getNodes()[i].material.pointSize) {
+    if (scene.getNodes()[i].name.indexOf("dome") == 0) {
       if (j==0) {
         document.getElementById("fnum").value = i;
       }
@@ -239,7 +239,7 @@ window.scene = createScene();};
 <input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg'/>
 <input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg'/>
-<input type='number' id='fnum' value='0'/>
+<input type='number' id='fnum' value='2'/>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a>
 <br/>
