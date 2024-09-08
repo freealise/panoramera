@@ -97,6 +97,8 @@
         var scene = null;
         var sceneToRender = null;
         var pipeline = null;
+        var editControl = null;
+        
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
             static CreateScene(engine, canvas) {
@@ -132,6 +134,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 
   var bgi = document.getElementById("bgimage").value.slice(0,-1).split(",");
   var bgd = document.getElementById("bgdepth").value.slice(0,-1).split(",");
+  document.getElementById("fnum").max = bgi.length-1;
   var dome = [];
   for (var j=0; j<bgi.length; j++) {
     dome[j] = new BABYLON.PhotoDome("dome"+j, bgi[j], 
@@ -142,7 +145,6 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
     var q = scene.meshes[scene.meshes.length-2]._children;
     for (i = 0; i < q.length; i++) {
       let mesh = q[i];
-      alert(mesh.name);
       mesh.dispose(false, true);
     }
     scene.meshes[scene.meshes.length-1].applyDisplacementMap(bgd[j], 0, 255, null, null, null, true, function(e){alert(e);});
@@ -154,6 +156,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
     if (scene.meshes[i].name.indexOf("dome") == 0) {
       if (j==0) {
         document.getElementById("fnum").value = i;
+        document.getElementById("fnum").min = i;
       }
       scene.getNodes()[i].rotationQuaternion = null;
       scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
@@ -174,9 +177,9 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
 
-  var editControl = new EditControl(scene.getNodes()[parseInt(document.getElementById("fnum").value)], camera, canvas, 2.0, true, 0.02);
+  editControl = new EditControl(scene.getNodes()[parseInt(document.getElementById("fnum").value)], camera, canvas, 2.0, true, 0.02);
   editControl.enableTranslation();
-  editControl.setTransSnapValue(0.5);
+  editControl.setTransSnapValue(1.0);
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
@@ -230,7 +233,7 @@ window.scene = createScene();};
 <input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg,'/>
 <input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/>
-<input type='number' id='fnum' value='2'/>
+# <input type='range' id='fnum' min='2' value='2' max='2' step='1' oninput='attach_control();'/>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a><br/>
 
@@ -267,6 +270,11 @@ document.getElementById('contrast').addEventListener('input', function(event) {
     pipeline.imageProcessing.contrast = event.target.value;
     event.target.parentNode.childNodes[2].innerText = pipeline.imageProcessing.contrast;
 });
+
+
+function attach_control() {
+editControl.switchTo(scene.getNodes([parseInt(document.getElementById("fnum").value)], true);
+}
 
 
 function reset_cam() {
