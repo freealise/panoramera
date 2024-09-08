@@ -22,6 +22,8 @@
         <script src="https://cdn.babylonjs.com/serializers/babylonjs.serializers.min.js"></script>
         <script src="https://cdn.babylonjs.com/gui/babylon.gui.min.js"></script>
         <script src="https://cdn.babylonjs.com/inspector/babylon.inspector.bundle.js"></script>
+        <script src="https://code.jquery.com/pep/0.4.2/pep.js"></script>
+        <script src="EditControl.js"></script>
 
         <style>
             html, body {
@@ -180,6 +182,10 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   var CoT = new BABYLON.TransformNode("root");
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
+
+  var editControl = new EditControl(scene.getNodes()[parseInt(document.getElementById("fnum").value)], camera, canvas, 2.0, true, 0.02);
+  editControl.enableTranslation();
+  editControl.setTransSnapValue(0.5);
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
