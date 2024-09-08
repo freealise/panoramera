@@ -294,7 +294,7 @@ document.getElementById('kbrd').addEventListener('pointermove', function(event){
                   const dir = BABYLON.Engine.LastCreatedScene.activeCamera.getForwardRay().direction;
                   dir.y = 0; dir.normalize();
                   const angle = BABYLON.Vector3.GetAngleBetweenVectors(dir, BABYLON.Vector3.Forward(), BABYLON.Vector3.Up());
-                  const node_r = 0;//BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
+                  const node_r = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
                   console.log(angle);
                   x_ = event.clientX-event.target.getBoundingClientRect().x-xold;
                   y_ = event.clientY-event.target.getBoundingClientRect().y-yold;
@@ -316,7 +316,7 @@ document.getElementById('kbrd').addEventListener('keydown', function(event){
     const dir = BABYLON.Engine.LastCreatedScene.activeCamera.getForwardRay().direction;
     dir.y = 0; dir.normalize();
     const angle = BABYLON.Vector3.GetAngleBetweenVectors(dir, BABYLON.Vector3.Forward(), BABYLON.Vector3.Up());
-    const node_r = 0;//BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
+    const node_r = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].rotation.y;
     switch(event.key) {
                     case "w":
                       BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y += 1;
