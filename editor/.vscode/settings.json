@@ -1,0 +1,30 @@
+// Place your settings in this file to overwrite default and user settings.
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.DS_Store": true,
+        "**/.tempChromeProfileForDebug": true,
+        "web.Debug.config": true,
+        "web.Release.config": true,
+        "*.csproj": true,
+        "*.sln": true,
+        ".vs/": true,
+        "obj/": true,
+        "bin/": true,
+        "node_modules/": false,
+        "build": true,
+        "declaration": true,
+        "electron-packages": true,
+        "node_modules": true,
+        "vscode-extension/node_modules": true,
+        "vscode-extension/.build": true,
+        "vscode-extension/.declaration": true,
+        "vscode-extension/*.vsix": true,
+        "photoshop-extension/.build": true,
+        "photoshop-extension/.declaration": true,
+        "photoshop-extension/node_modules": true
+    },
+
+    "editor.quickSuggestionsDelay": 0,
+    "typescript.tsdk": "./node_modules/typescript/lib"
+}
