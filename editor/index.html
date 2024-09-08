@@ -11,7 +11,7 @@
     <script src="./modules/w2ui/w2ui-2.0.min.js" type="text/javascript"></script>
 
     <link rel="stylesheet" type="text/css" href="./modules/w2ui/w2ui-2.0.css" />
-    <link rel="stylesheet" type="text/css" href="./modules/jstree/src/themes/default/style.min.css" />
+    <link rel="stylesheet" type="text/css" href="./modules/jstree/src/themes/default/style.css" />
     <link rel="stylesheet" type="text/css" href="./css/editor.css" />
 </head>
 <body>
@@ -99,9 +99,9 @@
     </script>
 
     <!-- REQUIRE MONACO EDITOR -->
-    <script src="./modules/monaco-editor/min/vs/loader.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/browse/monaco-editor@0.8.3/min/vs/loader.js" type="text/javascript"></script>
     <script type="text/javascript">
-        require.config({ paths: { 'vs': './modules/monaco-editor/min/vs' }});
+        require.config({ paths: { 'vs': 'https://unpkg.com/browse/monaco-editor@0.8.3/min/vs/' }});
         require(['vs/editor/editor.main'], function() {
             // Empty
 		});
