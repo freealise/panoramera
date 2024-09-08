@@ -4,14 +4,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Babylon.js Editor</title>
     
-    <script src="./node_modules/es6-promise/dist/es6-promise.auto.min.js" type="text/javascript"></script>
-    <script src="./node_modules/systemjs/dist/system.js" type="text/javascript"></script>
+    <script src="./modules/es6-promise.auto.min.js" type="text/javascript"></script>
+    <script src="./modules/systemjs/dist/system.js" type="text/javascript"></script>
 
-    <script src="./node_modules/jquery/dist/jquery.min.js" type="text/javascript"></script>
-    <script src="./node_modules/w2ui/w2ui.min.js" type="text/javascript"></script>
+    <script src="./modules/jquery-3.7.1.min.js" type="text/javascript"></script>
+    <script src="./modules/w2ui/w2ui-2.0.min.js" type="text/javascript"></script>
 
-    <link rel="stylesheet" type="text/css" href="./node_modules/w2ui/w2ui.css" />
-    <link rel="stylesheet" type="text/css" href="./node_modules/jstree/dist/themes/default/style.min.css" />
+    <link rel="stylesheet" type="text/css" href="./modules/w2ui/w2ui-2.0.css" />
+    <link rel="stylesheet" type="text/css" href="./modules/jstree/dist/themes/default/style.min.css" />
     <link rel="stylesheet" type="text/css" href="./css/editor.css" />
 </head>
 <body>
@@ -19,26 +19,26 @@
     <script type="text/javascript">
         System.config({
             paths: {
-                "babylonjs": "./node_modules/babylonjs/babylon.max.js",
-                "babylonjs-gui": "./node_modules/babylonjs-gui/babylon.gui.min.js",
-                "babylonjs-materials": "./node_modules/babylonjs-materials/babylonjs.materials.js",
-                "babylonjs-loaders": "./node_modules/babylonjs-loaders/babylonjs.loaders.js",
-                "babylonjs-serializers": "./node_modules/babylonjs-serializers/babylonjs.serializers.js",
-                "babylonjs-procedural-textures": "./node_modules/babylonjs-procedural-textures/babylonjs.proceduralTextures.js",
-                "babylonjs-post-process": "./node_modules/babylonjs-post-process/babylonjs.postProcess.js",
-                "babylonjs-node-editor": "./node_modules/babylonjs-node-editor/babylon.nodeEditor.js",
-                "cannon": "./node_modules/cannon/build/cannon.js",
-                "spectorjs": "./node_modules/spectorjs/dist/spector.bundle.js",
-                "dat-gui": "./node_modules/dat.gui/build/dat.gui.js",
-                "raphael": "./node_modules/raphael/raphael.js",
-                "socket.io-client": "./node_modules/socket.io-client/dist/socket.io.js",
-                "earcut": "./node_modules/earcut/dist/earcut.min.js",
-                "oimo": "./node_modules/babylonjs/Oimo.js",
-                "jstree": "./node_modules/jstree/dist/jstree.js",
-                "golden-layout": "./node_modules/golden-layout/dist/goldenlayout.js",
-                "javascript-astar": "./node_modules/javascript-astar/astar.js",
-                "typescript": "./node_modules/typescript/lib/typescript.js",
-                "litegraph.js": "./node_modules/litegraph.js/build/litegraph.min.js",
+                "babylonjs": "./modules/babylonjs/babylon.max.js",
+                "babylonjs-gui": "./modules/babylonjs-gui/babylon.gui.min.js",
+                "babylonjs-materials": "./modules/babylonjs-materials/babylonjs.materials.js",
+                "babylonjs-loaders": "./modules/babylonjs-loaders/babylonjs.loaders.js",
+                "babylonjs-serializers": "./modules/babylonjs-serializers/babylonjs.serializers.js",
+                "babylonjs-procedural-textures": "./modules/babylonjs-procedural-textures/babylonjs.proceduralTextures.js",
+                "babylonjs-post-process": "./modules/babylonjs-post-process/babylonjs.postProcess.js",
+                "babylonjs-node-editor": "./modules/babylonjs-node-editor/babylon.nodeEditor.js",
+                "cannon": "./modules/cannon/build/cannon.js",
+                "spectorjs": "./modules/spectorjs/dist/spector.bundle.js",
+                "dat-gui": "./modules/dat.gui/build/dat.gui.js",
+                "raphael": "./modules/raphael/raphael.js",
+                "socket.io-client": "./modules/socket.io-client/dist/socket.io.js",
+                "earcut": "./modules/earcut/dist/earcut.min.js",
+                "oimo": "./modules/babylonjs/Oimo.js",
+                "jstree": "./modules/jstree/dist/jstree.js",
+                "golden-layout": "./modules/golden-layout/dist/goldenlayout.js",
+                "javascript-astar": "./modules/javascript-astar/astar.js",
+                "typescript": "./modules/typescript/lib/typescript.js",
+                "litegraph.js": "./modules/litegraph.js/build/litegraph.min.js",
 
                 // Editor's modules paths
                 "babylonjs-editor": "./dist/editor.js",
@@ -63,13 +63,13 @@
                 "./build/src/": {
                     defaultExtension: "js"
                 },
-                "./node_modules/babylonjs-loaders/": {
+                "./modules/babylonjs-loaders/": {
                     format: "cjs",
                     main: "babylonjs.loaders.min.js"
                 }
             },
             map: {
-                css: "./node_modules/systemjs-plugin-css/css.js"
+                css: "./modules/systemjs-plugin-css/css.js"
             },
             meta: {
                 "*.css": { loader: "css" },
@@ -99,9 +99,9 @@
     </script>
 
     <!-- REQUIRE MONACO EDITOR -->
-    <script src="./node_modules/monaco-editor/min/vs/loader.js" type="text/javascript"></script>
+    <script src="./modules/monaco-editor/min/vs/loader.js" type="text/javascript"></script>
     <script type="text/javascript">
-        require.config({ paths: { 'vs': './node_modules/monaco-editor/min/vs' }});
+        require.config({ paths: { 'vs': './modules/monaco-editor/min/vs' }});
         require(['vs/editor/editor.main'], function() {
             // Empty
 		});
