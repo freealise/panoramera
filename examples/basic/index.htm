@@ -26,6 +26,9 @@
         <script src="EditControl.js"></script>
 
         <style>
+            * {
+                user-select:none;
+            }
             html, body {
                 overflow: hidden;
                 width: 100%;
@@ -33,6 +36,7 @@
                 margin: 0;
                 padding: 0;
                 user-select:none;
+                touch-action: none;
             }
             a {
               color: white;
@@ -40,6 +44,7 @@
             #renderCanvas {
                 width: 100%;
                 height: 100%;
+                user-select:none;
                 touch-action: none;
             }
             
@@ -160,10 +165,10 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   for (var i=0; i<scene.meshes.length; i++) {
     if (scene.meshes[i].name.indexOf("dome") == 0) {
       if (j==0) {
-        document.getElementById("fnum").innerHTML = '<option selected value="' + i + '">' + i + '</option>';
+        document.getElementById("fnum").innerHTML = '<option selected value="' + i + '">' + j + '</option>';
         document.getElementById("fnum").value = i;
       } else {
-        document.getElementById("fnum").innerHTML += '<option value="' + i + '">' + i + '</option>';
+        document.getElementById("fnum").innerHTML += '<option value="' + i + '">' + j + '</option>';
       }
       scene.meshes[i].rotationQuaternion = null;
       scene.meshes[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
@@ -184,7 +189,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
 
-  editControl = new EditControl(scene.meshes[parseInt(document.getElementById("fnum").value)], camera, canvas, 2.0, true, 0.02);
+  editControl = new EditControl(scene.meshes[parseInt(document.getElementById("fnum").value)], camera, canvas, 1.0, true, 0.02);
   editControl.enableTranslation();
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
@@ -239,8 +244,8 @@ window.scene = createScene();};
 <input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg,'/>
 <input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/><br/>
-# <select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
-<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mode(this.value);'>
+#<select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
+mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mode(this.value);'>
     <option selected value='move'>move</option>
     <option value='rotate'>rotate</option>
     <option value='scale'>scale</option>
