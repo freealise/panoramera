@@ -149,6 +149,11 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
     }
     scene.meshes[scene.meshes.length-1].applyDisplacementMap(bgd[j], 0, 255, null, null, null, true, function(e){alert(e);});
     scene.meshes[scene.meshes.length-1].name = "dome"+j;
+    //material.forceDepthWrite
+    scene.meshes[scene.meshes.length-1].material.needDepthPrePass = true;
+    scene.meshes[scene.meshes.length-1].alphaIndex = bgi.length-j;
+    scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
+    scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
   }
   
   var j=0;
