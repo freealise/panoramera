@@ -157,34 +157,34 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   }
   
   var j=0;
-  for (var i=0; i<scene.getNodes().length; i++) {
-    if (scene.getNodes()[i].name.indexOf("dome") == 0) {
+  for (var i=0; i<scene.meshes.length; i++) {
+    if (scene.meshes[i].name.indexOf("dome") == 0) {
       if (j==0) {
         document.getElementById("fnum").innerHTML = '<option selected value="' + i + '">' + i + '</option>';
         document.getElementById("fnum").value = i;
       } else {
         document.getElementById("fnum").innerHTML += '<option value="' + i + '">' + i + '</option>';
       }
-      scene.getNodes()[i].rotationQuaternion = null;
-      scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
-      scene.getNodes()[i].position.z = coords[parseInt(order[j])].lat;
-      scene.getNodes()[i].position.x = coords[parseInt(order[j])].lng;
-      scene.getNodes()[i].rotation.y = coords[parseInt(order[j])].heading / 180 * Math.PI;
-      scene.getNodes()[i].rotation.z = -coords[parseInt(order[j])].pitch / 180 * Math.PI;
+      scene.meshes[i].rotationQuaternion = null;
+      scene.meshes[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
+      scene.meshes[i].position.z = coords[parseInt(order[j])].lat;
+      scene.meshes[i].position.x = coords[parseInt(order[j])].lng;
+      scene.meshes[i].rotation.y = coords[parseInt(order[j])].heading / 180 * Math.PI;
+      scene.meshes[i].rotation.z = -coords[parseInt(order[j])].pitch / 180 * Math.PI;
       j++;
     }
   }
   var l_axes = new BABYLON.Debug.AxesViewer(scene, 16);
-  l_axes.xAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
-  l_axes.yAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
-  l_axes.zAxis.parent = scene.getNodes()[parseInt(document.getElementById("fnum").value)];
+  l_axes.xAxis.parent = scene.meshes[parseInt(document.getElementById("fnum").value)];
+  l_axes.yAxis.parent = scene.meshes[parseInt(document.getElementById("fnum").value)];
+  l_axes.zAxis.parent = scene.meshes[parseInt(document.getElementById("fnum").value)];
   
   var axes = new BABYLON.Debug.AxesViewer(scene, 32);
   var CoT = new BABYLON.TransformNode("root");
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
 
-  editControl = new EditControl(scene.getNodes()[parseInt(document.getElementById("fnum").value)], camera, canvas, 2.0, true, 0.02);
+  editControl = new EditControl(scene.meshes[parseInt(document.getElementById("fnum").value)], camera, canvas, 2.0, true, 0.02);
   editControl.enableTranslation();
   editControl.setTransSnapValue(1.0);
 
@@ -195,7 +195,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 
   BABYLON.Engine.LastCreatedScene.activeCamera.fov = document.getElementById("zoom").value;
   
-  document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0 + "px)";
+  document.getElementById("renderCanvas").style.filter = "blur(" + BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById("fnum").value)].material.pointSize/2.0 + "px)";
   document.getElementById("renderCanvas").oncontextmenu = function(e){e.preventDefault();}
   document.getElementById("renderCanvas").ondrag = function(e){e.preventDefault();}
 
@@ -257,9 +257,9 @@ var screenshot = false;
 
 document.getElementById('zoom').addEventListener('input', function(event){
 try {
-    for (var i=0; i<BABYLON.Engine.LastCreatedScene.getNodes().length; i++) {
-        if (BABYLON.Engine.LastCreatedScene.getNodes()[i].material && BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize) {
-              BABYLON.Engine.LastCreatedScene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value));
+    for (var i=0; i<BABYLON.Engine.LastCreatedScene.meshes.length; i++) {
+        if (BABYLON.Engine.LastCreatedScene.meshes[i].material && BABYLON.Engine.LastCreatedScene.meshes[i].material.pointSize) {
+              BABYLON.Engine.LastCreatedScene.meshes[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value));
         }
     }
     BABYLON.Engine.LastCreatedScene.activeCamera.fov = event.target.value;
@@ -281,7 +281,7 @@ document.getElementById('contrast').addEventListener('input', function(event) {
 
 function attach_control() {
 try {
-  editControl.switchTo(scene.getNodes([parseInt(document.getElementById("fnum").value)], true);
+  editControl.switchTo(scene.meshes[parseInt(document.getElementById("fnum").value)], true);
 } catch(e) {alert(e);}
 }
 
@@ -290,9 +290,9 @@ function reset_cam() {
     BABYLON.Engine.LastCreatedScene.activeCamera.radius = 0;
     BABYLON.Engine.LastCreatedScene.activeCamera.alpha = 0;
     BABYLON.Engine.LastCreatedScene.activeCamera.beta = Math.PI / 2;
-    BABYLON.Engine.LastCreatedScene.activeCamera.position.x = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.x;
-    BABYLON.Engine.LastCreatedScene.activeCamera.position.y = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.y;
-    BABYLON.Engine.LastCreatedScene.activeCamera.position.z = BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById("fnum").value)].position.z;
+    BABYLON.Engine.LastCreatedScene.activeCamera.position.x = BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById("fnum").value)].position.x;
+    BABYLON.Engine.LastCreatedScene.activeCamera.position.y = BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById("fnum").value)].position.y;
+    BABYLON.Engine.LastCreatedScene.activeCamera.position.z = BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById("fnum").value)].position.z;
     BABYLON.Engine.LastCreatedScene.activeCamera.rebuildAnglesAndRadius();
 }
 
@@ -325,7 +325,7 @@ BABYLON.Tools.CreateScreenshotUsingRenderTarget(BABYLON.Engine.LastCreatedScene.
              var svgd = `<svg id="svg_out" viewBox="0 0 ` + cnvs.width + ` ` + cnvs.height + `" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                           <defs>
                             <filter id="blur" x="0" y="0" xmlns="http://www.w3.org/2000/svg">
-                              <feGaussianBlur in="SourceGraphic" stdDeviation="` + BABYLON.Engine.LastCreatedScene.getNodes()[parseInt(document.getElementById('fnum').value)].material.pointSize/2.0*Math.sqrt(2.0) + `" />
+                              <feGaussianBlur in="SourceGraphic" stdDeviation="` + BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById('fnum').value)].material.pointSize/2.0*Math.sqrt(2.0) + `" />
                             </filter>
                           </defs>
                           <image filter="url(#blur)" id="svg_img" x="0" y="0" width="` + cnvs.width + `" height="` + cnvs.height + `" xlink:href=\"` + durl + `\"/>
