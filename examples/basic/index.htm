@@ -186,7 +186,6 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 
   editControl = new EditControl(scene.meshes[parseInt(document.getElementById("fnum").value)], camera, canvas, 2.0, true, 0.02);
   editControl.enableTranslation();
-  editControl.setTransSnapValue(1.0);
 
   pipeline = new BABYLON.DefaultRenderingPipeline("default", true, BABYLON.Engine.LastCreatedScene, [BABYLON.Engine.LastCreatedScene.activeCamera]);
   pipeline.samples = 4;
@@ -295,12 +294,13 @@ try {
 
 function control_mode(m) {
   if (m == 'move') {
+    editControl.show();
     editControl.enableTranslation();
-    editControl.setTransSnapValue(1.0);
     
     editControl.disableRotation();
     editControl.disableScaling();
   } else if (m == 'rotate') {
+    editControl.show();
     editControl.enableRotation();
     editControl.setRotGuideFull(false) //This makes the rotation guides 360 degree(true) or 90 degree(false) .90 degree  looks less cluttered.
     editControl.returnEuler(true); // Optional. This will return rotation in euler instead of quaternion. Quaternion is the default.
@@ -308,6 +308,7 @@ function control_mode(m) {
     editControl.disableTranslation();
     editControl.disableScaling();
   } else if (m == 'scale') {
+    editControl.show();
     editControl.enableScaling();
     
     editControl.disableTranslation();
@@ -316,6 +317,7 @@ function control_mode(m) {
     editControl.disableTranslation();
     editControl.disableRotation();
     editControl.disableScaling();
+    editControl.hide();
   }
 }
 
