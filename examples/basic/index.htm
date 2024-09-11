@@ -241,6 +241,12 @@ window.scene = createScene();};
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg,'/>
 <input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/><br/>
 # <select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
+<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mode(this.value);'>
+    <option selected value='move'>move</option>
+    <option value='rotate'>rotate</option>
+    <option value='scale'>scale</option>
+    <option value='-'>-</option>
+</select><br/>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
 <a href='#' id='origin_cam' onclick='origin_cam();'>camera to origin</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a><br/>
@@ -284,6 +290,33 @@ function attach_control() {
 try {
   editControl.switchTo(scene.meshes[parseInt(document.getElementById("fnum").value)], true);
 } catch(e) {alert(e);}
+}
+
+
+function control_mode(m) {
+  if (m == 'move') {
+    editControl.enableTranslation();
+    editControl.setTransSnapValue(1.0);
+    
+    editControl.disableRotation();
+    editControl.disableScaling();
+  } else if (m == 'rotate') {
+    editControl.enableRotation();
+    editControl.setRotGuideFull(false) //This makes the rotation guides 360 degree(true) or 90 degree(false) .90 degree  looks less cluttered.
+    editControl.returnEuler(true); // Optional. This will return rotation in euler instead of quaternion. Quaternion is the default.
+
+    editControl.disableTranslation();
+    editControl.disableScaling();
+  } else if (m == 'scale') {
+    editControl.enableScaling();
+    
+    editControl.disableTranslation();
+    editControl.disableRotation();
+  } else {
+    editControl.disableTranslation();
+    editControl.disableRotation();
+    editControl.disableScaling();
+  }
 }
 
 
