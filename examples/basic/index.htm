@@ -160,8 +160,10 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   for (var i=0; i<scene.meshes.length; i++) {
     if (scene.meshes[i].name.indexOf("dome") == 0) {
       if (j==0) {
+        document.getElementById("fnum").innerHTML = '<option selected value="' + i + '">' + i + '</option>';
         document.getElementById("fnum").value = i;
-        document.getElementById("fnum").min = i;
+      } else {
+        document.getElementById("fnum").innerHTML += '<option value="' + i + '">' + i + '</option>';
       }
       scene.getNodes()[i].rotationQuaternion = null;
       scene.getNodes()[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
@@ -237,8 +239,8 @@ window.scene = createScene();};
 <input type='text' id='order' value='0'/>
 <input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg,'/>
-<input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/>
-# <input type='range' id='fnum' min='2' value='2' max='2' step='1' oninput='attach_control();'/>
+<input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/><br/>
+# <select id='fnum' oninput='attach_control();'><option selected value='2'>2</option></select>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a><br/>
 
@@ -278,7 +280,9 @@ document.getElementById('contrast').addEventListener('input', function(event) {
 
 
 function attach_control() {
-editControl.switchTo(scene.getNodes([parseInt(document.getElementById("fnum").value)], true);
+try {
+  editControl.switchTo(scene.getNodes([parseInt(document.getElementById("fnum").value)], true);
+} catch(e) {alert(e);}
 }
 
 
