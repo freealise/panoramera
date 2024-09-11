@@ -242,6 +242,7 @@ window.scene = createScene();};
 <input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/><br/>
 # <select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
 <a href='#' id='reset_cam' onclick='reset_cam();'>reset camera</a>
+<a href='#' id='origin_cam' onclick='origin_cam();'>camera to origin</a>
 <a href='#' id='optimize' onclick='optimize();'>optimize</a><br/>
 
 <a href='#' onclick='if(!scene.debugLayer.isVisible()){scene.debugLayer.show();}else{scene.debugLayer.hide();}'>inspector</a>
@@ -286,14 +287,19 @@ try {
 }
 
 
-function reset_cam() {
-    BABYLON.Engine.LastCreatedScene.activeCamera.radius = 0;
-    BABYLON.Engine.LastCreatedScene.activeCamera.alpha = 0;
-    BABYLON.Engine.LastCreatedScene.activeCamera.beta = Math.PI / 2;
+function origin_cam() {
+    reset_cam();
     BABYLON.Engine.LastCreatedScene.activeCamera.position.x = BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById("fnum").value)].position.x;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.y = BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById("fnum").value)].position.y;
     BABYLON.Engine.LastCreatedScene.activeCamera.position.z = BABYLON.Engine.LastCreatedScene.meshes[parseInt(document.getElementById("fnum").value)].position.z;
     BABYLON.Engine.LastCreatedScene.activeCamera.rebuildAnglesAndRadius();
+}
+
+
+function reset_cam() {
+    BABYLON.Engine.LastCreatedScene.activeCamera.radius = 0;
+    BABYLON.Engine.LastCreatedScene.activeCamera.alpha = 0;
+    BABYLON.Engine.LastCreatedScene.activeCamera.beta = Math.PI / 2;
 }
 
 
