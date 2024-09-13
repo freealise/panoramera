@@ -117,6 +117,7 @@
                 cameraMoveDistance = 1;
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
+                camera.inputs.attached.pointers.panningSensibility = 1;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
