@@ -103,13 +103,18 @@
         var sceneToRender = null;
         var pipeline = null;
         var editControl = null;
+        var dummyTarget = BABYLON.Vector3.Zero();
+        var camera, cameraForward, cameraRight, cameraMoveDistance;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
             static CreateScene(engine, canvas) {
                 // This creates a basic Babylon Scene object (non-mesh)
                 var scene = new BABYLON.Scene(engine);
-                var camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
+                camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
+                cameraForward = dummyTarget.subtract(camera.position).normalize();
+                cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
+                cameraMoveDistance = 1;
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
@@ -278,12 +283,38 @@ try {
     event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     document.getElementById("renderCanvas").style.filter = "blur(" + Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value)/2.0) + "px)";
 } catch(e) {alert(e)}
+
+    /*alert("move forward!");
+    cameraForward = dummyTarget.subtract(camera.position).normalize();
+    cameraForward.scaleInPlace(cameraMoveDistance);
+    dummyTarget.addInPlace(cameraForward);
+    camera.setTarget(dummyTarget);*/
+    
+    /*alert("move back!");
+    cameraForward = dummyTarget.subtract(camera.position).normalize();
+    cameraForward.scaleInPlace(cameraMoveDistance);
+    dummyTarget.subtractInPlace(cameraForward);
+    camera.setTarget(dummyTarget);*/
 });
 
 document.getElementById('pan').addEventListener('input', function(event) {
-    BABYLON.Engine.LastCreatedScene.activeCamera.radius = event.target.value;
-    //BABYLON.Engine.LastCreatedScene.activeCamera.alpha = 0;
-    //BABYLON.Engine.LastCreatedScene.activeCamera.beta = Math.PI / 2;
+    const old = parseInt(event.target.parentNode.childNodes[2].innerText);
+            
+    if (event.target.value < old) {
+        //alert("move left!");
+        cameraForward = dummyTarget.subtract(camera.position).normalize();
+        cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
+        cameraRight.scaleInPlace(Math.abs(event.target.value - old));
+        dummyTarget.subtractInPlace(cameraRight);
+        camera.setTarget(dummyTarget);
+    } else if (event.target.value > old) {
+        //alert("move right!");
+        cameraForward = dummyTarget.subtract(camera.position).normalize();
+        cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
+        cameraRight.scaleInPlace(Math.abs(event.target.value - old));
+        dummyTarget.addInPlace(cameraRight);
+        camera.setTarget(dummyTarget);
+    }
     event.target.parentNode.childNodes[2].innerText = event.target.value;
 });
 
