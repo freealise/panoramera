@@ -81187,9 +81187,9 @@ ENV.registerFlag('WASM_HAS_MULTITHREAD_SUPPORT', async () => {
   }
 });
 },{"@tensorflow/tfjs-core":"node_modules/@tensorflow/tfjs-core/dist/index.js"}],"node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js":[function(require,module,exports) {
-var __filename = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js";
+var __filename = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/upload_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm-threaded-simd.js";
 var process = require("process");
-var __dirname = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
+var __dirname = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/upload_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
 var global = arguments[3];
 var define;
 
@@ -81224,9 +81224,9 @@ exports.wasmWorkerContents = void 0;
 const wasmWorkerContents = '"use strict";var Module={};var ENVIRONMENT_IS_NODE=typeof process==="object"&&typeof process.versions==="object"&&typeof process.versions.node==="string";if(ENVIRONMENT_IS_NODE){var nodeWorkerThreads=require("worker_threads");var parentPort=nodeWorkerThreads.parentPort;parentPort.on("message",function(data){onmessage({data:data})});var fs=require("fs");Object.assign(global,{self:global,require:require,Module:Module,location:{href:__filename},Worker:nodeWorkerThreads.Worker,importScripts:function(f){(0,eval)(fs.readFileSync(f,"utf8"))},postMessage:function(msg){parentPort.postMessage(msg)},performance:global.performance||{now:function(){return Date.now()}}})}function threadPrintErr(){var text=Array.prototype.slice.call(arguments).join(" ");if(ENVIRONMENT_IS_NODE){fs.writeSync(2,text+"\n");return}console.error(text)}function threadAlert(){var text=Array.prototype.slice.call(arguments).join(" ");postMessage({cmd:"alert",text:text,threadId:Module["_pthread_self"]()})}var err=threadPrintErr;self.alert=threadAlert;Module["instantiateWasm"]=((info,receiveInstance)=>{var instance=new WebAssembly.Instance(Module["wasmModule"],info);receiveInstance(instance);Module["wasmModule"]=null;return instance.exports});self.onmessage=(e=>{try{if(e.data.cmd==="load"){Module["wasmModule"]=e.data.wasmModule;Module["wasmMemory"]=e.data.wasmMemory;Module["buffer"]=Module["wasmMemory"].buffer;Module["ENVIRONMENT_IS_PTHREAD"]=true;if(typeof e.data.urlOrBlob==="string"){importScripts(e.data.urlOrBlob)}else{var objectUrl=URL.createObjectURL(e.data.urlOrBlob);importScripts(objectUrl);URL.revokeObjectURL(objectUrl)}WasmBackendModuleThreadedSimd(Module).then(function(instance){Module=instance})}else if(e.data.cmd==="run"){Module["__performance_now_clock_drift"]=performance.now()-e.data.time;Module["__emscripten_thread_init"](e.data.threadInfoStruct,0,0,1);Module["establishStackSpace"]();Module["PThread"].receiveObjectTransfer(e.data);Module["PThread"].threadInit();try{var result=Module["invokeEntryPoint"](e.data.start_routine,e.data.arg);if(Module["keepRuntimeAlive"]()){Module["PThread"].setExitStatus(result)}else{Module["__emscripten_thread_exit"](result)}}catch(ex){if(ex!="unwind"){if(ex instanceof Module["ExitStatus"]){if(Module["keepRuntimeAlive"]()){}else{Module["__emscripten_thread_exit"](ex.status)}}else{throw ex}}}}else if(e.data.cmd==="cancel"){if(Module["_pthread_self"]()){Module["__emscripten_thread_exit"](-1)}}else if(e.data.target==="setimmediate"){}else if(e.data.cmd==="processThreadQueue"){if(Module["_pthread_self"]()){Module["_emscripten_current_thread_process_queued_calls"]()}}else if(e.data.cmd==="processProxyingQueue"){if(Module["_pthread_self"]()){Module["_emscripten_proxy_execute_queue"](e.data.queue)}}else{err("worker.js received unknown command "+e.data.cmd);err(e.data)}}catch(ex){err("worker.js onmessage() captured an uncaught exception: "+ex);if(ex&&ex.stack)err(ex.stack);if(Module["__emscripten_thread_crashed"]){Module["__emscripten_thread_crashed"]()}throw ex}});';
 exports.wasmWorkerContents = wasmWorkerContents;
 },{}],"node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js":[function(require,module,exports) {
-var __filename = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js";
+var __filename = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/upload_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out/tfjs-backend-wasm.js";
 var process = require("process");
-var __dirname = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/live_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
+var __dirname = "/home/ahmedsabie/tfjs-models/face-landmarks-detection/demos/upload_video/node_modules/@tensorflow/tfjs-backend-wasm/wasm-out";
 var define;
 
 var WasmBackendModule = (() => {
@@ -93974,7 +93974,46 @@ function te(e, t) {
 !function (e) {
   e.MediaPipeFaceDetector = "MediaPipeFaceDetector";
 }(Q || (exports.SupportedModels = Q = {}));
-},{"@mediapipe/face_detection":"../../node_modules/@mediapipe/face_detection/face_detection.js","@tensorflow/tfjs-core":"node_modules/@tensorflow/tfjs-core/dist/index.js","@tensorflow/tfjs-converter":"node_modules/@tensorflow/tfjs-converter/dist/index.js"}],"node_modules/@mediapipe/face_mesh/face_mesh.js":[function(require,module,exports) {
+},{"@mediapipe/face_detection":"../../node_modules/@mediapipe/face_detection/face_detection.js","@tensorflow/tfjs-core":"node_modules/@tensorflow/tfjs-core/dist/index.js","@tensorflow/tfjs-converter":"node_modules/@tensorflow/tfjs-converter/dist/index.js"}],"src/shared/stats_panel.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.setupStats = setupStats;
+
+/**
+ * @license
+ * Copyright 2022 Google LLC. All Rights Reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * =============================================================================
+ */
+function setupStats() {
+  const stats = new Stats();
+  stats.customFpsPanel = stats.addPanel(new Stats.Panel('FPS', '#0ff', '#002'));
+  stats.showPanel(stats.domElement.children.length - 1);
+  const parent = document.getElementById('stats');
+  parent.appendChild(stats.domElement);
+  const statsPanes = parent.querySelectorAll('canvas');
+
+  for (let i = 0; i < statsPanes.length; ++i) {
+    statsPanes[i].style.width = '140px';
+    statsPanes[i].style.height = '80px';
+  }
+
+  return stats;
+}
+},{}],"node_modules/@mediapipe/face_mesh/face_mesh.js":[function(require,module,exports) {
 var global = arguments[3];
 (function(){/*
 
@@ -97319,9 +97358,7 @@ function drawResults(ctx, faces, triangulateMesh, boundingBox) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Camera = void 0;
-
-var _params = require("./shared/params");
+exports.Context = void 0;
 
 var _util = require("./shared/util");
 
@@ -97341,68 +97378,32 @@ var _util = require("./shared/util");
  * limitations under the License.
  * =============================================================================
  */
-class Camera {
+class Context {
   constructor() {
     this.video = document.getElementById('video');
     this.canvas = document.getElementById('output');
+    this.source = document.getElementById('currentVID');
     this.ctx = this.canvas.getContext('2d');
-  }
-  /**
-   * Initiate a Camera instance and wait for the camera stream to be ready.
-   * @param cameraParam From app `STATE.camera`.
-   */
-
-
-  static async setupCamera(cameraParam) {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      throw new Error('Browser API navigator.mediaDevices.getUserMedia not available');
-    }
-
-    const {
-      targetFPS,
-      sizeOption
-    } = cameraParam;
-    const $size = _params.VIDEO_SIZE[sizeOption];
-    const videoConfig = {
-      'audio': false,
-      'video': {
-        facingMode: 'user',
-        // Only setting the video to a specified size for large screen, on
-        // mobile devices accept the default size.
-        width: (0, _util.isMobile)() ? _params.VIDEO_SIZE['360 X 270'].width : $size.width,
-        height: (0, _util.isMobile)() ? _params.VIDEO_SIZE['360 X 270'].height : $size.height,
-        frameRate: {
-          ideal: targetFPS
-        }
-      }
+    const stream = this.canvas.captureStream();
+    const options = {
+      mimeType: 'video/webm; codecs=vp9'
     };
-    const stream = await navigator.mediaDevices.getUserMedia(videoConfig);
-    const camera = new Camera();
-    camera.video.srcObject = stream;
-    await new Promise(resolve => {
-      camera.video.onloadedmetadata = () => {
-        resolve(video);
-      };
-    });
-    camera.video.play();
-    const videoWidth = camera.video.videoWidth;
-    const videoHeight = camera.video.videoHeight; // Must set below two lines, otherwise video element doesn't show.
-
-    camera.video.width = videoWidth;
-    camera.video.height = videoHeight;
-    camera.canvas.width = videoWidth;
-    camera.canvas.height = videoHeight;
-    const canvasContainer = document.querySelector('.canvas-wrapper');
-    canvasContainer.style = `width: ${videoWidth}px; height: ${videoHeight}px`; // Because the image from camera is mirrored, need to flip horizontally.
-
-    camera.ctx.translate(camera.video.videoWidth, 0);
-    camera.ctx.scale(-1, 1);
-    return camera;
+    this.mediaRecorder = new MediaRecorder(stream, options);
+    this.mediaRecorder.ondataavailable = this.handleDataAvailable;
   }
 
   drawCtx() {
     this.ctx.drawImage(this.video, 0, 0, this.video.videoWidth, this.video.videoHeight);
   }
+
+  clearCtx() {
+    this.ctx.clearRect(0, 0, this.video.videoWidth, this.video.videoHeight);
+  }
+  /**
+   * Draw the keypoints on the video.
+   * @param faces A list of faces to render.
+   */
+
 
   drawResults(faces, triangulateMesh, boundingBox) {
     (0, _util.drawResults)(this.ctx, faces, triangulateMesh, boundingBox);
@@ -97410,8 +97411,8 @@ class Camera {
 
 }
 
-exports.Camera = Camera;
-},{"./shared/params":"src/shared/params.js","./shared/util":"src/shared/util.js"}],"src/shared/option_panel.js":[function(require,module,exports) {
+exports.Context = Context;
+},{"./shared/util":"src/shared/util.js"}],"src/shared/option_panel.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -97700,13 +97701,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.setupDatGui = setupDatGui;
 
-var params = _interopRequireWildcard(require("./shared/params"));
-
 var _option_panel = require("./shared/option_panel");
-
-function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
-
-function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /**
  * @license
@@ -97728,75 +97723,27 @@ async function setupDatGui(urlParams) {
   const gui = new dat.GUI({
     width: 300
   });
-  gui.domElement.id = 'gui'; // The camera folder contains options for video settings.
-
-  const cameraFolder = gui.addFolder('Camera');
-  const fpsController = cameraFolder.add(params.STATE.camera, 'targetFPS');
-  fpsController.onFinishChange(_ => {
-    params.STATE.isTargetFPSChanged = true;
-  });
-  const sizeController = cameraFolder.add(params.STATE.camera, 'sizeOption', Object.keys(params.VIDEO_SIZE));
-  sizeController.onChange(_ => {
-    params.STATE.isSizeOptionChanged = true;
-  });
-  cameraFolder.open();
+  gui.domElement.id = 'gui';
   return (0, _option_panel.setupModelFolder)(gui, urlParams);
 }
-},{"./shared/params":"src/shared/params.js","./shared/option_panel":"src/shared/option_panel.js"}],"src/shared/stats_panel.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.setupStats = setupStats;
-
-/**
- * @license
- * Copyright 2022 Google LLC. All Rights Reserved.
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- * https://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * =============================================================================
- */
-function setupStats() {
-  const stats = new Stats();
-  stats.customFpsPanel = stats.addPanel(new Stats.Panel('FPS', '#0ff', '#002'));
-  stats.showPanel(stats.domElement.children.length - 1);
-  const parent = document.getElementById('stats');
-  parent.appendChild(stats.domElement);
-  const statsPanes = parent.querySelectorAll('canvas');
-
-  for (let i = 0; i < statsPanes.length; ++i) {
-    statsPanes[i].style.width = '140px';
-    statsPanes[i].style.height = '80px';
-  }
-
-  return stats;
-}
-},{}],"src/index.js":[function(require,module,exports) {
+},{"./shared/option_panel":"src/shared/option_panel.js"}],"src/index.js":[function(require,module,exports) {
 "use strict";
 
 require("@tensorflow/tfjs-backend-webgl");
 
 var tfjsWasm = _interopRequireWildcard(require("@tensorflow/tfjs-backend-wasm"));
 
+var tf = _interopRequireWildcard(require("@tensorflow/tfjs-core"));
+
 require("@tensorflow-models/face-detection");
+
+var _stats_panel = require("./shared/stats_panel");
 
 var _camera = require("./camera");
 
 var _option_panel = require("./option_panel");
 
 var _params = require("./shared/params");
-
-var _stats_panel = require("./shared/stats_panel");
 
 var _util = require("./shared/util");
 
@@ -97827,33 +97774,19 @@ let startInferenceTime,
 let inferenceTimeSum = 0,
     lastPanelUpdate = 0;
 let rafId;
+const statusElement = document.getElementById('status');
 
 async function checkGuiUpdate() {
-  if (_params.STATE.isTargetFPSChanged || _params.STATE.isSizeOptionChanged) {
-    camera = await _camera.Camera.setupCamera(_params.STATE.camera);
-    _params.STATE.isTargetFPSChanged = false;
-    _params.STATE.isSizeOptionChanged = false;
-  }
-
   if (_params.STATE.isModelChanged || _params.STATE.isFlagChanged || _params.STATE.isBackendChanged) {
     _params.STATE.isModelChanged = true;
     window.cancelAnimationFrame(rafId);
-
-    if (detector != null) {
-      detector.dispose();
-    }
+    detector.dispose();
 
     if (_params.STATE.isFlagChanged || _params.STATE.isBackendChanged) {
       await (0, _util.setBackendAndEnvFlags)(_params.STATE.flags, _params.STATE.backend);
     }
 
-    try {
-      detector = await (0, _params.createDetector)(_params.STATE.model);
-    } catch (error) {
-      detector = null;
-      alert(error);
-    }
-
+    detector = await (0, _params.createDetector)(_params.STATE.model);
     _params.STATE.isFlagChanged = false;
     _params.STATE.isBackendChanged = false;
     _params.STATE.isModelChanged = false;
@@ -97882,55 +97815,89 @@ function endEstimateFaceStats() {
 }
 
 async function renderResult() {
-  if (camera.video.readyState < 2) {
-    await new Promise(resolve => {
-      camera.video.onloadeddata = () => {
-        resolve(video);
-      };
-    });
-  }
-
-  let faces = null; // Detector can be null if initialization failed (for example when loading
-  // from a URL that does not exist).
-
-  if (detector != null) {
-    // FPS only counts the time it takes to finish estimateFaces.
-    beginEstimateFaceStats(); // Detectors can throw errors, for example when using custom URLs that
-    // contain a model that doesn't provide the expected output.
-
-    try {
-      faces = await detector.estimateFaces(camera.video, {
-        flipHorizontal: false
-      });
-    } catch (error) {
-      detector.dispose();
-      detector = null;
-      alert(error);
-    }
-
-    endEstimateFaceStats();
-  }
-
+  // FPS only counts the time it takes to finish estimateFaces.
+  beginEstimateFaceStats();
+  const faces = await detector.estimateFaces(camera.video, {
+    flipHorizontal: false
+  });
+  endEstimateFaceStats();
   camera.drawCtx(); // The null check makes sure the UI is not in the middle of changing to a
-  // different model. If during model change, the result is from an old model,
-  // which shouldn't be rendered.
+  // different model. If during model change, the result is from an old
+  // model, which shouldn't be rendered.
 
-  if (faces && faces.length > 0 && !_params.STATE.isModelChanged) {
+  if (faces.length > 0 && !_params.STATE.isModelChanged) {
     camera.drawResults(faces, _params.STATE.modelConfig.triangulateMesh, _params.STATE.modelConfig.boundingBox);
   }
 }
 
-async function renderPrediction() {
+async function checkUpdate() {
   await checkGuiUpdate();
-
-  if (!_params.STATE.isModelChanged) {
-    await renderResult();
-  }
-
-  rafId = requestAnimationFrame(renderPrediction);
+  requestAnimationFrame(checkUpdate);
 }
 
 ;
+
+async function updateVideo(event) {
+  // Clear reference to any previous uploaded video.
+  URL.revokeObjectURL(camera.video.currentSrc);
+  const file = event.target.files[0];
+  camera.source.src = URL.createObjectURL(file); // Wait for video to be loaded.
+
+  camera.video.load();
+  await new Promise(resolve => {
+    camera.video.onloadeddata = () => {
+      resolve(video);
+    };
+  });
+  const videoWidth = camera.video.videoWidth;
+  const videoHeight = camera.video.videoHeight; // Must set below two lines, otherwise video element doesn't show.
+
+  camera.video.width = videoWidth;
+  camera.video.height = videoHeight;
+  camera.canvas.width = videoWidth;
+  camera.canvas.height = videoHeight;
+  statusElement.innerHTML = 'Video is loaded.';
+}
+
+async function runFrame() {
+  if (video.paused) {
+    // video has finished.
+    camera.mediaRecorder.stop();
+    camera.clearCtx();
+    camera.video.style.visibility = 'visible';
+    return;
+  }
+
+  await renderResult();
+  rafId = requestAnimationFrame(runFrame);
+}
+
+async function run() {
+  statusElement.innerHTML = 'Warming up model.'; // Warming up pipeline.
+
+  const [runtime, $backend] = _params.STATE.backend.split('-');
+
+  if (runtime === 'tfjs') {
+    const warmUpTensor = tf.fill([camera.video.height, camera.video.width, 3], 0, 'float32');
+    await detector.estimateFaces(warmUpTensor, {
+      flipHorizontal: false
+    });
+    warmUpTensor.dispose();
+    statusElement.innerHTML = 'Model is warmed up.';
+  }
+
+  camera.video.style.visibility = 'hidden';
+  video.pause();
+  video.currentTime = 0;
+  video.play();
+  camera.mediaRecorder.start();
+  await new Promise(resolve => {
+    camera.video.onseeked = () => {
+      resolve(video);
+    };
+  });
+  await runFrame();
+}
 
 async function app() {
   // Gui content will change depending on which model is in the query string.
@@ -97943,13 +97910,17 @@ async function app() {
 
   await (0, _option_panel.setupDatGui)(urlParams);
   stats = (0, _stats_panel.setupStats)();
-  camera = await _camera.Camera.setupCamera(_params.STATE.camera);
-  await (0, _util.setBackendAndEnvFlags)(_params.STATE.flags, _params.STATE.backend);
   detector = await (0, _params.createDetector)();
-  renderPrediction();
+  camera = new _camera.Context();
+  await (0, _util.setBackendAndEnvFlags)(_params.STATE.flags, _params.STATE.backend);
+  const runButton = document.getElementById('submit');
+  runButton.onclick = run;
+  const uploadButton = document.getElementById('videofile');
+  uploadButton.onchange = updateVideo;
+  checkUpdate();
 }
 
 ;
 app();
-},{"@tensorflow/tfjs-backend-webgl":"node_modules/@tensorflow/tfjs-backend-webgl/dist/index.js","@tensorflow/tfjs-backend-wasm":"node_modules/@tensorflow/tfjs-backend-wasm/dist/index.js","@tensorflow-models/face-detection":"node_modules/@tensorflow-models/face-detection/dist/face-detection.esm.js","./camera":"src/camera.js","./option_panel":"src/option_panel.js","./shared/params":"src/shared/params.js","./shared/stats_panel":"src/shared/stats_panel.js","./shared/util":"src/shared/util.js"}]},{},["src/index.js"], null)
+},{"@tensorflow/tfjs-backend-webgl":"node_modules/@tensorflow/tfjs-backend-webgl/dist/index.js","@tensorflow/tfjs-backend-wasm":"node_modules/@tensorflow/tfjs-backend-wasm/dist/index.js","@tensorflow/tfjs-core":"node_modules/@tensorflow/tfjs-core/dist/index.js","@tensorflow-models/face-detection":"node_modules/@tensorflow-models/face-detection/dist/face-detection.esm.js","./shared/stats_panel":"src/shared/stats_panel.js","./camera":"src/camera.js","./option_panel":"src/option_panel.js","./shared/params":"src/shared/params.js","./shared/util":"src/shared/util.js"}]},{},["src/index.js"], null)
 //# sourceMappingURL=/src.a2b27638.js.map
