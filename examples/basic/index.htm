@@ -113,7 +113,7 @@
                 camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
-                camera.inputs.attached.pointers.panningSensibility = 256;
+                camera.inputs.attached.pointers.panningSensibility = 64;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
@@ -349,7 +349,7 @@ function reset_cam() {
 
 try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
-    document.getElementById("cdata").innerText = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ', x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ', y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ', z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
+    document.getElementById("cdata").innerText = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ', a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ', b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ', x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ', y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ', z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
     if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.alpha - a_old) > Math.PI/4) {
         BABYLON.Engine.LastCreatedScene.activeCamera.alpha = a_old;
     }
