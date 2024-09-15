@@ -113,7 +113,7 @@
                 camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
-                camera.inputs.attached.pointers.panningSensibility = 32;
+                camera.inputs.attached.pointers.panningSensibility = 128;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
