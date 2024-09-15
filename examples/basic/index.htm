@@ -299,20 +299,21 @@ try {
 });
 
 document.getElementById('pan').addEventListener('input', function(event) {
-    const old = parseInt(event.target.parentNode.childNodes[2].innerText);
+    const old = parseFloat(event.target.parentNode.childNodes[2].innerText);
+    cameraMoveDistance = Math.abs(event.target.value - old);
             
     if (event.target.value < old) {
         //alert("move left!");
         cameraForward = dummyTarget.subtract(camera.position).normalize();
         cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
-        cameraRight.scaleInPlace(Math.abs(event.target.value - old));
+        cameraRight.scaleInPlace(cameraMoveDistance);
         dummyTarget.subtractInPlace(cameraRight);
         camera.setTarget(dummyTarget);
     } else if (event.target.value > old) {
         //alert("move right!");
         cameraForward = dummyTarget.subtract(camera.position).normalize();
         cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
-        cameraRight.scaleInPlace(Math.abs(event.target.value - old));
+        cameraRight.scaleInPlace(cameraMoveDistance);
         dummyTarget.addInPlace(cameraRight);
         camera.setTarget(dummyTarget);
     }
