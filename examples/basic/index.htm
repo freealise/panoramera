@@ -349,7 +349,7 @@ function reset_cam() {
 
 try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
-    document.getElementById("cdata").innerText = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ', a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ', b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ', x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ', y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ', z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
+    document.getElementById("cdata").innerHTML = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
     if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.radius) > 1.0) {
         BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.8 * Math.pow(2, BABYLON.Engine.LastCreatedScene.activeCamera.radius);
         
