@@ -285,17 +285,19 @@ try {
 });
 
 document.getElementById('pan').addEventListener('input', function(event) {
+    try {
     const old = parseFloat(event.target.parentNode.childNodes[2].innerText);
     
     cameraMoveDistance = event.target.value - old;
     dummyTarget.x = 256 * Math.cos(camera.alpha) * Math.sin(camera.beta);
     dummyTarget.y = 256 * Math.cos(camera.beta);
     dummyTarget.z = 256 * Math.sin(camera.alpha) * Math.sin(camera.beta);
-    camera.setTarget(dummyTarget);
+    camera.setTarget(dummyTarget, null, null, false);
     camera.alpha += cameraMoveDistance / 180 * Math.PI;
-    camera.setTarget(camera.position);
+    camera.setTarget(camera.position, null, null, false);
     
     event.target.parentNode.childNodes[2].innerText = event.target.value;
+    } catch(e) {alert(e);}
 });
 
 document.getElementById('exposure').addEventListener('input', function(event) {
