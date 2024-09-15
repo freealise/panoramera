@@ -113,7 +113,7 @@
                 camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
-                camera.inputs.attached.pointers.panningSensibility = 64;
+                camera.inputs.attached.pointers.panningSensibility = 32;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
@@ -351,14 +351,14 @@ try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
     document.getElementById("cdata").innerHTML = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
     if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.radius) > 1.0) {
-        BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.8 * Math.pow(2, BABYLON.Engine.LastCreatedScene.activeCamera.radius);
+        BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.8 * Math.pow(2, BABYLON.Engine.LastCreatedScene.activeCamera.radius/16);
         
         if (BABYLON.Engine.LastCreatedScene.activeCamera.fov < 0.157) {
             BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.157;
         } else if (BABYLON.Engine.LastCreatedScene.activeCamera.fov > 1.57) {
             BABYLON.Engine.LastCreatedScene.activeCamera.fov = 1.57;
         }
-        BABYLON.Engine.LastCreatedScene.activeCamera.radius = 1.0;
+        BABYLON.Engine.LastCreatedScene.activeCamera.radius = Math.sign(BABYLON.Engine.LastCreatedScene.activeCamera.radius);
     }
   });
 } catch(e) {alert(e);}
