@@ -349,10 +349,9 @@ function reset_cam() {
 
 try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
-    document.getElementById("cdata").innerHTML = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
+    document.getElementById("cdata").innerHTML = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z + ',<br/> fov: ' + BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     
     BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.8 * Math.pow(2, BABYLON.Engine.LastCreatedScene.activeCamera.radius/16);
-    document.getElementById("cdata").innerHTML += ',<br/> fov: ' + BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     
     if (BABYLON.Engine.LastCreatedScene.activeCamera.fov < 0.157) {
         BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.157;
