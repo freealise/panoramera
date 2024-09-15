@@ -103,8 +103,7 @@
         var sceneToRender = null;
         var pipeline = null;
         var editControl = null;
-        var dummyTarget = BABYLON.Vector3.Zero();
-        var camera, cameraForward, cameraRight, cameraMoveDistance;
+        var camera, cameraMoveDistance, dummyTarget;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
@@ -112,8 +111,7 @@
                 // This creates a basic Babylon Scene object (non-mesh)
                 var scene = new BABYLON.Scene(engine);
                 camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
-                cameraForward = dummyTarget.subtract(camera.position).normalize();
-                cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
+                dummyTarget = camera.position;
                 cameraMoveDistance = 1;
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
@@ -284,39 +282,19 @@ try {
     event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     document.getElementById("renderCanvas").style.filter = "blur(" + Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value)/2.0) + "px)";
 } catch(e) {alert(e)}
-
-    /*alert("move forward!");
-    cameraForward = dummyTarget.subtract(camera.position).normalize();
-    cameraForward.scaleInPlace(cameraMoveDistance);
-    dummyTarget.addInPlace(cameraForward);
-    camera.setTarget(dummyTarget);*/
-    
-    /*alert("move back!");
-    cameraForward = dummyTarget.subtract(camera.position).normalize();
-    cameraForward.scaleInPlace(cameraMoveDistance);
-    dummyTarget.subtractInPlace(cameraForward);
-    camera.setTarget(dummyTarget);*/
 });
 
 document.getElementById('pan').addEventListener('input', function(event) {
     const old = parseFloat(event.target.parentNode.childNodes[2].innerText);
-    cameraMoveDistance = Math.abs(event.target.value - old);
-            
-    if (event.target.value < old) {
-        //alert("move left!");
-        cameraForward = dummyTarget.subtract(camera.position).normalize();
-        cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
-        cameraRight.scaleInPlace(cameraMoveDistance);
-        dummyTarget.subtractInPlace(cameraRight);
-        camera.setTarget(dummyTarget);
-    } else if (event.target.value > old) {
-        //alert("move right!");
-        cameraForward = dummyTarget.subtract(camera.position).normalize();
-        cameraRight = BABYLON.Vector3.Cross(camera.upVector, cameraForward);
-        cameraRight.scaleInPlace(cameraMoveDistance);
-        dummyTarget.addInPlace(cameraRight);
-        camera.setTarget(dummyTarget);
-    }
+    
+    cameraMoveDistance = event.target.value - old;
+    dummyTarget.x = 256 * Math.cos(camera.alpha) * Math.sin(camera.beta);
+    dummyTarget.y = 256 * Math.cos(camera.beta);
+    dummyTarget.z = 256 * Math.sin(camera.alpha) * Math.sin(camera.beta);
+    camera.setTarget(dummyTarget);
+    camera.alpha += cameraMoveDistance / 180 * Math.PI;
+    camera.setTarget(camera.position);
+    
     event.target.parentNode.childNodes[2].innerText = event.target.value;
 });
 
