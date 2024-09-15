@@ -115,13 +115,6 @@
                 camera.attachControl(canvas, true);
                 camera.inputs.attached.pointers.panningSensibility = 16;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
-
-  camera.onViewMatrixChangeObservable.add(function() {
-    document.getElementById("cdata").innerText = 'r: ' + camera.radius + ', x: ' + camera.position.x + ', y: ' + camera.position.y + ', z: ' + camera.position.z;
-  });
-  camera.onProjectionMatrixChangeObservable.add(function() {
-    document.getElementById("cdata").innerText = 'r: ' + camera.radius + ', x: ' + camera.position.x + ', y: ' + camera.position.y + ', z: ' + camera.position.z;
-  });
                 
                 if (location.href.split("?file=")[1]) {
                     var path = location.href.split("?file=")[1];
@@ -351,6 +344,14 @@ function reset_cam() {
     BABYLON.Engine.LastCreatedScene.activeCamera.alpha = 0;
     BABYLON.Engine.LastCreatedScene.activeCamera.beta = Math.PI / 2;
 }
+
+
+  camera.onViewMatrixChangeObservable.add(function() {
+    document.getElementById("cdata").innerText = 'r: ' + camera.radius + ', x: ' + camera.position.x + ', y: ' + camera.position.y + ', z: ' + camera.position.z;
+  });
+  camera.onProjectionMatrixChangeObservable.add(function() {
+    document.getElementById("cdata").innerText = 'r: ' + camera.radius + ', x: ' + camera.position.x + ', y: ' + camera.position.y + ', z: ' + camera.position.z;
+  });
 
 
 function optimize() {
