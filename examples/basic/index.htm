@@ -350,7 +350,7 @@ function reset_cam() {
 try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
     document.getElementById("cdata").innerText = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ', x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ', y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ', z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
-    if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.radius - r_old) > 1.0) {
+    if (BABYLON.Engine.LastCreatedScene.activeCamera.radius != 0.0001) {
         BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.8 * Math.pow(2, BABYLON.Engine.LastCreatedScene.activeCamera.radius);
         
         if (BABYLON.Engine.LastCreatedScene.activeCamera.fov < 0.157) {
@@ -359,7 +359,6 @@ try {
             BABYLON.Engine.LastCreatedScene.activeCamera.fov = 1.57;
         }
         BABYLON.Engine.LastCreatedScene.activeCamera.radius = 0.0001;
-        r_old = BABYLON.Engine.LastCreatedScene.activeCamera.radius;
     }
   });
 } catch(e) {alert(e);}
