@@ -126,15 +126,6 @@
                 }
 try {
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
-
-  try {
-  camera.onViewMatrixChangeObservable.add(function() {
-    document.getElementById("cdata").innerText = 'r: ' + camera.radius + ', x: ' + camera.position.x + ', y: ' + camera.position.y + ', z: ' + camera.position.z;
-  });
-  camera.onProjectionMatrixChangeObservable.add(function() {
-    document.getElementById("cdata").innerText = 'r: ' + camera.radius + ', x: ' + camera.position.x + ', y: ' + camera.position.y + ', z: ' + camera.position.z;
-  });
-  } catch(e) {alert(e);}
     
   engine.setHardwareScalingLevel(1.0);
   var bg = JSON.parse(document.getElementById("bgcolor").value);
@@ -354,6 +345,13 @@ function reset_cam() {
     BABYLON.Engine.LastCreatedScene.activeCamera.alpha = 0;
     BABYLON.Engine.LastCreatedScene.activeCamera.beta = Math.PI / 2;
 }
+
+
+try {
+  document.getElementById('renderCanvas').addEventListener('pointermove', function() {
+    document.getElementById("cdata").innerText = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ', x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ', y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ', z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z;
+  });
+} catch(e) {alert(e);}
 
 
 function optimize() {
