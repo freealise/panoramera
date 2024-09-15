@@ -103,7 +103,7 @@
         var sceneToRender = null;
         var pipeline = null;
         var editControl = null;
-        var camera, a_old;
+        var camera, a_old = 0.0;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
