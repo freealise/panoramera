@@ -103,7 +103,7 @@
         var sceneToRender = null;
         var pipeline = null;
         var editControl = null;
-        var camera, cameraMoveDistance, cameraTarget;
+        var camera;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
@@ -111,11 +111,9 @@
                 // This creates a basic Babylon Scene object (non-mesh)
                 var scene = new BABYLON.Scene(engine);
                 camera = new BABYLON.ArcRotateCamera("camera", 0, Math.PI / 2, 0, new BABYLON.Vector3(0, 0, 0));
-                cameraMoveDistance = 1;
-                cameraTarget = new BABYLON.Vector3(0, 0, 0);
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
-                camera.inputs.attached.pointers.panningSensibility = 1;
+                camera.inputs.attached.pointers.panningSensibility = 2;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
@@ -240,7 +238,6 @@ window.scene = createScene();};
     </script>
 <div id='box'>
 <div><label for='zoom'>Zoom &nbsp; &nbsp;</label><input id='zoom' type='range' value='0.8' min='0.157' max='1.57' step='0.001'/><span>0.8</span></div>
-<div><label for='pan'>Pan &nbsp; &nbsp;</label><input id='pan' type='range' value='0.0' min='-32.0' max='32.0' step='1.0'/><span>0.0</span></div>
 <div><label for='exposure'>Exposure</label><input id='exposure' type='range' value='1.0' min='0' max='2' step='0.001'/><span>1.0</span></div>
 <div><label for='contrast'>Contrast</label><input id='contrast' type='range' value='1.0' min='0' max='2' step='0.001'/><span>1.0</span></div>
 
@@ -282,26 +279,6 @@ try {
     event.target.parentNode.childNodes[2].innerText = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     document.getElementById("renderCanvas").style.filter = "blur(" + Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/event.target.value)/2.0) + "px)";
 } catch(e) {alert(e)}
-});
-
-document.getElementById('pan').addEventListener('input', function(event) {
-    try {
-    const old = parseFloat(event.target.parentNode.childNodes[2].innerText);
-    
-    cameraMoveDistance = event.target.value - old;
-    
-    camera.radius = 256;
-    cameraTarget.x = 256 * Math.cos(camera.alpha) * Math.sin(camera.beta);
-    cameraTarget.y = 256 * Math.cos(camera.beta);
-    cameraTarget.z = 256 * Math.sin(camera.alpha) * Math.sin(camera.beta);
-    camera.setTarget(cameraTarget);
-    camera.alpha += cameraMoveDistance / 180 * Math.PI;
-    
-    camera.setTarget(camera.position);
-    camera.radius = 0;
-    
-    event.target.parentNode.childNodes[2].innerText = event.target.value;
-    } catch(e) {alert(e);}
 });
 
 document.getElementById('exposure').addEventListener('input', function(event) {
