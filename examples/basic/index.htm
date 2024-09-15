@@ -114,7 +114,8 @@
                 // This attaches the camera to the canvas
                 camera.attachControl(canvas, true);
                 camera.inputs.attached.pointers.panningSensibility = 128;
-                camera.pinchDeltaPercentage(100/256);
+                camera.pinchDeltaPercentage = 0.01;
+                camera.wheelDeltaPercentage = 0.01;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
