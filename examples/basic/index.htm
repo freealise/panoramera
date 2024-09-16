@@ -107,7 +107,6 @@
     <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
     <script>
         var canvas = document.getElementById("renderCanvas");
-        var compass = document.getElementById("compass");
         var then = new Date().getTime();
         var now, delta;
         const interval = 1000 / 25;
@@ -309,7 +308,7 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
 <a href='#' id="x" onclick='if(document.getElementById("box").style.display!="none"){document.getElementById("box").style.display="none";}else{document.getElementById("box").style.display="block";}'>[x]</a><br/>
 <div id="compass_box"><div id="compass"><b style="color:blue;">◅</b>𝍠<b style="color:red;">▻</b></div></div>
 <script>
-
+var compass = document.getElementById("compass");
 var screenshot = false;
 
 document.getElementById('zoom').addEventListener('input', function(event){
@@ -406,8 +405,9 @@ document.getElementById('renderCanvas').addEventListener('pointermove', function
     document.getElementById('zoom').value = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     document.getElementById('zoom').parentNode.childNodes[2].innerText = document.getElementById('zoom').value;
     
-    compass.style.transform = "rotateX(" + (BABYLON.Engine.LastCreatedScene.activeCamera.beta-Math.PI/2).toFixed(4) + "rad) rotateZ(" + BABYLON.Engine.LastCreatedScene.activeCamera.alpha.toFixed(4) + "rad)";
+    try { compass.style.transform = "rotateX(" + (BABYLON.Engine.LastCreatedScene.activeCamera.beta-Math.PI/2) + "rad) rotateZ(" + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + "rad)";
     document.getElementById("cdata").innerHTML = compass.style.transform + '<br/>radius: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> heading: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> pitch: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z + '<hr/>';
+    } catch(e) {alert(e);}
   }
 });
 document.getElementById('renderCanvas').addEventListener('pointerdown', function() {
