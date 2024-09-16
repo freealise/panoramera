@@ -357,12 +357,11 @@ function reset_cam() {
 
 try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
-    document.getElementById("cdata").innerHTML = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z + ',<br/> fov: ' + BABYLON.Engine.LastCreatedScene.activeCamera.fov + '<br/>';
     
-    if (a_old != BABYLON.Engine.LastCreatedScene.activeCamera.alpha || b_old != BABYLON.Engine.LastCreatedScene.activeCamera.beta) {
+    if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.radius - r_old) > 1/256) {
         BABYLON.Engine.LastCreatedScene.activeCamera.radius = r_old;
-        a_old = BABYLON.Engine.LastCreatedScene.activeCamera.alpha;
-        b_old = BABYLON.Engine.LastCreatedScene.activeCamera.beta;
+    } else {
+        r_old = BABYLON.Engine.LastCreatedScene.activeCamera.radius;
     }
     BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.8 * BABYLON.Engine.LastCreatedScene.activeCamera.radius;
     
@@ -371,12 +370,7 @@ try {
     } else if (BABYLON.Engine.LastCreatedScene.activeCamera.fov > 1.57) {
         BABYLON.Engine.LastCreatedScene.activeCamera.fov = 1.57;
     }
-  });
-  document.getElementById('renderCanvas').addEventListener('pointerdown', function() {
-    r_old = BABYLON.Engine.LastCreatedScene.activeCamera.radius;
-  });
-  document.getElementById('renderCanvas').addEventListener('pointerup', function() {
-    r_old = BABYLON.Engine.LastCreatedScene.activeCamera.radius;
+    document.getElementById("cdata").innerHTML = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z + ',<br/> fov: ' + BABYLON.Engine.LastCreatedScene.activeCamera.fov + '<hr/>';
   });
 } catch(e) {alert(e);}
 
