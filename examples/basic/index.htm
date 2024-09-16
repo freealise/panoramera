@@ -405,7 +405,7 @@ document.getElementById('renderCanvas').addEventListener('pointermove', function
     document.getElementById('zoom').value = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     document.getElementById('zoom').parentNode.childNodes[2].innerText = document.getElementById('zoom').value;
     
-    compass.style.transform = "rotateX(" + BABYLON.Engine.LastCreatedScene.activeCamera.beta + "rad) rotateZ(" + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + "rad)";
+    compass.style.transform = "rotateX(" + BABYLON.Engine.LastCreatedScene.activeCamera.beta + "rad) rotateZ(" + BABYLON.Engine.LastCreatedScene.activeCamera.alpha-Math.PI/2 + "rad)";
     document.getElementById("cdata").innerHTML = 'radius: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> heading: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> pitch: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z + '<hr/>';
   }
 });
@@ -469,7 +469,6 @@ function record_video() {
   if (BABYLON.VideoRecorder.IsSupported(engine) && (recorder == null || !recorder.isRecording) ) {
     recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25 });
     recorder.startRecording('video.mp4', 60*60);
-        );
   }
 }
 
