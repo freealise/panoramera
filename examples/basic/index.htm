@@ -128,7 +128,7 @@
         var sceneToRender = null;
         var pipeline = null;
         var editControl = null;
-        var camera;
+        var camera, recorder;
         var r_old = 1.0;
         var a_old = 0;
         var b_old = Math.PI / 2;
@@ -300,6 +300,7 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
 
 <a href='#' onclick='if(!scene.debugLayer.isVisible()){scene.debugLayer.show();}else{scene.debugLayer.hide();}'>inspector</a>
 <a href='#' onclick='record_video();'>record</a>
+<a href='#' onclick='stop_recording();'>stop</a>
 <a href='#' onclick='snapshot();'>snapshot</a><br/>
 <img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'/>
@@ -465,9 +466,17 @@ BABYLON.Tools.CreateScreenshotUsingRenderTarget(BABYLON.Engine.LastCreatedScene.
 
 
 function record_video() {
-  if (BABYLON.VideoRecorder.IsSupported(engine)) {
-    var recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25 });
-    recorder.startRecording('video.mp4');
+  if (BABYLON.VideoRecorder.IsSupported(engine) && (recorder == null || !recorder.isRecording) ) {
+    recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25 });
+    recorder.startRecording('video.mp4', 60*60);
+        );
+  }
+}
+
+
+function stop_recording() {
+  if (recorder.isRecording) {
+    recorder.stopRecording();
   }
 }
             
