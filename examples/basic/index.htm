@@ -104,6 +104,7 @@
         var pipeline = null;
         var editControl = null;
         var camera;
+        var r_old = 0;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
@@ -352,7 +353,10 @@ function reset_cam() {
 try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
     document.getElementById("cdata").innerHTML = 'r: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> a: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> b: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z + ',<br/> fov: ' + BABYLON.Engine.LastCreatedScene.activeCamera.fov + '<br/>';
-    
+    if (r_old != 0) {
+        BABYLON.Engine.LastCreatedScene.activeCamera.radius = r_old;
+        r_old = 0;
+    }
     BABYLON.Engine.LastCreatedScene.activeCamera.fov = 0.8 * BABYLON.Engine.LastCreatedScene.activeCamera.radius;
     
     if (BABYLON.Engine.LastCreatedScene.activeCamera.fov < 0.157) {
@@ -360,6 +364,9 @@ try {
     } else if (BABYLON.Engine.LastCreatedScene.activeCamera.fov > 1.57) {
         BABYLON.Engine.LastCreatedScene.activeCamera.fov = 1.57;
     }
+  });
+  document.getElementById('renderCanvas').addEventListener('pointerdown', function() {
+    r_old = BABYLON.Engine.LastCreatedScene.activeCamera.radius;
   });
 } catch(e) {alert(e);}
 
