@@ -76,6 +76,31 @@
                 right:20px;
                 top:0;
             }
+	#compass_box {
+	  top:1.5em;
+	  right:3px;
+	  position: fixed;
+	  border:1px dashed gray;
+	  border-radius: 50%;
+	  width:1.5em;
+	  height:1.5em;
+	  padding:0;
+	  margin:0;
+	}
+	#compass {
+	  position:absolute;
+	  top:-1px;
+	  left:-1px;
+	  transform:rotate(0deg);
+	  border:1px solid black;
+	  border-radius: 50%;
+	  width:100%;
+	  height:100%;
+	  padding:0;
+	  margin:0;
+	  line-height:1.45em;
+	  letter-spacing:0;
+	}
         </style>
     </head>
 <body oncontextmenu="return false;" onselect="event.preventDefault();">
@@ -107,6 +132,7 @@
         var r_old = 1.0;
         var a_old = 0;
         var b_old = Math.PI / 2;
+        var md = false;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
@@ -279,6 +305,7 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
 <canvas id='cnv_out'/>
 </div>
 <a href='#' id="x" onclick='if(document.getElementById("box").style.display!="none"){document.getElementById("box").style.display="none";}else{document.getElementById("box").style.display="block";}'>[x]</a><br/>
+<div id="compass_box"><div id="compass"><b style="color:blue;">◅</b>𝍠<b style="color:red;">▻</b></div></div>
 <script>
 
 var screenshot = false;
@@ -360,9 +387,8 @@ function reset_cam() {
 }
 
 
-try {
-  document.getElementById('renderCanvas').addEventListener('pointermove', function() {
-    
+document.getElementById('renderCanvas').addEventListener('pointermove', function() {
+  if (md === true) {
     if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.radius - r_old) > 1/16) {
         BABYLON.Engine.LastCreatedScene.activeCamera.radius = r_old;
     } else {
@@ -378,9 +404,19 @@ try {
     document.getElementById('zoom').value = BABYLON.Engine.LastCreatedScene.activeCamera.fov;
     document.getElementById('zoom').parentNode.childNodes[2].innerText = document.getElementById('zoom').value;
     
+    compass.style.transform = "rotateX(" + angleX + "deg) rotateZ(" + angleY + "deg)";
     document.getElementById("cdata").innerHTML = 'radius: ' + BABYLON.Engine.LastCreatedScene.activeCamera.radius + ',<br/> heading: ' + BABYLON.Engine.LastCreatedScene.activeCamera.alpha + ',<br/> pitch: ' + BABYLON.Engine.LastCreatedScene.activeCamera.beta + ',<br/> x: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.x + ',<br/> y: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.y + ',<br/> z: ' + BABYLON.Engine.LastCreatedScene.activeCamera.position.z + '<hr/>';
-  });
-} catch(e) {alert(e);}
+  }
+});
+document.getElementById('renderCanvas').addEventListener('pointerdown', function() {
+  md = true;
+});
+document.getElementById('renderCanvas').addEventListener('pointerup', function() {
+  md = false;
+});
+document.getElementById('renderCanvas').addEventListener('pointerleave', function() {
+  md = false;
+});
 
 
 function optimize() {
