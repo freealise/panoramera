@@ -122,6 +122,7 @@
                 camera.wheelDeltaPercentage = 1/256;
                 camera.upperRadiusLimit = 1.57 / 0.8;
                 camera.lowerRadiusLimit = 0.157 / 0.8;
+                camera.inertia = 0.0;
                 //camera.inputs.attached.mousewheel.detachControl(canvas);
                 
                 if (location.href.split("?file=")[1]) {
@@ -358,7 +359,7 @@ function reset_cam() {
 try {
   document.getElementById('renderCanvas').addEventListener('pointermove', function() {
     
-    if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.radius - r_old) > 1/256) {
+    if (Math.abs(BABYLON.Engine.LastCreatedScene.activeCamera.radius - r_old) > 1/16) {
         BABYLON.Engine.LastCreatedScene.activeCamera.radius = r_old;
     } else {
         r_old = BABYLON.Engine.LastCreatedScene.activeCamera.radius;
