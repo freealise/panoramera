@@ -63,8 +63,7 @@ async function getIdByLocation(lat, lon) {
   try {
     const res = await service.getPanorama({
       location: latLng,
-      radius: 50,
-      source: "outdoor",
+      radius: 1000,
     });
     return res;
   } catch (e) {
