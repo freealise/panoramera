@@ -487,6 +487,7 @@ function Recorder(cnvs, fps) {
     chunks = [];
     blobURL = URL.createObjectURL(blob);
     rec.download("slideshow_video.mp4");
+    showProgress("Video available");
     try{
     var myReader = new FileReader();
     myReader.readAsDataURL(blob);
@@ -706,7 +707,7 @@ function Recorder(cnvs, fps) {
             }, 1000);
 				  } else {
             if (k == 2) {
-              context.fillRect(0, 0, canvas.width, canvas.height);
+              context.fillRect(0, 0, 1, 1);
             }
             setTimeout(function() {
               k=1;
