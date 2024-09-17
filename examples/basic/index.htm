@@ -221,6 +221,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
       scene.meshes[i].position.x = coords[parseInt(order[j])].lng;
       scene.meshes[i].rotation.y = coords[parseInt(order[j])].heading / 180 * Math.PI;
       scene.meshes[i].rotation.z = -coords[parseInt(order[j])].pitch / 180 * Math.PI;
+      scene.meshes[i].rotation.x = -coords[parseInt(order[j])].pitch / 180 * Math.PI;
       j++;
     }
   }
