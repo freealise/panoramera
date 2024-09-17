@@ -345,7 +345,7 @@ async function initialize() {
         map.addListener("click", (e) => {
 						sv.getPanorama({ 
               location: e.latLng, 
-              radius: 100, 
+              radius: 1000, 
               preference: google.maps.StreetViewPreference.NEAREST, 
               sources: [ google.maps.StreetViewSource.GOOGLE, google.maps.StreetViewSource.DEFAULT ] 
             }).then(processSVData)
