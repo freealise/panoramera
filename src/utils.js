@@ -65,7 +65,7 @@ async function getIdByLocation(lat, lon) {
       location: latLng, 
       radius: 100, 
       preference: google.maps.StreetViewPreference.NEAREST, 
-      sources: [ google.maps.StreetViewSource.GOOGLE, google.maps.StreetViewSource.DEFAULT ]
+      sources: [ google.maps.StreetViewSource.DEFAULT, google.maps.StreetViewSource.GOOGLE ]
     });
     return res;
   } catch (e) {
