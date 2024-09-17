@@ -705,9 +705,9 @@ function Recorder(cnvs, fps) {
               requestAnimationFrame(recordFrames);
             }, 1000);
 				  } else {
-            /*if (k == 2) {
-              context.fillRect(0, 0, canvas.width, canvas.height);
-            }*/
+            if (k == 2) {
+              context.clearRect(0, 0, canvas.width, canvas.height);
+            }
             setTimeout(function() {
               k=1;
               rec.stop();
