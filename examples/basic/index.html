@@ -686,7 +686,7 @@ function Recorder(cnvs, fps) {
             setTimeout(function() {
               k++;
               requestAnimationFrame(recordFrames);
-            }, 40);
+            }, 1000);
 				  } else {
             if (k == 2) {
               context.drawImage(th[k-1], canvas.width, 0, 0, canvas.height);
@@ -696,7 +696,7 @@ function Recorder(cnvs, fps) {
               rec.stop();
               context.clearRect(0, 0, canvas.width, canvas.height);
               canvas.style.display = 'none';
-            }, 40);
+            }, 1000);
 					}
       }
 
