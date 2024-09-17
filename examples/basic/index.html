@@ -651,13 +651,15 @@ function Recorder(cnvs, fps) {
         e.preventDefault();
         idParam = document.location.href.split('ids=')[1];
         psParam = document.location.href.split('ps=')[1];
-        cParam = document.location.href.split('c=')[1];
 
         if (idParam && idParam != '') {
           ids = idParam.replace('#', '').split('&')[0].split(',');
         } else if (psParam && psParam != '') {
           url = 'https://lh5.googleusercontent.com/p/' + psParam.replace('#', '') + '=w4096-h2048-k-no';
-          copyright += decodeURIComponent(cParam.split('&')[0].replace('#', '')).trim();
+          cParam = document.location.href.split('c=')[1];
+          if (cParam && cParam != '') {
+            copyright += decodeURIComponent(cParam.split('&')[0].replace('#', '')).trim();
+          }
         }
         showProgress("Loading " + url);
         if (ids.length > 0) {
@@ -788,6 +790,7 @@ function dataURLtoBlob(dataURL) {
       var stt = [];
       var idParam = null;
       var psParam = null;
+      var cParam = null;
 
       loadBookmarklet();
       
