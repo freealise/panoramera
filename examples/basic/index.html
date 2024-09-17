@@ -624,6 +624,14 @@ function Recorder(cnvs, fps) {
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
+        idParam = document.location.href.split('ids=')[1].replace('#', '');
+        psParam = document.location.href.split('ps=')[1].replace('#', '');
+        
+        if (idParam && idParam != '') {
+          ids = idParam.split('&')[0].split(',');
+        } else if (psParam && psParam != '') {
+          url = 'https://lh5.googleusercontent.com/p/' + psParam + '=w4096-h2048-k-no';
+        }
         showProgress("Loading " + url);
         if (ids.length > 0) {
           load(ids[0]);
@@ -744,14 +752,9 @@ function dataURLtoBlob(dataURL) {
       var ids = [];
       var url = '';
       var stt = [];
-      var idParam = document.location.href.split('ids=')[1].replace('#', '');
-      var psParam = document.location.href.split('ps=')[1].replace('#', '');
+      var idParam = null;
+      var psParam = null;
 
-      if (typeof idParam !== "undefined" && idParam != '') {
-        ids = idParam.split('&')[0].split(',');
-      } else if (typeof psParam !== "undefined" && psParam != '') {
-        url = 'https://lh5.googleusercontent.com/p/' + psParam + '=w4096-h2048-k-no';
-      }
       loadBookmarklet();
       
     </script>
