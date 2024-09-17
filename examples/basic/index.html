@@ -565,6 +565,10 @@ function Recorder(cnvs, fps) {
               copyright +
               ".<br/>"
           );
+          const metadata = {};
+          metadata.copyright = copyright;
+          stt.push(metadata);
+          
           frame.src = id;
           frame.crossOrigin = "anonymous";
           frame.onload = function(e) {
@@ -587,8 +591,8 @@ function Recorder(cnvs, fps) {
               thumbnail.style.display = 'block';
               frame.src = "";
               durl = "";
-              //subs.value = JSON.stringify(stt);
-              //stt = [];
+              subs.value = JSON.stringify(stt);
+              stt = [];
 				    }
             var durl = c.toDataURL();
             th[k].download = durl;
