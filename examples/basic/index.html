@@ -556,7 +556,6 @@ function Recorder(cnvs, fps) {
           
           frame.src = id;
           frame.onload = function(e) {
-            try{
             c.width = frame.width;
 					  c.height = frame.height;
 					  ctx.drawImage(frame, 0, 0, c.width, c.height);
@@ -579,6 +578,8 @@ function Recorder(cnvs, fps) {
               //subs.value = JSON.stringify(stt);
               //stt = [];
 				    }
+            try{
+            alert('!');
             var durl = c.toDataURL();
             showProgress("DataURL acquired.");
             th[k].download = durl;
