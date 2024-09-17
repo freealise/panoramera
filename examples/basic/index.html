@@ -555,6 +555,7 @@ function Recorder(cnvs, fps) {
           canvasContainer.appendChild(c);
           
           frame.src = id;
+          frame.crossOrigin = "anonymous";
           frame.onload = function(e) {
             c.width = frame.width;
 					  c.height = frame.height;
@@ -579,7 +580,7 @@ function Recorder(cnvs, fps) {
               //stt = [];
 				    }
             try{
-            alert('!');
+            alert('crossorigin');
             var durl = c.toDataURL();
             showProgress("DataURL acquired.");
             th[k].download = durl;
