@@ -580,8 +580,10 @@ function Recorder(cnvs, fps) {
               //stt = [];
 				    }
             var durl = c.toDataURL();
+            showProgress("DataURL acquired.");
             th[k].download = durl;
             th[k].src = dataURLtoBlob( durl );
+            showProgress("Blob acquired.");
             
             } catch(e) {alert(e);}
           }
