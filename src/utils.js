@@ -62,8 +62,10 @@ async function getIdByLocation(lat, lon) {
   const latLng = new google.maps.LatLng(lat, lon);
   try {
     const res = await service.getPanorama({
-      location: latLng,
-      radius: 1000,
+      location: latLng, 
+      radius: 100, 
+      preference: google.maps.StreetViewPreference.NEAREST, 
+      sources: [ google.maps.StreetViewSource.GOOGLE, google.maps.StreetViewSource.DEFAULT ]
     });
     return res;
   } catch (e) {
