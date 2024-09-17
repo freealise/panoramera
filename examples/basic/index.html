@@ -487,14 +487,15 @@ function Recorder(cnvs, fps) {
     chunks = [];
     blobURL = URL.createObjectURL(blob);
     rec.download("slideshow_video.mp4");
-    
+    try{
     var myReader = new FileReader();
     myReader.readAsDataURL(blob);
     myReader.addEventListener("loadend", function(e) {
+      showProgress("Video loaded");
       seq.src = e.srcElement.result;
       videoURL = seq.src;
       seq.addEventListener("canplaythrough", () => {
-        showProgress("Video loaded");
+        showProgress("Video can be played");
 				if (seq.duration === Infinity) {
 				  // Set it to bigger than the actual duration
 				  seq.currentTime = 86400;
@@ -514,6 +515,7 @@ function Recorder(cnvs, fps) {
         }, 40);
 		  });
     });
+    } catch(e) {alert(e);}
   }
 
   mediaRecorder.ondataavailable = function(e) {
@@ -566,20 +568,18 @@ function Recorder(cnvs, fps) {
             th[k].style.width = '' + c.width / 64 + 'px';
             th[k].style.height = '' + c.height / 64 + 'px';
             th[k].onload = function() {
-              try{
               c.width = 1;
               c.height = 1;
               ctx = null;
             
               thumbnail.appendChild(th[k]);
               th[k].addEventListener("click", copyDataUrl);
-				      showProgress("Finished.");
+				      showProgress("Image loaded.");
               thumbnail.style.display = 'block';
               frame.src = "";
               durl = "";
               //subs.value = JSON.stringify(stt);
               //stt = [];
-              } catch(e) {alert(e);}
 				    }
             var durl = c.toDataURL();
             th[k].download = durl;
@@ -706,7 +706,7 @@ function Recorder(cnvs, fps) {
             }, 1000);
 				  } else {
             if (k == 2) {
-              context.clearRect(0, 0, canvas.width, canvas.height);
+              context.fillRect(0, 0, canvas.width, canvas.height);
             }
             setTimeout(function() {
               k=1;
