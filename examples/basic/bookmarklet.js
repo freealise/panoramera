@@ -11,8 +11,8 @@ for (var i=0; i<buttons.length; i++) {
 		j++;
 	}
 }
-if (result) {
-	window.location.href = 'https://freeali.se/PanomNom.js/examples/basic/sv-panoid.html?ids=' + ids.join(',');
+if (j>0) {
+	window.location.href = 'https://freeali.se/panoramera/examples/basic/index.html?ids=' + ids.join(',');
 } else {
-	alert("PanoID not found.");
+	window.location.href = 'https://lh5.googleusercontent.com/p/' + window.location.href.split('!1s')[1].split('!2e')[0] + '=w4096-h2048-k-no';
 }
