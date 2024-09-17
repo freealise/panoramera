@@ -547,15 +547,17 @@ function Recorder(cnvs, fps) {
 
 
       async function load(id) {
-        try{
         showProgress(`Loading ${id}`);
         
         if (id.indexOf('https://') == 0) {
-          try{
           const c = document.createElement('canvas');
           const ctx = c.getContext("2d", {willReadFrequently: true});
+          canvasContainer.appendChild(c);
+          
           frame.src = id;
+          showProgress("Image available.");
           frame.onload = function(e) {
+            try{
             c.width = frame.width;
 					  c.height = frame.height;
 					  ctx.drawImage(frame, 0, 0, c.width, c.height);
@@ -580,11 +582,11 @@ function Recorder(cnvs, fps) {
             var durl = c.toDataURL();
             th[k].download = durl;
             th[k].src = dataURLtoBlob( durl );
+            
+            } catch(e) {alert(e);}
           }
           return;
-          }catch(e){alert(e);}
         }
-        } catch(e) {alert(e);}
         const loader = new GoogleStreetViewLoader();
 
         loader.onProgress((p) => {
