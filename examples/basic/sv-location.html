@@ -56,7 +56,7 @@
   </head>
   <body>
     <section>
-      <h1>PanomNom.js Basic Usage</h1>
+      <h1>Panoramera Basic Usage</h1>
       <h2>GoogleStreetViewLoader.load + getIdByLocation</h2>
       <p>
         This example shows how to set GoogleStreetViewLoader + getIdByLocation
@@ -94,6 +94,7 @@
       }
 
       const locations = [
+        { lat: 59.2908287, lng: 25.4593849 },
         { lat: 51.50700703827454, lng: -0.12791916931155356 },
         { lat: 32.6144404, lng: -108.9852017 },
         { lat: 39.36382677360614, lng: 8.431220278759724 },
@@ -119,7 +120,7 @@
           parts = window.location.hash.substr(1).split(",");
           pos = { lat: parts[0], lng: parts[1] };
         } else {
-          pos = locations[Math.floor(Math.random() * locations.length)];
+          pos = locations[0];
         }
 
         try {
