@@ -688,10 +688,13 @@ function Recorder(cnvs, fps) {
               requestAnimationFrame(recordFrames);
             }, 40);
 				  } else {
+            k=1;
+            if (th.length == 2) {
+              context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
+            }
             setTimeout(function() {
               rec.stop();
               context.clearRect(0, 0, canvas.width, canvas.height);
-						  k=1;
               canvas.style.display = 'none';
             }, 40);
 					}
