@@ -689,10 +689,9 @@ function Recorder(cnvs, fps) {
             }, 40);
 				  } else {
             if (k == 2) {
-              context.fillRect(0, 0, 1, 1);
+              context.drawImage(th[k-1], canvas.width, 0, 0, canvas.height);
             }
             setTimeout(function() {
-              alert('stop');
               k=1;
               rec.stop();
               context.clearRect(0, 0, canvas.width, canvas.height);
