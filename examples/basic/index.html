@@ -658,7 +658,7 @@ function Recorder(cnvs, fps) {
           url = 'https://lh5.googleusercontent.com/p/' + psParam.replace('#', '') + '=w4096-h2048-k-no';
           cParam = document.location.href.split('c=')[1];
           if (cParam && cParam != '') {
-            copyright += decodeURIComponent(cParam.split('&')[0].replace('#', '')).trim();
+            copyright += decodeURIComponent(cParam.split('&')[0].replace('#', '')).replace(//g, '').trim();
           }
         }
         showProgress("Loading " + url);
