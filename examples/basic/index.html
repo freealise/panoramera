@@ -747,9 +747,9 @@ function dataURLtoBlob(dataURL) {
       var idParam = document.location.href.split('ids=')[1].replace('#', '');
       var psParam = document.location.href.split('ps=')[1].replace('#', '');
 
-      if (idParam && idParam != '') {
+      if (typeof idParam !== "undefined" && idParam != '') {
         ids = idParam.split('&')[0].split(',');
-      } else if (psParam && psParam != '') {
+      } else if (typeof psParam !== "undefined" && psParam != '') {
         url = 'https://lh5.googleusercontent.com/p/' + psParam + '=w4096-h2048-k-no';
       }
       loadBookmarklet();
