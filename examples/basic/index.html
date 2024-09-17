@@ -580,13 +580,11 @@ function Recorder(cnvs, fps) {
               //stt = [];
 				    }
             try{
-            alert('crossorigin');
-            var durl = c.toDataURL();
-            showProgress("DataURL acquired.");
-            th[k].download = durl;
-            th[k].src = dataURLtoBlob( durl );
-            showProgress("Blob acquired.");
-            
+              var durl = c.toDataURL();
+              showProgress("DataURL acquired.");
+              th[k].download = durl;
+              th[k].src = dataURLtoBlob( durl );
+              showProgress("Blob acquired.");
             } catch(e) {alert(e);}
           }
           return;
@@ -709,9 +707,9 @@ function Recorder(cnvs, fps) {
               requestAnimationFrame(recordFrames);
             }, 1000);
 				  } else {
-            if (k == 2) {
+            /*if (k == 2) {
               context.fillRect(0, 0, canvas.width, canvas.height);
-            }
+            }*/
             setTimeout(function() {
               k=1;
               rec.stop();
