@@ -714,10 +714,14 @@ function dataURLtoBlob(dataURL) {
       var k=1;
       var j=0;
       var ids = [];
+      var url = '';
       var stt = [];
       var idParam = document.location.href.split('ids=')[1].replace('#', '');
+      var psParam = document.location.href.split('ps=')[1].replace('#', '');
       if (idParam && idParam != '') {
         ids = idParam.split('&')[0].split(',');
+      } else if (psParam && psParam != '') {
+        url = 'https://lh5.googleusercontent.com/p/' + psParam + '=w4096-h2048-k-no';
       }
       loadBookmarklet();
       
