@@ -626,7 +626,7 @@ function Recorder(cnvs, fps) {
         e.preventDefault();
         idParam = document.location.href.split('ids=')[1];
         psParam = document.location.href.split('ps=')[1];
-        alert(idParam + ' ' + psParam);
+
         if (idParam && idParam != '') {
           ids = idParam.replace('#', '').split('&')[0].split(',');
         } else if (psParam && psParam != '') {
@@ -679,7 +679,7 @@ function Recorder(cnvs, fps) {
       }
 
       function recordFrames() {
-					if (k < canvases.length) {
+					if (k < th.length) {
             if (k == 1) { rec.start(); }
             context.drawImage(th[k], 0, 0, canvas.width, canvas.height);
             //videoStream.getVideoTracks()[0].requestFrame();
