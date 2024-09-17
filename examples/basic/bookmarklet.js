@@ -15,5 +15,5 @@ var url = 'https://freeali.se/panoramera/examples/basic/index.html';
 if (j>0) {
 	window.location.href = url + '?ids=' + ids.join(',');
 } else {
-	window.location.href = url + '?ps=' + window.location.href.split('!1s')[1].split('!2e')[0];
+	window.location.href = url + '?c=' + encodeURIComponent(document.getElementById('titlecard').innerText) + '&ps=' + window.location.href.split('!1s')[1].split('!2e')[0];
 }
