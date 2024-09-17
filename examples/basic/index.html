@@ -551,22 +551,34 @@ function Recorder(cnvs, fps) {
         showProgress(`Loading ${id}`);
         
         if (id.indexOf('https://') == 0) {
+          const c = document.createElement('canvas');
+          const ctx = c.getContext("2d", {willReadFrequently: true});
           frame.src = id;
           frame.onload = function(e) {
+            c.width = canvas.width;
+					  c.height = canvas.height;
+					  ctx.drawImage(frame, 0, 0, c.width, c.height);
+          
             th[k] = document.createElement('img');
-            th[k].style.width = '' + frame.width / 64 + 'px';
-            th[k].style.height = '' + frame.height / 64 + 'px';
+            th[k].style.width = '' + c.width / 64 + 'px';
+            th[k].style.height = '' + c.height / 64 + 'px';
             th[k].onload = function() {
+              c.width = 1;
+              c.height = 1;
+              ctx = null;
+            
               thumbnail.appendChild(th[k]);
               th[k].addEventListener("click", copyDataUrl);
 				      showProgress("Finished.");
               thumbnail.style.display = 'block';
               frame.src = "";
+              durl = "";
               //subs.value = JSON.stringify(stt);
               //stt = [];
 				    }
-            th[k].download = id;
-            th[k].src = id;
+            var durl = c.toDataURL();
+            th[k].download = durl;
+            th[k].src = dataURLtoBlob( durl );
           }
           return;
         }
@@ -656,6 +668,7 @@ function Recorder(cnvs, fps) {
             canvases[k].width = 1;
             canvases[k].height = 1;
             ctxs[k] = null;
+            
             thumbnail.appendChild(th[k]);
             th[k].addEventListener("click", copyDataUrl);
             showProgress("Loaded thumbnail "+k);
