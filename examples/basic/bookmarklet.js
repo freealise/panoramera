@@ -11,8 +11,9 @@ for (var i=0; i<buttons.length; i++) {
 		j++;
 	}
 }
+var url = 'https://freeali.se/panoramera/examples/basic/index.html';
 if (j>0) {
-	window.location.href = 'https://freeali.se/panoramera/examples/basic/index.html?ids=' + ids.join(',');
+	window.location.href = url + '?ids=' + ids.join(',');
 } else {
-	window.location.href = 'https://lh5.googleusercontent.com/p/' + window.location.href.split('!1s')[1].split('!2e')[0] + '=w4096-h2048-k-no';
+	window.location.href = url + '?ps=' + window.location.href.split('!1s')[1].split('!2e')[0];
 }
