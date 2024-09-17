@@ -688,10 +688,11 @@ function Recorder(cnvs, fps) {
               requestAnimationFrame(recordFrames);
             }, 40);
 				  } else {
-            if (th.length == 2) {
-              context.fillRect(0, 0, canvas.width, canvas.height);
+            if (k == 2) {
+              context.fillRect(0, 0, 1, 1);
             }
             setTimeout(function() {
+              alert('stop');
               k=1;
               rec.stop();
               context.clearRect(0, 0, canvas.width, canvas.height);
