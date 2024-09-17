@@ -547,6 +547,7 @@ function Recorder(cnvs, fps) {
 
 
       async function load(id) {
+        try{
         showProgress(`Loading ${id}`);
         
         if (id.indexOf('https://') == 0) {
@@ -569,6 +570,7 @@ function Recorder(cnvs, fps) {
           }
           return;
         }
+        } catch(e) {alert(e);}
         const loader = new GoogleStreetViewLoader();
 
         loader.onProgress((p) => {
@@ -619,11 +621,13 @@ function Recorder(cnvs, fps) {
         e.preventDefault();
       });
 
+
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
         if (ids.length > 0) {
           load(ids[0]);
         } else if (url != '') {
+          alert(url);
           load(url);
         }
       });
