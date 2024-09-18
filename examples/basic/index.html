@@ -435,14 +435,15 @@ fileSelect.addEventListener(
   },
   false,
 );
-fileElem.addEventListener("change", handleFiles, false);
+fileElem.addEventListener("change", handleFiles);
 
-function handleFiles() {
+function handleFiles(e) {
   fileList.textContent = "";
-  if (!this.files.length) {
+  if (!e.target.files.length) {
     fileList.textContent = "No files selected!";
   } else {
-    for (let i = 0; i < this.files.length; i++) {
+    try {
+    for (let i = 0; i < e.target.files.length; i++) {
       th[k] = document.createElement('img');
       th[k].style.width = '' + frame.width / 64 + 'px';
       th[k].style.height = '' + frame.height / 64 + 'px';
@@ -450,14 +451,15 @@ function handleFiles() {
           URL.revokeObjectURL(th[k].src);
           thumbnail.appendChild(th[k]);
 		  }
-      th[k].download = this.files[i].name;
-      th[k].src = URL.createObjectURL(this.files[i]);
+      th[k].download = e.target.files[i].name;
+      th[k].src = URL.createObjectURL(e.target.files[i]);
       k++;
     }
     thumbnail.style.display = 'block';
     subs.value = JSON.stringify(stt);
     stt = [];
     k=1;
+    } catch(e) {alert(e);}
   }
 }
       
