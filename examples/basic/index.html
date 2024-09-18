@@ -442,25 +442,23 @@ function handleFiles(e) {
   if (!e.target.files.length) {
     fileList.textContent = "No files selected!";
   } else {
-    try {
+    alert(e.target.files.length);
     for (let i = 0; i < e.target.files.length; i++) {
       th[k] = document.createElement('img');
       th[k].style.width = '' + frame.width / 64 + 'px';
       th[k].style.height = '' + frame.height / 64 + 'px';
-      th[k].onload = function() {
-          URL.revokeObjectURL(th[k].src);
-          thumbnail.appendChild(th[k]);
-          alert(k);
-          k++;
-          if (k > e.target.files.length) {k=1;}
+      th[k].onload = function(e) {
+          URL.revokeObjectURL(e.target.src);
+          thumbnail.appendChild(e.target);
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
+      k++;
+      if (k > e.target.files.length) {k=1;}
     }
     thumbnail.style.display = 'block';
     subs.value = JSON.stringify(stt);
     stt = [];
-    } catch(e) {alert(e);}
   }
 }
       
