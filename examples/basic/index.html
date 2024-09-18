@@ -450,15 +450,16 @@ function handleFiles(e) {
       th[k].onload = function() {
           URL.revokeObjectURL(th[k].src);
           thumbnail.appendChild(th[k]);
+          alert(k);
+          k++;
+          if (k > e.target.files.length) {k=1;}
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
-      k++;
     }
     thumbnail.style.display = 'block';
     subs.value = JSON.stringify(stt);
     stt = [];
-    k=1;
     } catch(e) {alert(e);}
   }
 }
