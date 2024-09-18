@@ -128,6 +128,7 @@
         try {
           const data = await getIdByLocation(pos.lat, pos.lng);
           showProgress("Loading " + pos.lat + ", " + pos.lng);
+          showMessage('heading: ' + data.data.tiles.originHeading + ', pitch: ' + data.data.tiles.originPitch);
           await loader.load(data.data.location.pano, 3);
           showProgress("Finished.");
           showError("");
