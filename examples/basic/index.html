@@ -442,7 +442,6 @@ function handleFiles(e) {
   if (!e.target.files.length) {
     fileList.textContent = "No files selected!";
   } else {
-    alert(e.target.files.length);
     for (let i = 0; i < e.target.files.length; i++) {
       th[k] = document.createElement('img');
       th[k].style.width = '' + frame.width / 64 + 'px';
@@ -453,6 +452,8 @@ function handleFiles(e) {
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
+      const metadata = { "copyright": '© ' + e.target.files[i].lastModifiedDate };
+      stt.push(metadata);
       k++;
       if (k > e.target.files.length) {k=1;}
     }
@@ -715,7 +716,7 @@ function Recorder(cnvs, fps) {
           url = 'https://lh5.googleusercontent.com/p/' + psParam.replace('#', '') + '=w4096-h2048-k-no';
           cParam = document.location.href.split('c=')[1];
           if (cParam && cParam != '') {
-            copyright += decodeURIComponent(cParam.split('&')[0]).replace(/[#]/g, '').trim().replace(/\n/g, ', ');
+            copyright = '© ' + decodeURIComponent(cParam.split('&')[0]).replace(/[#]/g, '').trim().replace(/\n/g, ', ');
             if (lParam && lParam != '') {
               latLng = lParam.split('&')[0].split(',');
             }
@@ -846,7 +847,7 @@ function dataURLtoBlob(dataURL) {
       var j=0;
       var ids = [];
       var url = '';
-      var copyright = '© ';
+      var copyright = '';
       var latLng = [];
       var stt = [];
       var idParam = null;
