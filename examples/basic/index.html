@@ -147,7 +147,7 @@
       
       <input type="file" id="fileElem" multiple accept="image/*" style="display:none" />
       <button id="fileSelect">Upload images</button>
-      <div id="fileList"><p>No files selected!</p></div>
+      <div id="fileList"></div>
       
       <textarea id="subs"></textarea>
       <div>
@@ -200,50 +200,6 @@
       }
     }
   }
-  
-  
-const fileSelect = document.getElementById("fileSelect"),
-fileElem = document.getElementById("fileElem"),
-fileList = document.getElementById("fileList");
-
-fileSelect.addEventListener(
-  "click",
-  (e) => {
-    if (fileElem) {
-      fileElem.click();
-    }
-  },
-  false,
-);
-fileElem.addEventListener("change", handleFiles, false);
-
-function handleFiles() {
-  fileList.textContent = "";
-  if (!this.files.length) {
-    const p = document.createElement("p");
-    p.textContent = "No files selected!";
-    fileList.appendChild(p);
-  } else {
-    const list = document.createElement("ul");
-    fileList.appendChild(list);
-    for (let i = 0; i < this.files.length; i++) {
-      const li = document.createElement("li");
-      list.appendChild(li);
-
-      const img = document.createElement("img");
-      img.src = URL.createObjectURL(this.files[i]);
-      img.height = 60;
-      img.onload = () => {
-        URL.revokeObjectURL(img.src);
-      };
-      li.appendChild(img);
-      const info = document.createElement("span");
-      info.textContent = `${this.files[i].name}: ${this.files[i].size} bytes`;
-      li.appendChild(info);
-    }
-  }
-}
-  
   
   document.getElementById('svg_in').addEventListener('pointerdown', function(event){
               try{
@@ -464,6 +420,46 @@ window.initialize = initialize;
       const frame = document.getElementById("frame");
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
+
+
+const fileSelect = document.getElementById("fileSelect"),
+fileElem = document.getElementById("fileElem"),
+fileList = document.getElementById("fileList");
+
+fileSelect.addEventListener(
+  "click",
+  (e) => {
+    if (fileElem) {
+      fileElem.click();
+    }
+  },
+  false,
+);
+fileElem.addEventListener("change", handleFiles, false);
+
+function handleFiles() {
+  fileList.textContent = "";
+  if (!this.files.length) {
+    fileList.textContent = "No files selected!";
+  } else {
+    for (let i = 0; i < this.files.length; i++) {
+      th[k] = document.createElement('img');
+      th[k].style.width = '' + frame.width / 64 + 'px';
+      th[k].style.height = '' + frame.height / 64 + 'px';
+      th[k].onload = function() {
+          URL.revokeObjectURL(th[k].src);
+          thumbnail.appendChild(th[k]);
+		  }
+      th[k].download = this.files[i].name;
+      th[k].src = URL.createObjectURL(this.files[i]);
+      k++;
+    }
+    thumbnail.style.display = 'block';
+    subs.value = JSON.stringify(stt);
+    stt = [];
+    k=1;
+  }
+}
       
 function downloadDepth(url, filename) {
     DepthLink.href = url;
