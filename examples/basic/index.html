@@ -452,7 +452,7 @@ function handleFiles(e) {
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
-      const metadata = { "copyright": '© ' + e.target.files[i].lastModifiedDate };
+      const metadata = { "copyright": '© ' };
       stt.push(metadata);
       k++;
       if (k > e.target.files.length) {k=1;}
