@@ -47,8 +47,9 @@ function cube2equi(image, isDepth) {
           var x = sourceImageSize+1;
           var y = sourceImageSize*(i-4)*2+1;
         }
+        context.drawImage(image, x, y, sourceImageSize-2, sourceImageSize-2, 1, 1, sourceImageSize-2, sourceImageSize-2);
+        
         if (isDepth === true) {
-          context.drawImage(image, x, y, sourceImageSize-2, sourceImageSize-2, 1, 1, sourceImageSize-2, sourceImageSize-2);
           var r = sourceImageSize/2*Math.sqrt(2);
           const grd = ctx.createRadialGradient(x+sourceImageSize/2, y+sourceImageSize/2, 0, x+sourceImageSize/2, y+sourceImageSize/2, r);
 					grd.addColorStop(0, 'rgba(255, 255, 255, '+ 1-1/Math.sqrt(2) +')');
