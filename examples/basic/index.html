@@ -453,10 +453,9 @@ function handleFiles(e) {
           if (isCube.checked) {
             try {
             e.target.onload = function(e) {
-              alert(e.target.width + 'x' + e.target.height);
+              //alert(e.target.width + 'x' + e.target.height);
               e.target.style.width = '' + e.target.width / 64 + 'px';
               e.target.style.height = '' + e.target.height / 64 + 'px';
-              window.location.href = e.target.src;
             };
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
