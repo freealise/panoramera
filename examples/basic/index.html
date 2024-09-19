@@ -447,7 +447,7 @@ function handleFiles(e) {
       th[k] = document.createElement('img');
       thumbnail.appendChild(th[k]);
       //URL.revokeObjectURL(e.target.src);
-      th[k].onclick = function(e) {
+      th[k].onload = function(e) {
           e.target.width = e.target.naturalWidth;
           e.target.height = e.target.naturalHeight;
           if (isCube.checked) {
