@@ -445,7 +445,7 @@ function handleFiles(e) {
   } else {
     for (let i = 0; i < e.target.files.length; i++) {
       th[k] = document.createElement('img');
-      th[k].onload = function(e) {
+      th[k].onclick = function(e) {
           e.target.width = e.target.naturalWidth;
           e.target.height = e.target.naturalHeight;
           if (isCube.checked) {
