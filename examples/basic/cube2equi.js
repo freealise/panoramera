@@ -27,7 +27,7 @@ function cube2equi(image, isDepth) {
 
     for (var i = 0; i < info.length; ++i) {
     
-        fileList.innerText = "Drawing cube side "+(i+1); 
+        fileList.innerText = "Loading cube side "+(i+1); 
         canvas = document.createElement("canvas");
         canvas.id = info[i].name;
 
