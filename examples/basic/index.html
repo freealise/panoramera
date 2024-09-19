@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+a as<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -450,7 +450,9 @@ function handleFiles(e) {
       th[k].onload = function(e) {
           URL.revokeObjectURL(e.target.src);
           if (isCube.checked) {
+            try {
             e.target.src = cube2equi(e.target, false);
+            } catch(e) {alert(e);}
           }
           thumbnail.appendChild(e.target);
 		  }
