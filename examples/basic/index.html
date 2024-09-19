@@ -463,11 +463,11 @@ function handleFiles(e) {
       const metadata = { "copyright": '© ' };
       stt.push(metadata);
       k++;
-      if (k > e.target.files.length) {k=1;}
     }
     thumbnail.style.display = 'block';
     subs.value = JSON.stringify(stt);
     stt = [];
+    k=1;
   }
 }
       
