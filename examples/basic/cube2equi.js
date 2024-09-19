@@ -26,8 +26,6 @@ function cube2equi(image, isDepth) {
     var canvas;
 
     for (var i = 0, canvas; i < info.length; ++i) {
-    
-        fileList.innerText = "Loading cube side "+(i+1); 
         canvas = document.createElement("canvas");
         canvas.id = info[i].name;
 
@@ -106,7 +104,7 @@ function cube2equi(image, isDepth) {
     backwardsConstructEquirectangularImage();
     outputContext.putImageData(outputImageData, 0, 0);
     
-    fileList.innerText = "Panorama from cube map completed"; 
+    fileList.innerText = ""; 
     return canvas.toDataURL();
 }
 
