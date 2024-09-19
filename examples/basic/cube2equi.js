@@ -36,7 +36,7 @@ function cube2equi(image, isDepth) {
         canvas.style.position = "absolute";
         canvas.style.left = i * (sourceImageSize + 10) + "px";
         canvas.style.top = "0px";
-        //canvas.style.display = "none";
+        canvas.style.display = "none";
         document.body.appendChild(canvas);
         context = canvas.getContext("2d");
         
@@ -96,7 +96,7 @@ function cube2equi(image, isDepth) {
     canvas.style.position = "absolute";
     canvas.style.left = "0px"
     canvas.style.top = sourceImageSize + 10 + "px";
-    //canvas.style.display = "none";
+    canvas.style.display = "none";
     document.body.appendChild(canvas);
     outputContext = canvas.getContext("2d");
     outputImageData = outputContext.getImageData(0, 0, eqrImageWidth, eqrImageHeight);
