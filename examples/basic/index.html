@@ -453,11 +453,11 @@ function handleFiles(e) {
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
           }
-          URL.revokeObjectURL(th[k].download);
+          //URL.revokeObjectURL(th[k].src);
           thumbnail.appendChild(e.target);
 		  }
-      th[k].download = URL.createObjectURL(e.target.files[i]);
-      th[k].src = th[k].download;
+      th[k].download = e.target.files[i].name;
+      th[k].src = URL.createObjectURL(e.target.files[i]);
       const metadata = { "copyright": '© ' };
       stt.push(metadata);
       k++;
