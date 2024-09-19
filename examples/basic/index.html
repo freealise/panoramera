@@ -448,14 +448,15 @@ function handleFiles(e) {
       th[k].onload = function(e) {
           e.target.width = e.target.naturalWidth;
           e.target.height = e.target.naturalHeight;
-          alert(e.target.width + 'x' + e.target.height);
           e.target.style.width = '' + e.target.width / 64 + 'px';
           e.target.style.height = '' + e.target.height / 64 + 'px';
           thumbnail.appendChild(e.target);
           //URL.revokeObjectURL(e.target.src);
           if (isCube.checked) {
             try {
-            e.target.onload = null;
+            e.target.onload = function(e) {
+              alert(e.target.width + 'x' + e.target.height);
+            };
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
           }
