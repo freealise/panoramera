@@ -1,5 +1,6 @@
 //Original code by Richard Morris © 2015
 //https://jsfiddle.net/SalixAlba/wdyohqs8/
+var fileList = document.getElementById('fileList');
 
 var info = [
     { name: "left",  imageData: 0 },
@@ -26,6 +27,7 @@ function cube2equi(image, isDepth) {
 
     for (var i = 0, canvas; i < info.length; ++i) {
     
+        fileList.innerText = "Drawing cube side "+(i+1); 
         canvas = document.createElement("canvas");
         canvas.id = info[i].name;
 
@@ -98,10 +100,12 @@ function cube2equi(image, isDepth) {
     outputContext = canvas.getContext("2d");
     outputImageData = outputContext.getImageData(0, 0, eqrImageWidth, eqrImageHeight);
 
+    fileList.innerText = "Calculating..."; 
     //constructEquirectangularImage();
     backwardsConstructEquirectangularImage();
     outputContext.putImageData(outputImageData, 0, 0);
     
+    fileList.innerText = "Panorama from cube map completed"; 
     return canvas.toDataURL();
 }
 
