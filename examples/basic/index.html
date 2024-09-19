@@ -454,10 +454,9 @@ function handleFiles(e) {
             try {
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
-          } else {
-            thumbnail.appendChild(e.target);
-            //URL.revokeObjectURL(e.target.src);
           }
+          thumbnail.appendChild(e.target);
+          //URL.revokeObjectURL(e.target.src);
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
