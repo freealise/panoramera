@@ -140,14 +140,13 @@
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
         <input type="button" id="SlideshowVideo" value="Video slideshow"/>
-        <input type="checkbox" id="VideoThumbnail" checked/>
-        <label for="VideoThumbnail">size/2 (if no video on mobile)</label>
+        <input type="checkbox" id="VideoThumbnail" checked/><label for="VideoThumbnail">size/2 (if no video on mobile)</label>
         <a href="" id="DownloadLink"></a>
       </form>
       
       <input type="file" id="fileElem" multiple accept="image/*" style="display:none" />
-      <button id="fileSelect">Upload images</button>
-      <div id="fileList"></div>
+      <button id="fileSelect">Upload images</button><span id="fileList"></span>
+      <input type="checkbox" id="isCube"/><label for="isCube">is cube map</label>
       
       <textarea id="subs"></textarea>
       <div>
@@ -185,6 +184,7 @@
         <a href='#' id='fullscreen' onclick='const model=document.getElementById("model").getElementsByTagName("iframe")[0];if(model.style.width!="100vw"){model.style.width="100vw";model.style.height="100vh";}else{model.style.width="320px";model.style.height="256px";}'>[+]</a>
       </div>
     </section>
+    <script src="cube2equi.js"></script>
     <!--<script src="https://maps.google.com/maps/api/js"></script>-->
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDONbj1HFMLs7UI3yBortL4qwLm-0C7mYM&loading=async&callback=initialize&v=weekly" defer="defer" async="async"></script>
     <script>
@@ -408,6 +408,7 @@ window.initialize = initialize;
       var svg = document.getElementsByTagName('svg')[0];
       var SlideshowVideo = document.getElementById("SlideshowVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
+      var isCube = document.getElementById("isCube");
       var subs = document.getElementById("subs");
       var blur_in = document.getElementById("blur_in");
       var model = document.getElementById("model").getElementsByTagName("iframe")[0];
@@ -448,6 +449,9 @@ function handleFiles(e) {
       th[k].style.height = '' + frame.height / 64 + 'px';
       th[k].onload = function(e) {
           URL.revokeObjectURL(e.target.src);
+          if (isCube.checked) {
+            e.target.src = cube2equi(e.target, false);
+          }
           thumbnail.appendChild(e.target);
 		  }
       th[k].download = e.target.files[i].name;
