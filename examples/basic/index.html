@@ -458,6 +458,8 @@ function handleFiles(e) {
               e.target.style.height = '' + frame.height / 64 + 'px';
             };
             e.target.src = cube2equi(e.target, false);
+            e.target.download = e.target.src;
+            e.target.addEventListener("click", copyDataUrl);
             } catch(e) {alert(e);}
           } else {
             e.target.style.width = '' + frame.width / 64 + 'px';
