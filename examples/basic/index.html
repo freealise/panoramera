@@ -448,16 +448,16 @@ function handleFiles(e) {
       th[k].style.width = '' + frame.width / 64 + 'px';
       th[k].style.height = '' + frame.height / 64 + 'px';
       th[k].onload = function(e) {
-          URL.revokeObjectURL(e.target.src);
           if (isCube.checked) {
             try {
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
           }
+          URL.revokeObjectURL(th[k].download);
           thumbnail.appendChild(e.target);
 		  }
-      th[k].download = e.target.files[i].name;
-      th[k].src = URL.createObjectURL(e.target.files[i]);
+      th[k].download = URL.createObjectURL(e.target.files[i]);
+      th[k].src = th[k].download;
       const metadata = { "copyright": '© ' };
       stt.push(metadata);
       k++;
