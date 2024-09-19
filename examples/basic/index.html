@@ -450,13 +450,15 @@ function handleFiles(e) {
           e.target.height = e.target.naturalHeight;
           e.target.style.width = '' + e.target.width / 64 + 'px';
           e.target.style.height = '' + e.target.height / 64 + 'px';
+          thumbnail.appendChild(e.target);
+          //URL.revokeObjectURL(e.target.src);
           if (isCube.checked) {
+            alert('cube');
             try {
+            e.target.onload = null;
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
           }
-          thumbnail.appendChild(e.target);
-          //URL.revokeObjectURL(e.target.src);
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
