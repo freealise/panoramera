@@ -445,16 +445,22 @@ function handleFiles(e) {
   } else {
     for (let i = 0; i < e.target.files.length; i++) {
       th[k] = document.createElement('img');
-      th[k].style.width = '' + frame.width / 64 + 'px';
-      th[k].style.height = '' + frame.height / 64 + 'px';
+      th[k].width = th[k].naturalWidth;
+      th[k].height = th[k].naturalHeight;
+      th[k].style.width = '' + th[k].width / 64 + 'px';
+      th[k].style.height = '' + th[k].height / 64 + 'px';
       th[k].onload = function(e) {
           if (isCube.checked) {
             try {
+            e.target.onload = function(e) {
+              thumbnail.appendChild(e.target);
+            }
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
+          } else {
+            thumbnail.appendChild(e.target);
+            //URL.revokeObjectURL(e.target.src);
           }
-          //URL.revokeObjectURL(th[k].src);
-          thumbnail.appendChild(e.target);
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
