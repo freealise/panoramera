@@ -445,16 +445,13 @@ function handleFiles(e) {
   } else {
     for (let i = 0; i < e.target.files.length; i++) {
       th[k] = document.createElement('img');
-      th[k].width = th[k].naturalWidth;
-      th[k].height = th[k].naturalHeight;
-      th[k].style.width = '' + th[k].width / 64 + 'px';
-      th[k].style.height = '' + th[k].height / 64 + 'px';
       th[k].onload = function(e) {
+          e.target.width = e.target.naturalWidth;
+          e.target.height = e.target.naturalHeight;
+          e.target.style.width = '' + e.target.width / 64 + 'px';
+          e.target.style.height = '' + e.target.height / 64 + 'px';
           if (isCube.checked) {
             try {
-            e.target.onload = function(e) {
-              thumbnail.appendChild(e.target);
-            }
             e.target.src = cube2equi(e.target, false);
             } catch(e) {alert(e);}
           } else {
