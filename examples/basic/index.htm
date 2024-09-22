@@ -210,9 +210,9 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
                     var fln = "TriangleWithoutIndices.gltf";
                     var url = "https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/"; 
                 }
-try {
+
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
-    
+try {
   engine.setHardwareScalingLevel(1.0);
   var bg = JSON.parse(document.getElementById("bgcolor").value);
   for (var i=0; i<bg.length; i++) {
@@ -293,6 +293,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   document.getElementById("renderCanvas").oncontextmenu = function(e){e.preventDefault();}
   document.getElementById("renderCanvas").ondrag = function(e){e.preventDefault();}
 
+            video.crossOrigin = "anonymous";
             video.src = document.getElementById("fgdepth").value;
             videoDome = new BABYLON.VideoDome(
                 "videoDome",
@@ -300,22 +301,20 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
                 {
                     resolution: 32,
                     size: 16,
-                    clickToPlay: false,
+                    clickToPlay: true,
                     autoPlay: false,
                 }, scene
             );
             video.muted = true;
-            video.crossOrigin = "anonymous";
             videoDome.videoTexture.video.muted = true;
-            videoDome.videoTexture.video.crossOrigin = "anonymous";
             
             scene.meshes[scene.meshes.length-1].dispose();
             scene.meshes[scene.meshes.length-1].alphaIndex = 0;
             scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
             scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
 
-});
 } catch(e) {alert(e);}
+});
                 return scene;
             }
         }
