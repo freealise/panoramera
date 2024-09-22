@@ -150,7 +150,6 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
     <script>
         var canvas = document.getElementById("renderCanvas");
         var video = document.getElementById("video");
-        video.crossOrigin = "anonymous";
         var compass = document.getElementById("compass");
         var screenshot = false;
 
@@ -294,6 +293,7 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   document.getElementById("renderCanvas").oncontextmenu = function(e){e.preventDefault();}
   document.getElementById("renderCanvas").ondrag = function(e){e.preventDefault();}
 
+            video.src = document.getElementById("fgdepth").value;
             videoDome = new BABYLON.VideoDome(
                 "videoDome",
                 [document.getElementById("fgvideo").value],
@@ -302,12 +302,13 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
                     size: 16,
                     clickToPlay: true,
                     autoPlay: false,
-                    poster: "https://i.imgur.com/zVGaZNi.png"
                 }, scene
             );
-            videoDome.videoTexture.video.muted = true;
-            video.src = document.getElementById("fgdepth").value;
             video.muted = true;
+            video.crossOrigin = "anonymous";
+            videoDome.videoTexture.video.muted = true;
+            videoDome.videoTexture.video.crossOrigin = "anonymous";
+            
             scene.meshes[scene.meshes.length-1].dispose();
             scene.meshes[scene.meshes.length-1].alphaIndex = 0;
             scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
@@ -454,8 +455,11 @@ document.getElementById('renderCanvas').addEventListener('pointerleave', functio
 
 
 video.addEventListener("canplaythrough", function () {
+try {
+  alert('video loaded');
   video.play();
   videoDome.videoTexture.video.play();
+} catch(e) {alert(e);}
 });
 
 
