@@ -314,18 +314,6 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
             scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
             scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
 
-            video.addEventListener("canplaythrough", function () {
-            try {
-              alert('video loaded');
-              videoDome.videoTexture.video.addEventListener("canplaythrough", function () {
-                try {
-                alert('depth loaded');
-                video.play();
-                videoDome.videoTexture.video.play();
-                } catch(e) {alert(e);}
-              });
-            } catch(e) {alert(e);}
-            });
 });
 } catch(e) {alert(e);}
                 return scene;
@@ -463,6 +451,12 @@ document.getElementById('renderCanvas').addEventListener('pointerup', function()
 });
 document.getElementById('renderCanvas').addEventListener('pointerleave', function() {
   md = false;
+});
+document.getElementById('renderCanvas').addEventListener('click', function() {
+try {
+  video.play();
+  videoDome.videoTexture.video.play();
+} catch(e) {alert(e);}
 });
 
 
