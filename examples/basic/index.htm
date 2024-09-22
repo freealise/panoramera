@@ -268,17 +268,14 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
                     poster: "https://i.imgur.com/zVGaZNi.png"
                 }, scene
             );
+            videoDome.videoTexture.video.muted = true;
             video.src = document.getElementById("fgdepth").value;
+            video.muted = true;
             scene.meshes[scene.meshes.length-1].dispose();
             scene.meshes[scene.meshes.length-1].alphaIndex = 0;
             scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
             scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
 
-            video.muted = true;
-            videoDome.videoTexture.video.muted = true;
-            video.play();
-            videoDome.videoTexture.video.play();
-            
 });
 } catch(e) {alert(e);}
                 return scene;
@@ -455,6 +452,12 @@ document.getElementById('renderCanvas').addEventListener('pointerup', function()
 });
 document.getElementById('renderCanvas').addEventListener('pointerleave', function() {
   md = false;
+});
+
+
+video.addEventListener("canplaythrough", function () {
+  video.play();
+  videoDome.videoTexture.video.play();
 });
 
 
