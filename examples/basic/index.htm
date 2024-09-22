@@ -104,12 +104,19 @@
     #compass b {
       margin-top:-1px;
     }
+    #video {
+      display:none;
+    }
         </style>
     </head>
 <body oncontextmenu="return false;" onselect="event.preventDefault();">
     <div id="canvasZone"><canvas id="renderCanvas"></canvas></div>
+    <video id="video" src="" autoplay="false"/>
     <script>
         var canvas = document.getElementById("renderCanvas");
+        var video = document.getElementById("video");
+        video.crossOrigin = "anonymous";
+        
         var then = new Date().getTime();
         var now, delta;
         const interval = 1000 / 25;
@@ -136,6 +143,7 @@
         var a_old = 0;
         var b_old = Math.PI / 2;
         var md = false;
+        var videoDome, ctx, buffer;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
@@ -250,6 +258,28 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   document.getElementById("renderCanvas").ondrag = function(e){e.preventDefault();}
 
 });
+
+            videoDome = new BABYLON.VideoDome(
+                "videoDome",
+                [document.getElementById("fgvideo").value],
+                {
+                    resolution: 32,
+                    size: 16,
+                    clickToPlay: true,
+                    autoPlay: false,
+                    poster: "https://i.imgur.com/zVGaZNi.png"
+                },
+                scene
+            );
+            video.src = document.getElementById("fgdepth").value;
+            scene.meshes[scene.meshes.length-1].dispose();
+
+            video.muted = true;
+            videoDome.videoTexture.video.muted = true;
+            video.play();
+            videoDome.videoTexture.video.play();
+            
+
 } catch(e) {alert(e);}
                 return scene;
             }
@@ -290,7 +320,10 @@ window.scene = createScene();};
 <input type='text' id='order' value='0'/>
 <input type='text' id='bgcolor' value='[127, 127, 127, 255]'/>
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg,'/>
-<input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/><br/>
+<input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/>
+<input type='text' id='fgvideo' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/freestock_butterfly_alpha.mp4'/>
+<input type='text' id='fgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/freestock_butterfly_alpha.mp4'/>
+<br/>
 #<select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
 mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mode(this.value);'>
     <option selected value='move'>move</option>
@@ -423,6 +456,87 @@ document.getElementById('renderCanvas').addEventListener('pointerup', function()
 document.getElementById('renderCanvas').addEventListener('pointerleave', function() {
   md = false;
 });
+
+
+video.addEventListener("playing", function () {
+  const canvas = document.createElement("canvas");
+  canvas.width = video.videoWidth;
+  canvas.height = video.videoHeight;
+  ctx = canvas.getContext("2d");
+
+  requestAnimationFrame(requestMap);
+});
+
+
+function requestMap() {
+  ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
+  if (buffer) {
+    applyDisplacementMapFromBuffer(sceneToRender.meshes[sceneToRender.meshes.length-1], buffer, video.videoWidth, video.videoHeight, 0, -1, null, null, true);
+  }
+  buffer = ctx.getImageData(0, 0, video.videoWidth, video.videoHeight).data;
+  applyDisplacementMapFromBuffer(sceneToRender.meshes[sceneToRender.meshes.length-1], buffer, video.videoWidth, video.videoHeight, 0, 1, null, null, true);
+  setTimeout(updateMap, 40);
+}
+
+
+function updateMap() {
+  requestAnimationFrame(requestMap);
+}
+
+
+function applyDisplacementMapFromBuffer(
+        mesh,
+        buffer,
+        heightMapWidth,
+        heightMapHeight,
+        minHeight,
+        maxHeight,
+        uvOffset,
+        uvScale,
+        forceUpdate
+    ) {
+        if (!mesh.isVerticesDataPresent(BABYLON.VertexBuffer.PositionKind) || !mesh.isVerticesDataPresent(BABYLON.VertexBuffer.NormalKind) || !mesh.isVerticesDataPresent(BABYLON.VertexBuffer.UVKind)) {
+            console.log("Cannot call applyDisplacementMap: Given mesh is not complete. Position, Normal or UV are missing");
+            return mesh;
+        }
+
+        const positions = mesh.getVerticesData(BABYLON.VertexBuffer.PositionKind, true, true);
+        const normals = mesh.getVerticesData(BABYLON.VertexBuffer.NormalKind);
+        const uvs = mesh.getVerticesData(BABYLON.VertexBuffer.UVKind);
+
+        let position = BABYLON.Vector3.Zero();
+        const normal = BABYLON.Vector3.Zero();
+        const uv = BABYLON.Vector2.Zero();
+
+        uvOffset = uvOffset || BABYLON.Vector2.Zero();
+        uvScale = uvScale || new BABYLON.Vector2(1, 1);
+
+        for (let index = 0; index < positions.length; index += 3) {
+            BABYLON.Vector3.FromArrayToRef(positions, index, position);
+            BABYLON.Vector3.FromArrayToRef(normals, index, normal);
+            BABYLON.Vector2.FromArrayToRef(uvs, (index / 3) * 2, uv);
+
+            // Compute height
+            const u = (Math.abs(uv.x * uvScale.x + (uvOffset.x % 1)) * (heightMapWidth - 1)) % heightMapWidth | 0;
+            const v = (Math.abs(uv.y * uvScale.y + (uvOffset.y % 1)) * (heightMapHeight - 1)) % heightMapHeight | 0;
+
+            const pos = (u + v * heightMapWidth) * 4;
+            const r = buffer[pos] / 255.0;
+            const g = buffer[pos + 1] / 255.0;
+            const b = buffer[pos + 2] / 255.0;
+
+            const gradient = r * 0.33 + g * 0.33 + b * 0.33;
+
+            normal.normalize();
+            normal.scaleInPlace(minHeight + (maxHeight - minHeight) * gradient);
+            position = position.add(normal);
+
+            position.toArray(positions, index);
+        }
+
+        mesh.setVerticesData(BABYLON.VertexBuffer.PositionKind, positions);
+        return mesh;
+    }
 
 
 function optimize() {
