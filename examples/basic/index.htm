@@ -257,8 +257,6 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
   document.getElementById("renderCanvas").oncontextmenu = function(e){e.preventDefault();}
   document.getElementById("renderCanvas").ondrag = function(e){e.preventDefault();}
 
-});
-
             videoDome = new BABYLON.VideoDome(
                 "videoDome",
                 [document.getElementById("fgvideo").value],
@@ -268,18 +266,20 @@ BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
                     clickToPlay: true,
                     autoPlay: false,
                     poster: "https://i.imgur.com/zVGaZNi.png"
-                },
-                scene
+                }, scene
             );
             video.src = document.getElementById("fgdepth").value;
             scene.meshes[scene.meshes.length-1].dispose();
+            scene.meshes[scene.meshes.length-1].alphaIndex = 0;
+            scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
+            scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
 
             video.muted = true;
             videoDome.videoTexture.video.muted = true;
             video.play();
             videoDome.videoTexture.video.play();
             
-
+});
 } catch(e) {alert(e);}
                 return scene;
             }
