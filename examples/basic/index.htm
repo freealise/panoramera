@@ -540,8 +540,10 @@ function applyDisplacementMapFromBuffer(
             const r = buffer[pos] / 255.0;
             const g = buffer[pos + 1] / 255.0;
             const b = buffer[pos + 2] / 255.0;
+            const a = buffer[pos + 3] / 255.0;
 
-            const gradient = r * 0.33 + g * 0.33 + b * 0.33;
+            //const gradient = r * 0.33 + g * 0.33 + b * 0.33;
+            const gradient = a;
 
             normal.normalize();
             normal.scaleInPlace(minHeight + (maxHeight - minHeight) * gradient);
