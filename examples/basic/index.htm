@@ -466,9 +466,12 @@ try {
 
 
 video.addEventListener("canplaythrough", function () {
-    videoDome.videoTexture.video.addEventListener("canplaythrough", function () {
-        alert('video loaded');
-    });
+    alert('depth loaded');
+    video.removeEventListener("canplaythrough");
+});
+videoDome.videoTexture.video.addEventListener("canplaythrough", function () {
+    alert('video loaded');
+    videoDome.videoTexture.video.removeEventListener("canplaythrough");
 });
 
 
