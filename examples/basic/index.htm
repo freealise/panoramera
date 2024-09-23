@@ -310,6 +310,19 @@ try {
             video.loop = true;
             videoDome.videoTexture.video.loop = true;
             
+            video.oncanplaythrough = function () {
+                alert('depth loaded');
+                video.oncanplaythrough = null;
+            };
+            videoDome.videoTexture.video.oncanplaythrough = function () {
+                alert('video loaded');
+                videoDome.videoTexture.video.oncanplaythrough = null;
+            };
+            document.getElementById('renderCanvas').addEventListener('click', function() {
+                video.play();
+                videoDome.videoTexture.video.play();
+            });
+            
             scene.meshes[scene.meshes.length-2].alphaIndex = 0;
             //scene.meshes[scene.meshes.length-2].material.diffuseTexture.hasAlpha = true;
             //scene.meshes[scene.meshes.length-2].material.useAlphaFromDiffuseTexture = true;
@@ -459,20 +472,6 @@ document.getElementById('renderCanvas').addEventListener('pointerup', function()
 document.getElementById('renderCanvas').addEventListener('pointerleave', function() {
   md = false;
 });
-document.getElementById('renderCanvas').addEventListener('click', function() {
-  video.play();
-  videoDome.videoTexture.video.play();
-});
-
-
-video.oncanplaythrough = function () {
-    alert('depth loaded');
-    video.oncanplaythrough = null;
-};
-videoDome.videoTexture.video.oncanplaythrough = function () {
-    alert('video loaded');
-    videoDome.videoTexture.video.oncanplaythrough = null;
-};
 
 
 video.addEventListener("playing", function () {
