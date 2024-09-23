@@ -300,13 +300,15 @@ try {
                 [document.getElementById("fgvideo").value],
                 {
                     resolution: 32,
-                    size: 16,
+                    size: 1,
                     clickToPlay: true,
                     autoPlay: false,
                 }, scene
             );
             video.muted = true;
             videoDome.videoTexture.video.muted = true;
+            
+            scene.meshes[scene.meshes.length-2].material.needDepthPrePass = true;
             
             scene.meshes[scene.meshes.length-2].alphaIndex = 0;
             scene.meshes[scene.meshes.length-2].material.diffuseTexture.hasAlpha = true;
