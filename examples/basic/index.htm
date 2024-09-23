@@ -308,9 +308,9 @@ try {
             video.muted = true;
             videoDome.videoTexture.video.muted = true;
             
-            //scene.meshes[scene.meshes.length-2].alphaIndex = 0;
-            //scene.meshes[scene.meshes.length-2].material.diffuseTexture.hasAlpha = true;
-            //scene.meshes[scene.meshes.length-2].material.useAlphaFromDiffuseTexture = true;
+            scene.meshes[scene.meshes.length-2].alphaIndex = 0;
+            scene.meshes[scene.meshes.length-2].material.diffuseTexture.hasAlpha = true;
+            scene.meshes[scene.meshes.length-2].material.useAlphaFromDiffuseTexture = true;
     
     var q = scene.meshes[scene.meshes.length-2]._children;
     for (i = 0; i < q.length; i++) {
