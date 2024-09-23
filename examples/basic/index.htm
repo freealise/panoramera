@@ -124,8 +124,8 @@
 <input type='text' id='bgcolor' value='[0, 0, 0, 0]'/>
 <input type='text' id='bgimage' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0.jpg,'/>
 <input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/>
-<input type='text' id='fgvideo' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/freestock_butterfly_alpha.mp4'/>
-<input type='text' id='fgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/freestock_butterfly_alpha.mp4'/>
+<input type='text' id='fgvideo' value='https://raw.githubusercontent.com/freealise/freealise/refs/heads/main/transparent.mp4'/>
+<input type='text' id='fgdepth' value='https://raw.githubusercontent.com/freealise/freealise/refs/heads/main/transparent.mp4'/>
 <br/>
 #<select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
 mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mode(this.value);'>
@@ -324,8 +324,8 @@ try {
             });
             
             scene.meshes[scene.meshes.length-2].alphaIndex = 0;
-            //scene.meshes[scene.meshes.length-2].material.diffuseTexture.hasAlpha = true;
-            //scene.meshes[scene.meshes.length-2].material.useAlphaFromDiffuseTexture = true;
+            scene.meshes[scene.meshes.length-2].material.diffuseTexture.hasAlpha = true;
+            scene.meshes[scene.meshes.length-2].material.useAlphaFromDiffuseTexture = true;
     
     var q = scene.meshes[scene.meshes.length-2]._children;
     for (i = 0; i < q.length; i++) {
