@@ -317,6 +317,7 @@ try {
       let mesh = q[i];
       mesh.dispose(false, true);
     }
+    alert('scene loaded');
 
 } catch(e) {alert(e);}
 });
@@ -464,11 +465,18 @@ try {
 });
 
 
+video.addEventListener("canplaythrough", function () {
+    videoDome.videoTexture.video.addEventListener("canplaythrough", function () {
+        alert('video loaded');
+    });
+});
+
+
 video.addEventListener("playing", function () {
   const canvas = document.createElement("canvas");
   canvas.width = video.videoWidth;
   canvas.height = video.videoHeight;
-  ctx = canvas.getContext("2d");
+  ctx = canvas.getContext("2d", { willReadFrequently: true });
 
   requestAnimationFrame(requestMap);
 });
