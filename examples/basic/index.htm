@@ -300,7 +300,7 @@ try {
                 [document.getElementById("fgvideo").value],
                 {
                     resolution: 32,
-                    size: 1,
+                    size: 2,
                     clickToPlay: true,
                     autoPlay: false,
                 }, scene
@@ -542,8 +542,8 @@ function applyDisplacementMapFromBuffer(
             const b = buffer[pos + 2] / 255.0;
             const a = buffer[pos + 3] / 255.0;
 
-            //const gradient = r * 0.33 + g * 0.33 + b * 0.33;
-            const gradient = a;
+            const gradient = r * 0.33 + g * 0.33 + b * 0.33;
+            //const gradient = a;
 
             normal.normalize();
             normal.scaleInPlace(minHeight + (maxHeight - minHeight) * gradient);
