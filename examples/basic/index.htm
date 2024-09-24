@@ -329,13 +329,12 @@ try {
                     
                     document.getElementById('renderCanvas').addEventListener('click', function() {
                         try {
-                        video.play();
-                        videoDome.videoTexture.video.play();
-                        
                         music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3", scene, function(){
                             if (!BABYLON.Engine.audioEngine.unlocked) {
                                 BABYLON.Engine.audioEngine.unlock();
                             }
+                            videoDome.videoTexture.video.play();
+                            video.play();
                             music.play();
                         }, {
                           loop: true,
@@ -346,8 +345,8 @@ try {
                         ST.rotationQuaternion = null;
                         ST.position.x = 0;
                         ST.position.y = 0;
-                        ST.position.z = -1;
-                        const direction = new BABYLON.Vector3(0, 0, 1);
+                        ST.position.z = 8;
+                        const direction = new BABYLON.Vector3(0, 0, -1);
                         music.attachToMesh(ST);
                         music.setDirectionalCone(45, 90, 0.5);
                         music.setLocalDirectionToMesh(direction);
