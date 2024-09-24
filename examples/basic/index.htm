@@ -292,24 +292,24 @@ try {
 
             video.crossOrigin = "anonymous";
             video.src = document.getElementById("fgdepth").value;
-            videoDome = new BABYLON.VideoDome(
-                "videoDome",
-                [document.getElementById("fgvideo").value],
-                {
-                    resolution: 32,
-                    size: 16,
-                    clickToPlay: true,
-                    autoPlay: false,
-                    poster: 'https://freeali.se/assets/images/1x1.png',
-                }, scene
-            );
             video.muted = true;
-            videoDome.videoTexture.video.muted = true;
             video.loop = true;
-            videoDome.videoTexture.video.loop = true;
-            
             video.oncanplaythrough = function () {
                 alert('depth loaded');
+                
+                videoDome = new BABYLON.VideoDome(
+                    "videoDome",
+                    [document.getElementById("fgvideo").value],
+                    {
+                        resolution: 32,
+                        size: 16,
+                        clickToPlay: true,
+                        autoPlay: false,
+                        poster: 'https://freeali.se/assets/images/1x1.png',
+                    }, scene
+                );
+                videoDome.videoTexture.video.muted = true;
+                videoDome.videoTexture.video.loop = true;
                 videoDome.videoTexture.video.oncanplaythrough = function () {
                     alert('video loaded');
                     //BABYLON.Engine.audioEngine.useCustomUnlockedButton = true;
