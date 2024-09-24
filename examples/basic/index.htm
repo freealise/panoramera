@@ -344,9 +344,12 @@ try {
                         });
                         var ST = new BABYLON.TransformNode("ST");
                         ST.rotationQuaternion = null;
-                        const direction = new BABYLON.Vector3(0, 0, -1);
+                        ST.position.x = 0;
+                        ST.position.y = 0;
+                        ST.position.z = -1;
+                        const direction = new BABYLON.Vector3(0, 0, 1);
                         music.attachToMesh(ST);
-                        music.setDirectionalCone(90, 180, 0.5);
+                        music.setDirectionalCone(45, 90, 0.5);
                         music.setLocalDirectionToMesh(direction);
                         
                         } catch(e) {alert(e);}
