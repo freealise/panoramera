@@ -308,6 +308,19 @@ try {
                         poster: 'https://freeali.se/assets/images/1x1.png',
                     }, scene
                 );
+                var q = scene.meshes[scene.meshes.length-2]._children;
+                    for (i = 0; i < q.length; i++) {
+                    let mesh = q[i];
+                    mesh.dispose(false, true);
+                }
+                scene.meshes[scene.meshes.length-1].alphaIndex = 1;
+                scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
+                scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
+                
+                document.getElementById("fnum").innerHTML += '<option selected value="' + (scene.meshes.length-1) + '">video</option>';
+                editControl = new EditControl(scene.meshes[parseInt(document.getElementById("fnum").value)], camera, canvas, 1.0, true, 0.02);
+                editControl.enableTranslation();
+                
                 videoDome.videoTexture.video.muted = true;
                 videoDome.videoTexture.video.loop = true;
                 videoDome.videoTexture.video.oncanplaythrough = function () {
@@ -342,23 +355,9 @@ try {
                 };
                 video.oncanplaythrough = null;
             };
-            scene.meshes[scene.meshes.length-2].alphaIndex = 1;
-            scene.meshes[scene.meshes.length-2].material.diffuseTexture.hasAlpha = true;
-            scene.meshes[scene.meshes.length-2].material.useAlphaFromDiffuseTexture = true;
-    
-    var q = scene.meshes[scene.meshes.length-2]._children;
-    for (i = 0; i < q.length; i++) {
-      let mesh = q[i];
-      mesh.dispose(false, true);
-    }
-    document.getElementById("fnum").innerHTML += '<option selected value="' + (scene.meshes.length-1) + '">video</option>';
-    editControl = new EditControl(scene.meshes[parseInt(document.getElementById("fnum").value)], camera, canvas, 1.0, true, 0.02);
-    editControl.enableTranslation();
-    
-    alert('scene loaded');
-
 } catch(e) {alert(e);}
 });
+                alert('scene loaded');
                 return scene;
             }
         }
