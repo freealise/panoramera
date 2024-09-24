@@ -342,13 +342,13 @@ try {
                           autoplay: true,
                           spatialSound: true,
                         });
-                        //var ST = new BABYLON.TransformNode("ST");
-                        //ST.rotationQuaternion = null;
+                        var ST = new BABYLON.TransformNode("ST");
+                        ST.rotationQuaternion = null;
                         const direction = new BABYLON.Vector3(0, 0, 1);
-                        music.attachToMesh(scene.meshes[scene.meshes.length-1]);
+                        music.attachToMesh(ST);
                         music.setDirectionalCone(90, 180, 0);
                         music.setLocalDirectionToMesh(direction);
-                        showAudio(scene.meshes[scene.meshes.length-1].position, direction, 255.0, new BABYLON.Color3(1, 1, 1));
+                        //showAudio(scene.meshes[scene.meshes.length-1].position, direction, 255.0, new BABYLON.Color3(1, 1, 1));
                         
                         } catch(e) {alert(e);}
                     }, { once: true });
