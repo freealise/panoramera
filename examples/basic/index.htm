@@ -335,6 +335,8 @@ try {
     }
     document.getElementById("fnum").innerHTML += '<option selected value="' + (scene.meshes.length-1) + '">video</option>';
     
+    var ST = new BABYLON.TransformNode("ST");
+    ST.rotationQuaternion = null;
     music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/skylark_bird.mp3", scene, null, {
       loop: true,
       autoplay: false,
@@ -342,9 +344,8 @@ try {
     const direction = new BABYLON.Vector3(1, 0, 0);
     music.setDirectionalCone(90, 180, 0);
     music.setLocalDirectionToMesh(direction);
-    music.attachToMesh(scene.meshes[scene.meshes.length-1]);
-    alert(music.position.x);
-    showAudio(music.position, direction, 0.25, new BABYLON.Color3(1, 1, 1));
+    music.attachToMesh(ST);
+    showAudio(ST.position, direction, 0.25, new BABYLON.Color3(1, 1, 1));
     
     alert('scene loaded');
 
