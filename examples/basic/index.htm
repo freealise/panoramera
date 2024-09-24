@@ -312,6 +312,7 @@ try {
                 alert('depth loaded');
                 videoDome.videoTexture.video.oncanplaythrough = function () {
                     alert('video loaded');
+                    BABYLON.Engine.audioEngine.useCustomUnlockedButton = true;
                     
                     document.getElementById('renderCanvas').addEventListener('click', function() {
                         try {
@@ -320,6 +321,7 @@ try {
                         music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3", scene, null, {
                           loop: true,
                           autoplay: false,
+                          spatialSound: true,
                         });
                         const direction = new BABYLON.Vector3(0, 0, 1);
                         music.setDirectionalCone(90, 180, 0);
@@ -329,6 +331,9 @@ try {
                 
                         video.play();
                         videoDome.videoTexture.video.play();
+                        if (!BABYLON.Engine.audioEngine.unlocked) {
+                          BABYLON.Engine.audioEngine.unlock();
+                        }
                         music.play();
                         } catch(e) {alert(e);}
                     });
