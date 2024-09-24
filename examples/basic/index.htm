@@ -254,7 +254,7 @@ try {
   for (var i=0; i<scene.meshes.length; i++) {
     if (scene.meshes[i].name.indexOf("dome") == 0) {
       if (j==0) {
-        document.getElementById("fnum").innerHTML = '<option selected value="' + i + '">' + j + '</option>';
+        document.getElementById("fnum").innerHTML = '<option value="' + i + '">' + j + '</option>';
         document.getElementById("fnum").value = i;
       } else {
         document.getElementById("fnum").innerHTML += '<option value="' + i + '">' + j + '</option>';
@@ -332,6 +332,7 @@ try {
       let mesh = q[i];
       mesh.dispose(false, true);
     }
+    document.getElementById("fnum").innerHTML += '<option selected value="' + (scene.meshes.length-1) + '">video</option>';
     alert('scene loaded');
 
 } catch(e) {alert(e);}
