@@ -333,6 +333,18 @@ try {
       mesh.dispose(false, true);
     }
     document.getElementById("fnum").innerHTML += '<option selected value="' + (scene.meshes.length-1) + '">video</option>';
+    
+    const music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/skylark_bird.mp3", scene, null, {
+      loop: true,
+      autoplay: false,
+    });
+    const direction = new BABYLON.Vector3(1, 0, 0);
+    music.setDirectionalCone(90, 180, 0);
+    music.setLocalDirectionToMesh(direction);
+    music.attachToMesh(scene.meshes[scene.meshes.length-1]);
+    
+    showAudio(music.position, direction, 0.25, new BABYLON.Color3(1, 1, 1));
+    
     alert('scene loaded');
 
 } catch(e) {alert(e);}
@@ -616,6 +628,17 @@ function stop_recording() {
     recorder.stopRecording();
   }
 }
+            function showAudio(position, direction, size, color, sc) {
+                color = color || BABYLON.Color3.White();
+                sc = sc || scene;
+                size = size || 1;
+        
+                var lines = [];
+                lines.push([position, position.add(direction.scaleInPlace(size))]);
+                var aLines = BABYLON.MeshBuilder.CreateLineSystem("aLines", {lines: lines}, sc);
+                aLines.color = color;
+                return aLines;
+            }
             
 </script>
 </body>
