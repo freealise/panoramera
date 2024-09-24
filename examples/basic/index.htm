@@ -312,7 +312,7 @@ try {
                 alert('depth loaded');
                 videoDome.videoTexture.video.oncanplaythrough = function () {
                     alert('video loaded');
-                    BABYLON.Engine.audioEngine.useCustomUnlockedButton = true;
+                    //BABYLON.Engine.audioEngine.useCustomUnlockedButton = true;
                     
                     document.getElementById('renderCanvas').addEventListener('click', function() {
                         try {
@@ -331,11 +331,11 @@ try {
                         music.setLocalDirectionToMesh(direction);
                         music.attachToMesh(ST);
                         showAudio(ST.position, direction, 255.0, new BABYLON.Color3(1, 1, 1));
-                        */
+                        
                         if (!BABYLON.Engine.audioEngine.unlocked) {
                           BABYLON.Engine.audioEngine.unlock();
                         }
-                        music.play();
+                        music.play();*/
                         } catch(e) {alert(e);}
                     });
                     videoDome.videoTexture.video.oncanplaythrough = null;
