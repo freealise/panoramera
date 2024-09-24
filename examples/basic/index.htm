@@ -334,7 +334,12 @@ try {
                         
                         var ST = new BABYLON.TransformNode("ST");
                         ST.rotationQuaternion = null;
-                        music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3", scene, null, {
+                        music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3", scene, function(){
+                            if (!BABYLON.Engine.audioEngine.unlocked) {
+                                BABYLON.Engine.audioEngine.unlock();
+                            }
+                            music.play();
+                        }, {
                           loop: true,
                           autoplay: true,
                           spatialSound: true,
@@ -344,11 +349,7 @@ try {
                         music.setLocalDirectionToMesh(direction);
                         music.attachToMesh(ST);
                         showAudio(ST.position, direction, 255.0, new BABYLON.Color3(1, 1, 1));
-                        
-                        if (!BABYLON.Engine.audioEngine.unlocked) {
-                          BABYLON.Engine.audioEngine.unlock();
-                        }
-                        music.play();*/
+                        */
                         } catch(e) {alert(e);}
                     });
                     videoDome.videoTexture.video.oncanplaythrough = null;
