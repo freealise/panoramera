@@ -351,7 +351,7 @@ try {
                         showAudio(ST.position, direction, 255.0, new BABYLON.Color3(1, 1, 1));
                         */
                         } catch(e) {alert(e);}
-                    });
+                    }, { once: true });
                     videoDome.videoTexture.video.oncanplaythrough = null;
                 };
                 video.oncanplaythrough = null;
