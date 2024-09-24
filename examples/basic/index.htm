@@ -269,12 +269,12 @@ try {
     }
     //alert(scene.meshes[i].name + ' z: ' + scene.meshes[i].rotation.z + ' x: ' + scene.meshes[i].rotation.x);
   }
-  var l_axes = new BABYLON.Debug.AxesViewer(scene, 4);
+  var l_axes = new BABYLON.Debug.AxesViewer(scene, 2);
   l_axes.xAxis.parent = scene.meshes[parseInt(document.getElementById("fnum").value)];
   l_axes.yAxis.parent = scene.meshes[parseInt(document.getElementById("fnum").value)];
   l_axes.zAxis.parent = scene.meshes[parseInt(document.getElementById("fnum").value)];
   
-  var axes = new BABYLON.Debug.AxesViewer(scene, 8);
+  var axes = new BABYLON.Debug.AxesViewer(scene, 4);
   var CoT = new BABYLON.TransformNode("root");
   CoT.rotationQuaternion = null;
   axes.parent = CoT;
@@ -336,10 +336,10 @@ try {
                             if (!BABYLON.Engine.audioEngine.unlocked) {
                                 BABYLON.Engine.audioEngine.unlock();
                             }
-                            //music.play();
+                            music.play();
                         }, {
                           loop: true,
-                          autoplay: true,
+                          autoplay: false,
                           spatialSound: true,
                         });
                         var ST = new BABYLON.TransformNode("ST");
@@ -349,8 +349,8 @@ try {
                         music.setDirectionalCone(90, 180, 0);
                         music.setLocalDirectionToMesh(direction);
                         
-                        const axes = new BABYLON.Debug.AxesViewer(scene, 16);
-                        axes.update(ST.position, direction, direction, direction);
+                        const axes = new BABYLON.Debug.AxesViewer(scene, 8);
+                        axes.update(ST.position, direction, BABYLON.Vector3.Zero(), BABYLON.Vector3.Zero());
                         
                         } catch(e) {alert(e);}
                     }, { once: true });
