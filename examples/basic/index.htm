@@ -494,11 +494,12 @@ video.addEventListener("playing", function () {
   canvas.height = video.videoHeight;
   ctx = canvas.getContext("2d", { willReadFrequently: true });
 
-  requestAnimationFrame(requestMap);
+  updateMap();
 });
 
 
 function requestMap() {
+try {
   ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight);
   if (buffer) {
     applyDisplacementMapFromBuffer(sceneToRender.meshes[sceneToRender.meshes.length-1], buffer, video.videoWidth, video.videoHeight, 0, -1, null, null, true);
@@ -506,6 +507,7 @@ function requestMap() {
   buffer = ctx.getImageData(0, 0, video.videoWidth, video.videoHeight).data;
   applyDisplacementMapFromBuffer(sceneToRender.meshes[sceneToRender.meshes.length-1], buffer, video.videoWidth, video.videoHeight, 0, 1, null, null, true);
   setTimeout(updateMap, 40);
+} catch(e) {alert(e);}
 }
 
 
