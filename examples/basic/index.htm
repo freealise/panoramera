@@ -179,7 +179,7 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
         var a_old = 0;
         var b_old = Math.PI / 2;
         var md = false;
-        var videoDome, ctx, buffer;
+        var videoDome, ctx, buffer, music;
         
         var createDefaultEngine = function() { return new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true,  disableWebGL2Support: false}, true); }; //adapt to device ratio
         class Playground {
@@ -321,6 +321,7 @@ try {
             document.getElementById('renderCanvas').addEventListener('click', function() {
                 video.play();
                 videoDome.videoTexture.video.play();
+                music.play();
             });
             
             scene.meshes[scene.meshes.length-2].alphaIndex = 1;
@@ -334,7 +335,7 @@ try {
     }
     document.getElementById("fnum").innerHTML += '<option selected value="' + (scene.meshes.length-1) + '">video</option>';
     
-    const music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/skylark_bird.mp3", scene, null, {
+    music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/skylark_bird.mp3", scene, null, {
       loop: true,
       autoplay: false,
     });
