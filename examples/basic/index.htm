@@ -174,7 +174,7 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
         var sceneToRender = null;
         var pipeline = null;
         var editControl = null;
-        var camera, recorder;
+        var camera, recorder, ac;
         var r_old = 1.0;
         var a_old = 0;
         var b_old = Math.PI / 2;
@@ -627,10 +627,17 @@ BABYLON.Tools.CreateScreenshotUsingRenderTarget(BABYLON.Engine.LastCreatedScene.
 
 
 function record_video() {
+  try {
   if (BABYLON.VideoRecorder.IsSupported(engine) && (recorder == null || !recorder.isRecording) ) {
-    recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25 });
+    if (!ac) {
+        ac = BABYLON.Engine.audioEngine.audioContext;
+        var mediaStreamDestination = ac.createMediaStreamDestination();
+        BABYLON.Engine.audioEngine.masterGain.connect(mediaStreamDestination);
+        recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25, audioTracks: mediaStreamDestination.stream.getAudioTracks()[0] });
+    }
     recorder.startRecording('video.mp4', 60*60);
   }
+  } catch(e) {alert(e);}
 }
 
 
