@@ -632,7 +632,9 @@ function record_video() {
     if (!ac) {
         ac = BABYLON.Engine.audioEngine.audioContext;
         var mediaStreamDestination = ac.createMediaStreamDestination();
+        music.connectToSoundTrackAudioNode(mediaStreamDestination);
         BABYLON.Engine.audioEngine.masterGain.connect(mediaStreamDestination);
+        alert('audio connected');
         recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25, audioTracks: mediaStreamDestination.stream.getAudioTracks()[0] });
     }
     recorder.startRecording('video.mp4', 60*60);
