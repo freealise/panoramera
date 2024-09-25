@@ -174,7 +174,7 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
         var sceneToRender = null;
         var pipeline = null;
         var editControl = null;
-        var camera, recorder, ac;
+        var camera, recorder, ac, mediaStreamDestination;
         var r_old = 1.0;
         var a_old = 0;
         var b_old = Math.PI / 2;
@@ -333,6 +333,11 @@ try {
                             if (!BABYLON.Engine.audioEngine.unlocked) {
                                 BABYLON.Engine.audioEngine.unlock();
                             }
+                            ac = BABYLON.Engine.audioEngine.audioContext;
+                            mediaStreamDestination = ac.createMediaStreamDestination();
+                            //music.connectToSoundTrackAudioNode(mediaStreamDestination);
+                            BABYLON.Engine.audioEngine.masterGain.connect(mediaStreamDestination);
+        
                             videoDome.videoTexture.video.play();
                             video.play();
                             music.play();
@@ -629,12 +634,7 @@ BABYLON.Tools.CreateScreenshotUsingRenderTarget(BABYLON.Engine.LastCreatedScene.
 function record_video() {
   try {
   if (BABYLON.VideoRecorder.IsSupported(engine) && (recorder == null || !recorder.isRecording) ) {
-    if (!ac) {
-        ac = BABYLON.Engine.audioEngine.audioContext;
-        var mediaStreamDestination = ac.createMediaStreamDestination();
-        //music.connectToSoundTrackAudioNode(mediaStreamDestination);
-        BABYLON.Engine.audioEngine.masterGain.connect(mediaStreamDestination);
-        alert('masterGain connected');
+    if (recorder == null) {
         recorder = new BABYLON.VideoRecorder(engine, { mimeType:'video/mp4', fps:25, audioTracks: mediaStreamDestination.stream.getAudioTracks() });
     }
     recorder.startRecording('video.mp4', 60*60);
