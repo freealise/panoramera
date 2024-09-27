@@ -112,6 +112,7 @@
         font-size:16px;
         line-height:1em;
         white-space:pre;
+        border:0;
         margin:0;
         padding:0;
         height:64px;
@@ -123,6 +124,9 @@
     }            
     #subs {
         width:67vw;
+    }
+    #subs_c {
+        width:100vw;
     }
         </style>
     </head>
@@ -162,15 +166,14 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
 <a href='#' onclick='snapshot();'>snapshot</a><br/>
 <img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'></canvas>
-
-<textarea id="times"></textarea><textarea id="subs">line0
+<div id='subs_c'><textarea id="times"></textarea><textarea id="subs">line0
 
 line1
 
 line2
 
 line3
-</textarea><br/>
+</textarea></div>
 <button id="add_times" onclick="addTimes();">add</button><a id="subs_link" href=""></a>
 </div>
 <a href='#' id="x" onclick='if(document.getElementById("box").style.display!="none"){document.getElementById("box").style.display="none";}else{document.getElementById("box").style.display="block";}'>[x]</a><br/>
