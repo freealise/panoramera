@@ -166,7 +166,7 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
 <a href='#' onclick='snapshot();'>snapshot</a><br/>
 <img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'></canvas>
-<div id='subs_c'><textarea id="times"></textarea><textarea id="subs">line0
+<div id='subs_c'><textarea id="times" onscroll="scrollSubs(true);"></textarea><textarea id="subs" onscroll="scrollSubs(false);">line0
 
 line1
 
@@ -769,6 +769,14 @@ function stop_recording() {
              subs_link.download = 'subtitles.vtt';
              subs_link.click();
          }
+        
+        function scrollSubs(s) {
+            if (s === true) {
+                subs.scrollTo(0, times.scrollTop);
+            } else {
+                times.scrollTo(0, subs.scrollTop);
+            }
+        }
             
 </script>
 </body>
