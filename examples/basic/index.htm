@@ -108,25 +108,23 @@
       display:none;
     }
     textarea, #add_times {
-        position:absolute;
-        bottom:0;
+        position:relative;
         font-size:16px;
         line-height:1em;
         white-space:pre;
     }
     #times {
-        left:0;
         width:33vw;
         height:64px;
     }            
     #subs {
         left:33vw;
+        bottom:64px;
         width:67vw;
         height:64px;
     }
     #add_times {
-        left:0;
-        bottom:0;
+        bottom:64px;
     }
         </style>
     </head>
@@ -160,11 +158,12 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
 <a href='#' id='optimize' onclick='optimize();'>optimize</a><br/>
 
 <a href='#' onclick='if(!scene.debugLayer.isVisible()){scene.debugLayer.show();}else{scene.debugLayer.hide();}'>inspector</a>
+<a href='#' id='play'>play</a>
 <a href='#' onclick='record_video();'>record</a>
 <a href='#' onclick='stop_recording();'>stop</a>
 <a href='#' onclick='snapshot();'>snapshot</a><br/>
 <img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
-<canvas id='cnv_out'/>
+<canvas id='cnv_out'></canvas>
 
 <textarea id="times"></textarea>
     <textarea id="subs">line0
@@ -348,7 +347,7 @@ try {
                     {
                         resolution: 32,
                         size: 16,
-                        clickToPlay: true,
+                        clickToPlay: false,
                         autoPlay: false,
                         poster: 'https://freeali.se/assets/images/1x1.png',
                     }, scene
@@ -372,7 +371,7 @@ try {
                     alert('video loaded');
                     //BABYLON.Engine.audioEngine.useCustomUnlockedButton = true;
                     
-                    document.getElementById('renderCanvas').addEventListener('click', function() {
+                    document.getElementById('play').addEventListener('click', function() {
                         try {
                         music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3", scene, function(){
                             if (!BABYLON.Engine.audioEngine.unlocked) {
