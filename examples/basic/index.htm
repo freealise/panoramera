@@ -107,6 +107,28 @@
     #video {
       display:none;
     }
+    textarea, #add_times {
+        position:fixed;
+        top:0;
+        z-index:1;
+        font-size:16px;
+        line-height:1em;
+        white-space:pre;
+    }
+    #times {
+        right:67vw;
+        width:33vw;
+        height:64px;
+    }            
+    #subs {
+        right:0;
+        width:67vw;
+        height:64px;
+    }
+    #add_times {
+        right:0;
+        top:64px;
+    }
         </style>
     </head>
 <body oncontextmenu="return false;" onselect="event.preventDefault();">
@@ -144,6 +166,17 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
 <a href='#' onclick='snapshot();'>snapshot</a><br/>
 <img src='' id='img_out' onload='var ctxt = document.getElementById("cnv_out").getContext("2d");ctxt.drawImage(this, 0, 0);'/><br/>
 <canvas id='cnv_out'/>
+
+<textarea id="times"></textarea>
+    <textarea id="subs">line0
+
+line1
+
+line2
+
+line3
+</textarea>
+<button id="add_times" onclick="addTimes();">add</button><a id="subs_link" href=""></a>
 </div>
 <a href='#' id="x" onclick='if(document.getElementById("box").style.display!="none"){document.getElementById("box").style.display="none";}else{document.getElementById("box").style.display="block";}'>[x]</a><br/>
 <div id="compass_box"><div id="compass"><b style="color:blue;">◅</b>𝍠<b style="color:red;">▻</b></div></div>
@@ -151,7 +184,20 @@ mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mo
         var canvas = document.getElementById("renderCanvas");
         var video = document.getElementById("video");
         var compass = document.getElementById("compass");
+        var times = document.getElementById("times");
+        var subs = document.getElementById("subs");
+        var subs_link = document.getElementById("subs_link");
         var screenshot = false;
+        
+        var avg = [];
+        var avg_all = 0;
+        var avg_old = 0;
+        var start = Date.now();
+        var d = new Date(start);
+        const o = d.getTimezoneOffset()*60*1000;
+        var t_old = 0;
+        var time_old = '00:00:00.000';
+        subs.value = 'WEBVTT\n\n' + subs.value;
 
         var then = new Date().getTime();
         var now, delta;
@@ -355,6 +401,41 @@ try {
                         music.attachToMesh(ST);
                         music.setDirectionalCone(45, 90, 0);
                         music.setLocalDirectionToMesh(direction);
+                        
+                        music.onEndedObservable.add(function() {
+                            setTime(j-1);
+                            avg_all /= j;
+                        });
+        
+        	            var analyser = new BABYLON.Analyser(scene);
+        	            BABYLON.Engine.audioEngine.connectToAnalyser(analyser);
+                        analyser.FFT_SIZE = 1024;
+        	            analyser.SMOOTHING = 0.0;
+                        analyser.DEBUGCANVASSIZE.width = 512;
+                        analyser.DEBUGCANVASSIZE.height = 100;
+                        analyser.DEBUGCANVASPOS.x = 0;
+                        analyser.DEBUGCANVASPOS.y = 0;
+                        analyser.drawDebugCanvas();
+
+                        var j = 0;
+                        start = Date.now();
+                        scene.registerBeforeRender(function () {
+        	                var workingArray = analyser.getByteFrequencyData();
+                            avg[j] = 0;
+
+                            for (var i = 0; i < analyser.getFrequencyBinCount(); i++) {
+                                avg[j] += workingArray[i];
+        	                 }
+                            avg[j] = parseInt(avg[j] / analyser.getFrequencyBinCount());
+                            avg_all += avg[j];
+             
+                            if (j>0 && avg[j] / avg[j-1] >= 2 && avg_old != j-1) {
+                                setTime(j);
+                                times.scrollBy(0, 32);
+                                subs.scrollTo(0, times.scrollTop);
+                            }
+                            j++;
+                    	 });
                         
                         } catch(e) {alert(e);}
                     }, { once: true });
@@ -648,6 +729,48 @@ function stop_recording() {
     recorder.stopRecording();
   }
 }
+
+
+         function setTime(j) {
+                 t = Date.now() - start;
+                 d = new Date(t + o);
+                 let h = addZeros(d.getHours(), 1);
+                 let m = addZeros(d.getMinutes(), 1);
+                 let s = addZeros(d.getSeconds(), 1);
+                 let ms = addZeros(d.getMilliseconds(), 2);
+                 let time = h + ":" + m + ":" + s + "." + ms;
+
+                 times.value += time_old + ' --> ' + time + ' ' + ((t-t_old)/1000).toFixed(3) + ' ' + avg[j-1] + ' ' + avg[j] + '\n\n';
+                 t_old = t;
+                 time_old = time;
+                 avg_old = j;
+         }
+
+
+         function addZeros(q, n) {
+             var k = 0;
+             while (k < n) {
+                 if (q < Math.pow(10,n)) {
+                     q = "0" + q;
+                 }
+                 k++;
+             }
+             return q;
+         }
+        
+        
+        //https://stackoverflow.com/questions/39610163/whats-the-benefit-of-webvtt-vtt-over-subreal-srt
+         function addTimes() {
+             var times_a = times.value.split('\n\n');
+             var subs_a = subs.value.split('\n\n');
+             for (var i=0; i<subs_a.length; i++) {
+                 subs_a[i] = times_a[i] + '\n' + subs_a[i];
+             }
+             const v = subs_a.join('\n\n');
+             subs_link.href = "data:text/vtt;base64," + btoa( v.slice(v.indexOf('WEBVTT\n\n')) );
+             subs_link.download = 'subtitles.vtt';
+             subs_link.click();
+         }
             
 </script>
 </body>
