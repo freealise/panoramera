@@ -357,6 +357,7 @@ try {
                     let mesh = q[i];
                     mesh.dispose(false, true);
                 }
+                scene.meshes[scene.meshes.length-1].visibility = 0.9999;
                 scene.meshes[scene.meshes.length-1].alphaIndex = 1;
                 scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
                 scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
