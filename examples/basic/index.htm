@@ -358,10 +358,10 @@ try {
                     mesh.dispose(false, true);
                 }
                 scene.meshes[scene.meshes.length-1].alphaIndex = 1;
-                //scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
+                scene.meshes[scene.meshes.length-1].material.diffuseTexture.hasAlpha = true;
                 //scene.meshes[scene.meshes.length-1].material.useAlphaFromDiffuseTexture = true;
-                scene.meshes[scene.meshes.length-1].material.opacityTexture.getAlphaFromRGB = true;
                 scene.meshes[scene.meshes.length-1].material.opacityTexture = scene.meshes[scene.meshes.length-1].material.diffuseTexture;
+                scene.meshes[scene.meshes.length-1].material.opacityTexture.getAlphaFromRGB = true;
                 
                 document.getElementById("fnum").innerHTML += '<option selected value="' + (scene.meshes.length-1) + '">video</option>';
                 editControl = new EditControl(scene.meshes[parseInt(document.getElementById("fnum").value)], camera, canvas, 1.0, true, 0.02);
