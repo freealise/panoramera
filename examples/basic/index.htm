@@ -345,28 +345,46 @@ try {
                 //videoMat.disableLighting = true;
                 videoMat.Fragment_Before_FragColor(`  
 vec3 chromaKey = vec3(1.0, 1.0, 1.0);
-vec3 tolerance = vec3(0.004);
-vec3 limitMin = vec3(chromaKey-tolerance); 
-vec3 limitMax = vec3(chromaKey+tolerance);
-limitMin.r = max(limitMin.r, 0.);
-limitMin.g = max(limitMin.g, 0.);
-limitMin.b = max(limitMin.b, 0.);
-limitMax.r = min(limitMax.r, 1.);
-limitMax.g = min(limitMax.g, 1.);
-limitMax.b = min(limitMax.b, 1.);
+vec3 blend = vec3(0.02);
+vec3 limitMin = vec3(chromaKey-blend); 
+vec3 limitMax = vec3(chromaKey+blend);
+limitMin.r = max(limitMin.r, 0.0);
+limitMin.g = max(limitMin.g, 0.0);
+limitMin.b = max(limitMin.b, 0.0);
+limitMax.r = min(limitMax.r, 1.0);
+limitMax.g = min(limitMax.g, 1.0);
+limitMax.b = min(limitMax.b, 1.0);
+
+function lerp(y1, y2, mu) { return y1*(1-mu)+y2*mu; }
 
 if (
     ((color.r >= limitMin.r) && (color.r <= limitMax.r)) &&
     ((color.g >= limitMin.g) && (color.g <= limitMax.g)) &&
     ((color.b >= limitMin.b) && (color.b <= limitMax.b))
 ) {
-    if (color.r == chromaKey.r && color.g == chromaKey.g && color.b == chromaKey.b){
+    if (color.r == chromaKey.r && color.g == chromaKey.g && color.b == chromaKey.b && color.a == 1.0){
         discard;
     } else {
-        color.a = (color.r-0.096) * 4.0 + (color.g-0.096) * 2.0 + (color.b-0.096);
+        highp float rold = chromaKey.r-blend.r;
+        highp float rnew = chromaKey.r;
+        highp float r = color.r;
+        
+        highp float gold = chromaKey.g-blend.g;
+        highp float gnew = chromaKey.g;
+        highp float g = color.g;
+        
+        highp float bold = chromaKey.b-blend.b;
+        highp float bnew = chromaKey.b;
+        highp float b = color.b;
+        
+        color.a = (
+            lerp( 1.0, 0.0, (r-rold)/(rnew-rold) ) + 
+            lerp( 1.0, 0.0, (g-gold)/(gnew-gold) ) + 
+            lerp( 1.0, 0.0, (b-bold)/(bnew-bold) )
+        ) / 3.0;
     }
 } else {
-    color.a = 1.;
+    color.a = 1.0;
 }
 `);
                 
