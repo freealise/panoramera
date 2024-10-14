@@ -344,9 +344,6 @@ try {
                 var videoMat = new BABYLON.CustomMaterial("video material", scene);
                 //videoMat.disableLighting = true;
                 videoMat.Fragment_Before_FragColor(`  
-float lerp(float y1, float y2, float mu) { return y1*(1.0-mu)+y2*mu; }
-
-void main() {
 vec3 chromaKey = vec3(1.0, 1.0, 1.0);
 vec3 blend = vec3(0.02);
 vec3 limitMin = vec3(chromaKey-blend); 
@@ -378,16 +375,22 @@ if (
         float bold = chromaKey.b-blend.b;
         float bnew = chromaKey.b;
         float b = color.b;
+
+        float rlerp = (r-rold)/(rnew-rold);
+        float glerp = (g-gold)/(gnew-gold);
+        float blerp = (b-bold)/(bnew-bold);
+
+        float aold = 1.0;
+        float anew = 0.0;
         
         color.a = (
-            lerp( 1.0, 0.0, (r-rold)/(rnew-rold) ) + 
-            lerp( 1.0, 0.0, (g-gold)/(gnew-gold) ) + 
-            lerp( 1.0, 0.0, (b-bold)/(bnew-bold) )
+            ( aold*(1.0-rlerp)+anew*rlerp ) + 
+            ( aold*(1.0-glerp)+anew*glerp ) + 
+            ( aold*(1.0-blerp)+anew*blerp )
         ) / 3.0;
     }
 } else {
     color.a = 1.0;
-}
 }
 `);
                 
