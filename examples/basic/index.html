@@ -148,6 +148,7 @@
       <input type="file" id="fileElem" multiple accept="image/*" style="display:none" />
       <button id="fileSelect">Upload images</button><span id="fileList"></span>
       <input type="checkbox" id="isCube"/><label for="isCube"> are cube maps <b style='letter-spacing:-0.25em;'>⢴⠤</b></label><br/>
+      <input type="checkbox" id="removeBg"/><label for="removeBg"> are scene photos</label><br/>
       
       <textarea id="subs"></textarea>
       <div>
@@ -410,6 +411,7 @@ window.initialize = initialize;
       var SlideshowVideo = document.getElementById("SlideshowVideo");
       var VideoThumbnail = document.getElementById("VideoThumbnail");
       var isCube = document.getElementById("isCube");
+      var removeBg = document.getElementById("removeBg");
       var subs = document.getElementById("subs");
       var blur_in = document.getElementById("blur_in");
       var model = document.getElementById("model").getElementsByTagName("iframe")[0];
@@ -493,7 +495,8 @@ async function loadDepth() {
     //const exampleVideo = await response.blob({ 'type': 'video/mp4' });
     showProgress("Connecting to depth estimator..."); 
     const app = await Client.connect("freealise/Depth-Anything-Video");
-    showProgress("Calculating depth map, please wait..."); 
+    showProgress("Calculating depth map, please wait...");
+    if (removeBg.checked) { var remove_bg = true; } else { var remove_bg = false; }
     const result = await app.predict("/on_submit", [
 				        {
                   "type": 'video/mp4',
@@ -501,6 +504,7 @@ async function loadDepth() {
                   "subtitles": null
                 }, 	// blob in 'Input Video' Video component		
 				        "vits", // string  in 'Model Type' Dropdown component
+                remove_bg,
                 subs.value.trim()
 	  ]);
     depth.src = result.data[0].video.url;
