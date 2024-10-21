@@ -357,8 +357,7 @@ async function initialize() {
               sources: [ google.maps.StreetViewSource.DEFAULT, google.maps.StreetViewSource.GOOGLE ] 
             }).then(processSVData)
 							.catch((error) =>
-                alert(error);
-								console.error(error),
+                alert(error),//console.error(error),
 						);
 				});
 				
@@ -386,8 +385,7 @@ async function initialize() {
               sources: [ google.maps.StreetViewSource.DEFAULT, google.maps.StreetViewSource.GOOGLE ] 
             }).then(processSVData)
 							.catch((error) =>
-                alert(error);
-								console.error(error),
+                alert(error),//console.error(error),
 						);
         });
         google.maps.event.addListener(panorama, "closeclick", function(event) {
