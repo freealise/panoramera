@@ -281,6 +281,7 @@
 var sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng;
 
 function processSVData({ data }) {
+try {
   const location = data.location;
   busMarker.position = location.latLng;
   busMarker.title = location.description;
@@ -305,6 +306,7 @@ function processSVData({ data }) {
   //https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
   document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps";
   document.getElementById('loadLink').target = "_top";
+} catch(e) {alert(e);}
 }
     
 async function initialize() {
