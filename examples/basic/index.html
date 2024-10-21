@@ -627,10 +627,11 @@ function Recorder(cnvs, fps) {
       showProgress("Starting.");
 
 
-      async function load(id) {
+      async function load(id, isPhotosphere) {
         showProgress(`Loading ${id}`);
         
-        if (id.indexOf('https://') == 0) {
+        if (isPhotosphere === true) {
+          id = 'https://lh5.googleusercontent.com/p/' + id + '=w4096-h2048-k-no';
           var c = document.createElement('canvas');
           var ctx = c.getContext("2d", {willReadFrequently: true});
           canvasContainer.appendChild(c);
@@ -678,7 +679,14 @@ function Recorder(cnvs, fps) {
             th[k].download = durl;
             th[k].src = dataURLtoBlob( durl );
           }
-          return;
+          k++;
+          if (ps[k]) {
+            load(ps[k], true);
+          } else {
+            k=1;
+            resizeFrame();
+            return;
+	        }
         }
         const loader = new GoogleStreetViewLoader();
 
@@ -740,7 +748,7 @@ function Recorder(cnvs, fps) {
         if (idParam && idParam != '') {
           ids = idParam.replace('#', '').split('&')[0].split(',');
         } else if (psParam && psParam != '') {
-          url = 'https://lh5.googleusercontent.com/p/' + psParam.replace('#', '') + '=w4096-h2048-k-no';
+          ps = psParam.replace('#', '').split('&')[0].split(',');
           cParam = document.location.href.split('c=')[1];
           if (cParam && cParam != '') {
             copyright = '© ' + decodeURIComponent(cParam.split('&')[0]).replace(/[#]/g, '').trim().replace(/\n/g, ', ');
@@ -751,9 +759,9 @@ function Recorder(cnvs, fps) {
         }
         showProgress("Loading " + url);
         if (ids.length > 0) {
-          load(ids[0]);
-        } else if (url != '') {
-          load(url);
+          load(ids[0], false);
+        } else if (ps.length > 0) {
+          load(ps[0], true);
         }
       });
 
@@ -873,6 +881,7 @@ function dataURLtoBlob(dataURL) {
       var k=1;
       var j=0;
       var ids = [];
+      var ps = [];
       var url = '';
       var copyright = '';
       var latLng = [];
