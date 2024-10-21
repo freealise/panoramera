@@ -7,14 +7,16 @@ var ids = [];
 var ps = [];
 var j = 0;
 for (var i=0; i<buttons.length; i++) {
-	 if (buttons[i].style.background.length) {
-	   if (buttons[i].style.background.indexOf('panoid=') >= 0) {
-		    ids[j] = buttons[i].style.background.split('panoid=')[1].split('&')[0];
+	 var bsb = buttons[i].style.background;
+	 if (bsb.length) {
+	   if (bsb.indexOf('panoid=') >= 0) {
+		    ids[j] = bsb.split('panoid=')[1].split('&')[0];
 	   } else {
-					 ps[j] = buttons[i].style.background.split('/')[1].split('=')[0];
+					  var s = bsb.lastIndexOf('/')+1;
+					  ps[j] = bsb.slice(s).split('=')[0];
 				}
-		  j++;
-	 }
+				j++;
+		}
 }
 var url = 'https://freeali.se/panoramera/examples/basic/index.html';
 if (ids.length>0) {
