@@ -49,8 +49,8 @@ class GooglePhotoSphereLoader extends Loader {
           height: metadata[1][0][2][3][1][0],
         },
         originHeading: parseFloat(metadata[1][0][5][0][1][2][0]),
-        originRoll: parseFloat(metadata[1][0][5][0][1][2][1]),
-        originPitch: parseFloat(metadata[1][0][5][0][1][2][2]),
+        originPitch: parseFloat(metadata[1][0][5][0][1][2][1])-90.0,
+        originRoll: parseFloat(metadata[1][0][5][0][1][2][2]),
       },
     };
 
