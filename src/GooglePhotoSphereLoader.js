@@ -35,8 +35,8 @@ class GooglePhotoSphereLoader extends Loader {
       copyright: metadata[1][0][4][1][0][0][0],
       location: {
         latLng: {
-          lat: metadata[1][0][5][0][1][0][2],
-          lng: metadata[1][0][5][0][1][0][3],
+          lat: parseFloat(metadata[1][0][5][0][1][0][2]),
+          lng: parseFloat(metadata[1][0][5][0][1][0][3]),
         }
       },
       tiles: {
