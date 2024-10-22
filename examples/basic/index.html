@@ -668,25 +668,25 @@ function Recorder(cnvs, fps) {
             
               thumbnail.appendChild(th[k]);
               th[k].addEventListener("click", copyDataUrl);
-				      showProgress("Image loaded.");
-              thumbnail.style.display = 'block';
-              frame.src = "";
-              durl = "";
-              subs.value = JSON.stringify(stt);
-              stt = [];
+				      showProgress("Image" + k + "loaded.");
+              
+              k++;
+              if (ps[k]) {
+                load(ps[k], true);
+              } else {
+                k=1;
+                thumbnail.style.display = 'block';
+                frame.src = "";
+                durl = "";
+                subs.value = JSON.stringify(stt);
+                stt = [];
+              }
 				    }
             var durl = c.toDataURL();
             th[k].download = durl;
             th[k].src = dataURLtoBlob( durl );
           }
-          k++;
-          if (ps[k]) {
-            load(ps[k], true);
-          } else {
-            k=1;
-            resizeFrame();
-            return;
-	        }
+          return;
         }
         const loader = new GoogleStreetViewLoader();
 
