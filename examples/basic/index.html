@@ -643,10 +643,10 @@ function Recorder(cnvs, fps) {
             showProgress("Loaded.");
             showError("");
             canvasContainer.appendChild(loader.canvas);
-            if (typeof loader.metadata.copyright == 'undefined') {
+            if (cs[k-1].indexOf(' - ') >= 0) {
               loader.metadata.copyright = '© ' + cs[k-1];
-            } else {
-              loader.metadata.copyright = '© ' + loader.metadata.copyright;
+            } else if (typeof loader.metadata.copyright != 'undefined') {
+              loader.metadata.copyright = '© ' + loader.metadata.copyright + ' - ' + cs[k-1];
             }
             if (typeof loader.metadata.location.latLng.lat == 'undefined' || typeof loader.metadata.location.latLng.lng == 'undefined') {
               loader.metadata.location = {
