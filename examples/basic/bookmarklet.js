@@ -5,6 +5,7 @@ var result = re.exec(window.location.href);
 var buttons = document.getElementsByTagName('button');
 var ids = [];
 var ps = [];
+var cs = [];
 var j = 0;
 for (var i=0; i<buttons.length; i++) {
 	 var bsb = buttons[i].style.background;
@@ -14,6 +15,10 @@ for (var i=0; i<buttons.length; i++) {
 	   } else {
 					  var s = bsb.lastIndexOf('/')+1;
 					  ps[j] = bsb.slice(s).split('=')[0];
+							cs[j] = buttons[i].innerText.trim().replace(/\n/g, ' - ');
+							if (cs[j].length < 8) {
+							  cs[j] = document.getElementById('titlecard').innerText.trim().replace(/\n/g, ' - ');
+							}
 				}
 				j++;
 		}
@@ -23,5 +28,5 @@ if (ids.length>0) {
 	window.location.href = url + '?ids=' + ids.join(',');
 } else if (ps.length>0) {
 	const l = window.location.href.split('@')[1].split('/')[0].split(',');
-	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + encodeURIComponent(document.getElementById('titlecard').innerText) + '&ps=' + ps.join(','); //+ window.location.href.split('!1s')[1].split('!2e')[0];
+	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + encodeURIComponent(cs.join(',')) + '&ps=' + ps.join(','); //+ window.location.href.split('!1s')[1].split('!2e')[0];
 }
