@@ -637,7 +637,36 @@ function Recorder(cnvs, fps) {
             showProgress("Loaded " + p.toFixed(0) + "%");
           });
           
-          id = 'https://lh5.googleusercontent.com/p/' + id + '=w4096-h2048-k-no';
+          try {
+            await loader.load(id, 3);
+            
+            showProgress("Loaded.");
+            showError("");
+            canvasContainer.appendChild(loader.canvas);
+            showMessage(
+              "Panorama loaded, street view data " +
+              loader.metadata.copyright +
+              ".<br/>"
+            );
+            //alert(JSON.stringify(loader.metadata));
+            stt.push(loader.metadata); //location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
+            k++;
+            if (ps[k-1]) {
+              load(ps[k-1], true);
+            } else {
+	            resizeFrame();
+	          }
+          } catch (e) {
+            if (e === "ZERO_RESULTS") {
+              showError("No results");
+            } else if (e === "NO_IMAGE") {
+              showError("Could not load image.");
+            } else {
+              showError(e.message);
+            }
+          }
+          
+          /*id = 'https://lh5.googleusercontent.com/p/' + id + '=w4096-h2048-k-no';
           var c = document.createElement('canvas');
           var ctx = c.getContext("2d", {willReadFrequently: true});
           canvasContainer.appendChild(c);
@@ -691,7 +720,7 @@ function Recorder(cnvs, fps) {
             var durl = c.toDataURL();
             th[k].download = durl;
             th[k].src = dataURLtoBlob( durl );
-          }
+          }*/
           return;
         }
         const loader = new GoogleStreetViewLoader();
@@ -715,7 +744,7 @@ function Recorder(cnvs, fps) {
           stt.push(loader.metadata); //location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
           j++;
           if (ids[j]) {
-            load(ids[j]);
+            load(ids[j], false);
           } else {
 	          resizeFrame();
 	        }
