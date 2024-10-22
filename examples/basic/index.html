@@ -401,7 +401,7 @@ window.initialize = initialize;
       var srv = 'https://script.google.com/macros/s/AKfycbz5br4wnfSGtucWKwGQq1Tb07eshJez6uVaFatn4xJAc_rcrcA/exec';
       
       import { Client } from "https://cdn.jsdelivr.net/npm/@gradio/client@0.19.4/dist/index.min.js";
-      import { GoogleStreetViewLoader } from "../../src/PanomNom.js";
+      import { GoogleStreetViewLoader, GooglePhotoSphereLoader } from "../../src/PanomNom.js";
 
       var messageDiv = document.getElementById("messageDiv");
       var errorDiv = document.getElementById("errorDiv");
@@ -631,6 +631,12 @@ function Recorder(cnvs, fps) {
         showProgress(`Loading ${id}`);
         
         if (isPhotosphere === true) {
+          const loader = new GooglePhotoSphereLoader();
+
+          loader.onProgress((p) => {
+            showProgress("Loaded " + p.toFixed(0) + "%");
+          });
+          
           id = 'https://lh5.googleusercontent.com/p/' + id + '=w4096-h2048-k-no';
           var c = document.createElement('canvas');
           var ctx = c.getContext("2d", {willReadFrequently: true});
