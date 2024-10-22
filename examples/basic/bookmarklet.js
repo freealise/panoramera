@@ -16,7 +16,7 @@ for (var i=0; i<buttons.length; i++) {
 					  var s = bsb.lastIndexOf('/')+1;
 					  ps[j] = bsb.slice(s).split('=')[0];
 							cs[j] = buttons[i].innerText.trim().replace(/\n/g, ' - ');
-							if (cs[j].length < 8) {
+							if (cs[j].indexOf(' - ' < 0) {
 							  cs[j] = encodeURIComponent(document.getElementById('titlecard').innerText.trim().replace(/\n/g, ' - '));
 							}
 				}
