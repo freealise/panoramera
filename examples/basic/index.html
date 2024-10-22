@@ -638,11 +638,22 @@ function Recorder(cnvs, fps) {
           });
           
           try {
-            await loader.load(id, 1);
+            await loader.load(id, 3);
             
             showProgress("Loaded.");
             showError("");
             canvasContainer.appendChild(loader.canvas);
+            if (typeof loader.metadata.copyright == 'undefined') {
+              loader.metadata.copyright = '© ' + cs[k-1];
+            }
+            if (typeof loader.metadata.location == 'undefined') {
+              loader.metadata.location = {
+                "latLng": {
+                  "lat": parseFloat(latLng[0]),
+                  "lng": parseFloat(latLng[1])
+                }
+              };
+            }
             showMessage(
               "Panorama loaded, street view data " +
               loader.metadata.copyright +
@@ -731,7 +742,7 @@ function Recorder(cnvs, fps) {
         });
 
         try {
-          await loader.load(id, 1);
+          await loader.load(id, 3);
 
           showProgress("Loaded.");
           showError("");
