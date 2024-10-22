@@ -645,8 +645,10 @@ function Recorder(cnvs, fps) {
             canvasContainer.appendChild(loader.canvas);
             if (typeof loader.metadata.copyright == 'undefined') {
               loader.metadata.copyright = '© ' + cs[k-1];
+            } else {
+              loader.metadata.copyright = '© ' + loader.metadata.copyright;
             }
-            if (typeof loader.metadata.location == 'undefined') {
+            if (typeof loader.metadata.location.latLng.lat == 'undefined' || typeof loader.metadata.location.latLng.lng == 'undefined') {
               loader.metadata.location = {
                 "latLng": {
                   "lat": parseFloat(latLng[0]),
