@@ -32,6 +32,13 @@ class GooglePhotoSphereLoader extends Loader {
 
     const metadata = await getPhotoSphereInfo(id);
     this.metadata = {
+      copyright: metadata[1][0][4][1][0][0][0],
+      location: {
+        latLng: {
+          lat: metadata[1][0][5][0][1][0][2],
+          lng: metadata[1][0][5][0][1][0][3],
+        }
+      },
       tiles: {
         worldSize: {
           width: metadata[1][0][2][2][1],
