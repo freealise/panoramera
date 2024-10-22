@@ -668,11 +668,11 @@ function Recorder(cnvs, fps) {
             
               thumbnail.appendChild(th[k]);
               th[k].addEventListener("click", copyDataUrl);
-				      showProgress("Image" + k + "loaded.");
+				      showProgress("Image " + k + " loaded.");
               
               k++;
-              if (ps[k]) {
-                load(ps[k], true);
+              if (ps[k-1]) {
+                load(ps[k-1], true);
               } else {
                 k=1;
                 thumbnail.style.display = 'block';
