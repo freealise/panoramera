@@ -638,7 +638,7 @@ function Recorder(cnvs, fps) {
           });
           
           try {
-            await loader.load(id, 3);
+            await loader.load(id, 1);
             
             showProgress("Loaded.");
             showError("");
@@ -654,6 +654,7 @@ function Recorder(cnvs, fps) {
             if (ps[k-1]) {
               load(ps[k-1], true);
             } else {
+              k=1;
 	            resizeFrame();
 	          }
           } catch (e) {
@@ -730,7 +731,7 @@ function Recorder(cnvs, fps) {
         });
 
         try {
-          await loader.load(id, 3);
+          await loader.load(id, 1);
 
           showProgress("Loaded.");
           showError("");
