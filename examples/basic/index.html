@@ -636,12 +636,12 @@ function Recorder(cnvs, fps) {
           var ctx = c.getContext("2d", {willReadFrequently: true});
           canvasContainer.appendChild(c);
           showMessage(
-            "Panorama loaded, street view data " +
-              copyright +
+            "Panorama loaded, street view data © " + 
+              cs[k-1] +
               ".<br/>"
           );
           const metadata = {};
-          metadata.copyright = copyright;
+          metadata.copyright = '© ' + cs[k-1];
           metadata.location = {
             "latLng": {
               "lat": parseFloat(latLng[0]),
@@ -751,7 +751,7 @@ function Recorder(cnvs, fps) {
           ps = psParam.replace('#', '').split('&')[0].split(',');
           cParam = document.location.href.split('c=')[1];
           if (cParam && cParam != '') {
-            copyright = '© ' + decodeURIComponent(cParam.split('&')[0]).replace(/[#]/g, '').trim().replace(/\n/g, ', ');
+            cs = decodeURIComponent(cParam.split('&')[0]).replace(/[#]/g, '').trim().split(',');
             if (lParam && lParam != '') {
               latLng = lParam.split('&')[0].split(',');
             }
@@ -882,6 +882,7 @@ function dataURLtoBlob(dataURL) {
       var j=0;
       var ids = [];
       var ps = [];
+      var cs = [];
       var url = '';
       var copyright = '';
       var latLng = [];
