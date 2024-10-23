@@ -364,12 +364,6 @@ if (
     if (color.r == chromaKey.r && color.g == chromaKey.g && color.b == chromaKey.b && color.a == 1.0) {
         discard;
         
-    } else if (color.r > 0.94 && color.g > 0.94 && color.b > 0.94) {
-        color.r = (color.r - 240.0 / 255.0) * 17.0;
-        color.g = (color.g - 240.0 / 255.0) * 17.0;
-        color.b = (color.b - 240.0 / 255.0) * 17.0;
-        color.a = 0.5;
-        
     } else {
         float rold = chromaKey.r-blend.r;
         float rnew = chromaKey.r;
@@ -396,6 +390,12 @@ if (
             ( aold*(1.0-blerp)+anew*blerp )
         ) / 3.0;
     }
+} else if (color.r > 0.94 && color.g > 0.94 && color.b > 0.94) {
+    color.r = (color.r - 240.0 / 255.0) * 17.0;
+    color.g = (color.g - 240.0 / 255.0) * 17.0;
+    color.b = (color.b - 240.0 / 255.0) * 17.0;
+    color.a = 0.5;
+        
 } else {
     color.a = 1.0;
 }
