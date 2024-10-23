@@ -378,10 +378,9 @@ limitMax.b = min(limitMax.b, 1.0);
 if (
     ((color.r >= limitMin.r) && (color.r <= limitMax.r)) &&
     ((color.g >= limitMin.g) && (color.g <= limitMax.g)) &&
-    ((color.b >= limitMin.b) && (color.b <= limitMax.b)) &&
-    color.a == 1.0
+    ((color.b >= limitMin.b) && (color.b <= limitMax.b))
 ) {
-    if (color.r == chromaKey.r && color.g == chromaKey.g && color.b == chromaKey.b && color.a == 1.0) {
+    if (color.r == chromaKey.r && color.g == chromaKey.g && color.b == chromaKey.b) {
         discard;
         
     } else {
@@ -409,8 +408,9 @@ if (
             ( aold*(1.0-glerp)+anew*glerp ) + 
             ( aold*(1.0-blerp)+anew*blerp )
         ) / 3.0;
+        
     }
-} else if (color.r <= shadowMax && color.g <= shadowMax && color.b <= shadowMax && color.a == 1.0) {
+} else if (color.r <= shadowMax && color.g <= shadowMax && color.b <= shadowMax) {
     color.r = color.r * 17.0;
     color.g = color.g * 17.0;
     color.b = color.b * 17.0;
