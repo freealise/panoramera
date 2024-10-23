@@ -390,7 +390,20 @@ function handleFiles(e) {
 		  }
       th[k].download = e.target.files[i].name;
       th[k].src = URL.createObjectURL(e.target.files[i]);
-      const metadata = { "copyright": '© ' };
+      const metadata = {
+        copyright: '© ',
+        location: {
+          latLng: {
+            lat: -90.0,
+            lng: -90.0,
+          }
+        },
+        tiles: {
+          originHeading: 180.0,
+          originPitch: 0.0,
+          originRoll: 0.0,
+        },
+      };
       stt.push(metadata);
       k++;
     }
