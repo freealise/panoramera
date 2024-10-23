@@ -363,7 +363,8 @@ try {
                 //videoMat.disableLighting = true;
                 videoMat.Fragment_Before_FragColor(`  
 vec3 chromaKey = vec3(1.0, 1.0, 1.0);
-vec3 blend = vec3(0.02);
+float shadowMax = 15.0 / 255.0;
+vec3 blend = vec3(shadowMax);
 vec3 limitMin = vec3(chromaKey-blend); 
 vec3 limitMax = vec3(chromaKey+blend);
 
@@ -409,10 +410,10 @@ if (
             ( aold*(1.0-blerp)+anew*blerp )
         ) / 3.0;
     }
-} else if (color.r > 0.94 && color.g > 0.94 && color.b > 0.94 && (color.r == color.g && color.g == color.b) && color.a == 1.0) {
-    color.r = (color.r - 240.0 / 255.0) * 17.0;
-    color.g = (color.g - 240.0 / 255.0) * 17.0;
-    color.b = (color.b - 240.0 / 255.0) * 17.0;
+} else if (color.r <= shadowMax && color.g <= shadowMax && color.b <= shadowMax && color.a == 1.0) {
+    color.r = color.r * 17.0;
+    color.g = color.g * 17.0;
+    color.b = color.b * 17.0;
     color.a = 0.5;
         
 } else {
