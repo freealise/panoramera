@@ -148,7 +148,7 @@
 <input type='text' id='fgvideo' value='https://raw.githubusercontent.com/freealise/freealise/refs/heads/main/movie.mp4'/>
 <input type='text' id='fgdepth' value='https://raw.githubusercontent.com/freealise/freealise/refs/heads/main/movie.mp4'/>
 <input type='text' id='soundtrack' value='https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3'/>
-<input type="file" id="fileElemAudio" accept="audio/*" style="display:none" /><button id="fileSelect">Upload soundtrack</button>
+<input type="file" id="fileElemAudio" accept="audio/aac, audio/mpeg, audio/ogg, audio/wav, audio/webm" style="display:none" /><button id="fileSelect">Upload soundtrack</button>
 <br/>
 #<select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
 mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mode(this.value);'>
@@ -377,7 +377,8 @@ limitMax.b = min(limitMax.b, 1.0);
 if (
     ((color.r >= limitMin.r) && (color.r <= limitMax.r)) &&
     ((color.g >= limitMin.g) && (color.g <= limitMax.g)) &&
-    ((color.b >= limitMin.b) && (color.b <= limitMax.b))
+    ((color.b >= limitMin.b) && (color.b <= limitMax.b)) &&
+    color.a == 1.0
 ) {
     if (color.r == chromaKey.r && color.g == chromaKey.g && color.b == chromaKey.b && color.a == 1.0) {
         discard;
@@ -408,7 +409,7 @@ if (
             ( aold*(1.0-blerp)+anew*blerp )
         ) / 3.0;
     }
-} else if (color.r > 0.94 && color.g > 0.94 && color.b > 0.94) {
+} else if (color.r > 0.94 && color.g > 0.94 && color.b > 0.94 && (color.r == color.g && color.g == color.b) && color.a == 1.0) {
     color.r = (color.r - 240.0 / 255.0) * 17.0;
     color.g = (color.g - 240.0 / 255.0) * 17.0;
     color.b = (color.b - 240.0 / 255.0) * 17.0;
