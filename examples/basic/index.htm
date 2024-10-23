@@ -147,6 +147,7 @@
 <input type='text' id='bgdepth' value='https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/f0_dmap.jpg,'/>
 <input type='text' id='fgvideo' value='https://raw.githubusercontent.com/freealise/freealise/refs/heads/main/movie.mp4'/>
 <input type='text' id='fgdepth' value='https://raw.githubusercontent.com/freealise/freealise/refs/heads/main/movie.mp4'/>
+<input type='text' id='soundtrack' value='https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3'/>
 <br/>
 #<select id='fnum' oninput='attach_control();' onselect='attach_control();'><option selected value='0'>0</option></select>
 mode<select id='c_mode' oninput='control_mode(this.value);' onselect='control_mode(this.value);'>
@@ -186,6 +187,24 @@ line3
         var subs = document.getElementById("subs");
         var subs_link = document.getElementById("subs_link");
         var screenshot = false;
+        
+        const fileSelect = document.getElementById("fileSelect"),
+        fileElem = document.getElementById("fileElem");
+
+        fileSelect.addEventListener("click", (e) => {
+          if (fileElem) {
+            fileElem.click();
+          }
+        }, false);
+        fileElem.addEventListener("change", handleFiles);
+
+        function handleFiles(e) {
+          if (!e.target.files.length) {
+            document.getElementById("soundtrack").value = "No files selected!";
+          } else {
+            document.getElementById("soundtrack").value = URL.createObjectURL(e.target.files[0]);
+          }
+        }
         
         var avg = [];
         var avg_all = 0;
@@ -436,7 +455,7 @@ if (
                     
                     document.getElementById('play').addEventListener('click', function() {
                         try {
-                        music = new BABYLON.Sound("Soundtrack", "https://raw.githubusercontent.com/freealise/freealise.github.io/refs/heads/master/assets/mp3/nightingale_bird.mp3", scene, function(){
+                        music = new BABYLON.Sound("Soundtrack", document.getElementById("soundtrack").value, scene, function(){
                             if (!BABYLON.Engine.audioEngine.unlocked) {
                                 BABYLON.Engine.audioEngine.unlock();
                             }
