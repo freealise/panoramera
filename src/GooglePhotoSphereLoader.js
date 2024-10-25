@@ -62,6 +62,7 @@ class GooglePhotoSphereLoader extends Loader {
         levels.push(level);
         level *= 2;
       }
+      const tile = true;
     } catch(e) {
       alert(e);
       this.metadata = {
@@ -78,7 +79,7 @@ class GooglePhotoSphereLoader extends Loader {
             height: 2048,
           },
           tileSize: {
-            width: 2048,
+            width: 4096,
             height: 2048,
           },
           originHeading: 180.0,
@@ -86,8 +87,9 @@ class GooglePhotoSphereLoader extends Loader {
           originRoll: 0.0,
         },
       };
-      const widths = [2048, 2048];
+      const widths = [2048, 4096];
       const levels = [1, 2];
+      const tile = false;
     }
 try {
     const aspectRatio =
@@ -105,7 +107,11 @@ try {
 
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
-        const url = `https://lh3.ggpht.com/p/${id}=x${x}-y${y}-z${zoom}`;
+        if (tile === true) {
+          const url = `https://lh3.ggpht.com/p/${id}=x${x}-y${y}-z${zoom}`;
+        } else {
+          const url = 'https://lh5.googleusercontent.com/p/' + id + '=w' + this.canvas.width + '-h' + this.canvas.height + '-k-no';
+        }
         this.stitcher.addTileTask({
           url: url,
           x: x * tileWidth,
