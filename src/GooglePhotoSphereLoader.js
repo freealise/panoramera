@@ -80,6 +80,28 @@ class GooglePhotoSphereLoader extends Loader {
       
       tl = true;
     } catch(e) {
+      this.metadata = {
+        copyright: '',
+        location: {
+          latLng: {
+            lat: -90.0,
+            lng: -90.0,
+          }
+        },
+        tiles: {
+          worldSize: {
+            width: 4096,
+            height: 2048,
+          },
+          tileSize: {
+            width: 4096,
+            height: 2048,
+          },
+          originHeading: 180.0,
+          originPitch: 0.0,
+          originRoll: 0.0,
+        },
+      };
       
       const aspectRatio = 2;
       this.canvas.width = 4096;
