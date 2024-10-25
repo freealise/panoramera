@@ -94,7 +94,7 @@ class GooglePhotoSphereLoader extends Loader {
             height: 2048,
           },
           tileSize: {
-            width: 4096,
+            width: 2048,
             height: 2048,
           },
           originHeading: 180.0,
@@ -107,9 +107,9 @@ class GooglePhotoSphereLoader extends Loader {
       this.canvas.width = 4096;
       this.canvas.height = this.canvas.width / aspectRatio;
 
-      tileWidth = 4096;
+      tileWidth = 2048;
       tileHeight = 2048;
-      w = 1;
+      w = 2;
       h = 1;
       
       tl = false;
@@ -117,11 +117,11 @@ class GooglePhotoSphereLoader extends Loader {
 
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
-        if (tl === true) {
+        //if (tl === true) {
           url = `https://lh3.ggpht.com/p/${id}=x${x}-y${y}-z${zoom}`;
-        } else {
+        /*} else {
           url = 'https://lh5.googleusercontent.com/p/' + id + '=w' + this.canvas.width + '-h' + this.canvas.height + '-k-no';
-        }
+        }*/
         this.stitcher.addTileTask({
           url: url,
           x: x * tileWidth,
