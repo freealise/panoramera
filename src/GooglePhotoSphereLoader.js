@@ -31,9 +31,9 @@ class GooglePhotoSphereLoader extends Loader {
     this.panoId = id;
 
     const metadata = await getPhotoSphereInfo(id);
-    if (metadata.search(/\d\.\d/) == -1) {
+    if (JSON.stringify(metadata).search(/\d\.\d/) == -1) {
       this.metadata = {
-        copyright: cs[k-1],
+        copyright: '',
         location: {
           latLng: {
             lat: -90.0,
