@@ -63,6 +63,7 @@ class GooglePhotoSphereLoader extends Loader {
         level *= 2;
       }
     } catch(e) {
+      alert(e);
       this.metadata = {
         copyright: '',
         location: {
@@ -88,7 +89,7 @@ class GooglePhotoSphereLoader extends Loader {
       const widths = [2048, 2048];
       const levels = [1, 2];
     }
-
+try {
     const aspectRatio =
       this.metadata.tiles.worldSize.width /
       this.metadata.tiles.worldSize.height;
@@ -115,6 +116,7 @@ class GooglePhotoSphereLoader extends Loader {
 
     const res = await this.stitcher.process();
     return res;
+} catch(e) {alert(e);}
   }
 }
 
