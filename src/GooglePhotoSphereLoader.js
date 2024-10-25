@@ -85,12 +85,8 @@ class GooglePhotoSphereLoader extends Loader {
           originRoll: 0.0,
         },
       };
-      const widths = [];
-      const levels = [];
-      let level = 1;
-      widths.push(4096);
-      levels.push(level);
-      level *= 2;
+      const widths = [4096, 4096];
+      const levels = [1, 1];
     }
 
     const aspectRatio =
