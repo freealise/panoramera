@@ -121,6 +121,8 @@ class GooglePhotoSphereLoader extends Loader {
             url: url,
             x: x * tileWidth,
             y: y * tileHeight,
+            tileWidth: tileWidth,
+            tileHeight: tileHeight
           });
         }
       }
@@ -130,6 +132,8 @@ class GooglePhotoSphereLoader extends Loader {
         url: url,
         x: 0,
         y: 0,
+        tileWidth: tileWidth,
+        tileHeight: tileHeight
       });
     }
     
