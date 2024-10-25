@@ -48,6 +48,8 @@ class GoogleStreetViewLoader extends Loader {
           url: url,
           x: x * tileWidth,
           y: y * tileHeight,
+          tileWidth: tileWidth,
+          tileHeight: tileHeight
         });
       }
     }
