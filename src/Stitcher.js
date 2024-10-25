@@ -54,8 +54,8 @@ class Stitcher {
         img.naturalHeight,
         task.x,
         task.y,
-        2048,
-        2048
+        512,
+        512
       );
       this.processQueue();
 
