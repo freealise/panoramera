@@ -727,6 +727,7 @@ function Recorder(cnvs, fps) {
 
       DownloadImages.addEventListener("click", function (e) {
         e.preventDefault();
+try {
         idParam = document.location.href.split('ids=')[1];
         psParam = document.location.href.split('ps=')[1];
         lParam = document.location.href.split('l=')[1];
@@ -749,6 +750,7 @@ function Recorder(cnvs, fps) {
         } else if (ps.length > 0) {
           load(ps[0], true);
         }
+} catch(e) {alert(e); }
       });
 
       function resizeFrame() {
