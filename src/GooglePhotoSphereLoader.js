@@ -57,7 +57,7 @@ class GooglePhotoSphereLoader extends Loader {
       const widths = [];
       const levels = [];
       let level = 1;
-      for (const w of metadata[1][0][2][3][0])) {
+      for (const w of metadata[1][0][2][3][0]) {
         widths.push(w[0][1]);
         levels.push(level);
         level *= 2;
