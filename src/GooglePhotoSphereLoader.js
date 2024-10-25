@@ -31,7 +31,7 @@ class GooglePhotoSphereLoader extends Loader {
     this.panoId = id;
 
     const metadata = await getPhotoSphereInfo(id);
-    if (typeof metadata[1][0][4][1] == 'undefined') {
+    if (!metadata[1][0][4][1]) {
       const copyright = '';
     } else {
       const copyright = metadata[1][0][4][1][0][0][0];
