@@ -221,8 +221,12 @@ try {
   document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps";
   document.getElementById('loadLink').target = "_top";
   
-  document.getElementById('fetchLink').href = './?ids=' + panoId;
-  document.getElementById('fetchLink').innerHTML = "<b>Download for current date</b>";
+  if (panoId.length > 22) {
+    document.getElementById('fetchLink').href = './?l=' + panoLat + ',' + panoLng	+ '&c=' + data.copyright + '&ps=' + panoId;
+  } else {
+    document.getElementById('fetchLink').href = './?ids=' + panoId;
+  }
+  document.getElementById('fetchLink').innerHTML = "<b>Download for<br/> current date</b>";
   document.getElementById('fetchLink').target = "_top";
 } catch(e) {alert(e);}
 }
