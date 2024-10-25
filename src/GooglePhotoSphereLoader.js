@@ -91,8 +91,8 @@ class GooglePhotoSphereLoader extends Loader {
             height: 2048,
           },
           tileSize: {
-            width: 512,
-            height: 512,
+            width: 4096,
+            height: 2048,
           },
           originHeading: 180.0,
           originPitch: 0.0,
@@ -104,7 +104,7 @@ class GooglePhotoSphereLoader extends Loader {
       this.canvas.width = 4096;
       this.canvas.height = this.canvas.width / aspectRatio;
 
-      w = 8;
+      w = 2;
       h = w / aspectRatio;
       
       tl = false;
@@ -113,19 +113,24 @@ class GooglePhotoSphereLoader extends Loader {
     tileWidth = this.metadata.tiles.tileSize.width;
     tileHeight = this.metadata.tiles.tileSize.height;
 
-    for (let y = 0; y < h; y++) {
-      for (let x = 0; x < w; x++) {
-        //if (tl === true) {
+    if (tl === true) {
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
           url = `https://lh3.ggpht.com/p/${id}=x${x}-y${y}-z${zoom}`;
-        /*} else {
-          url = 'https://lh5.googleusercontent.com/p/' + id + '=w' + this.canvas.width + '-h' + this.canvas.height + '-k-no';
-        }*/
-        this.stitcher.addTileTask({
-          url: url,
-          x: x * tileWidth,
-          y: y * tileHeight,
-        });
+          this.stitcher.addTileTask({
+            url: url,
+            x: x * tileWidth,
+            y: y * tileHeight,
+          });
+        }
       }
+    } else {
+      url = 'https://lh5.googleusercontent.com/p/' + id + '=w' + this.canvas.width + '-h' + this.canvas.height + '-k-no';
+      this.stitcher.addTileTask({
+        url: url,
+        x: 0,
+        y: 0,
+      });
     }
     
     const res = await this.stitcher.process();
