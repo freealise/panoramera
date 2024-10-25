@@ -155,7 +155,6 @@
       <div id="messageDiv"></div>
       <div id="errorDiv"></div>
       <a href="#" id="loadLink"></a>
-      <a href="#" id="fetchLink"></a>
       <div id="map" class="display"></div>
       <video id="seq" src="" width="320" height="160" muted controls class="display"></video>
       
@@ -220,15 +219,6 @@ try {
   //https://maps.googleapis.com/maps/api/streetview?size=400x400&location=47.5763831,-122.4211769%20&fov=80&heading=70&pitch=0&key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg
   document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps";
   document.getElementById('loadLink').target = "_top";
-  
-  if (panoId.length > 22) {
-    document.getElementById('fetchLink').href = 'https://lh5.googleusercontent.com/p/' + panoId + '=w4096-h2048-k-no';
-    document.getElementById('fetchLink').target = "_blank";
-  } else {
-    document.getElementById('fetchLink').href = './?ids=' + panoId;
-    document.getElementById('fetchLink').target = "_top";
-  }
-  document.getElementById('fetchLink').innerHTML = "<b>Download for<br/> current date</b>";
 } catch(e) {alert(e);}
 }
     
@@ -287,7 +277,6 @@ async function initialize() {
 				});
 				
         const controlButton = document.getElementById("loadLink");
-        const fetchButton = document.getElementById("fetchLink");
         panorama = map.getStreetView(); // TODO fix type
         panorama.setOptions({
           addressControl: false,
@@ -295,7 +284,6 @@ async function initialize() {
           enableCloseButton: true,
         });
         panorama.controls[google.maps.ControlPosition.TOP_CENTER].push(controlButton);
-        panorama.controls[google.maps.ControlPosition.TOP_CENTER].push(fetchButton);
         panorama.setPosition( pano );
         panorama.setPov(
           /** @type {google.maps.StreetViewPov} */ {
