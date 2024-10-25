@@ -60,11 +60,11 @@ class GooglePhotoSphereLoader extends Loader {
           var c = document.createElement('canvas');
           var ctx = c.getContext("2d", {willReadFrequently: true});
           canvasContainer.appendChild(c);
-          showMessage(
+          /*showMessage(
             "Panorama loaded, street view data © " + 
               cs[k-1] +
               ".<br/>"
-          );
+          );*/
           const metadata = {};
           metadata.copyright = '© ' + cs[k-1];
           metadata.location = {
@@ -81,7 +81,7 @@ class GooglePhotoSphereLoader extends Loader {
             c.width = frame.width;
 					  c.height = frame.height;
 					  ctx.drawImage(frame, 0, 0, c.width, c.height);
-            showProgress("Image acquired.");
+            //showProgress("Image acquired.");
             
             th[k] = document.createElement('img');
             th[k].style.width = '' + c.width / 64 + 'px';
@@ -93,7 +93,7 @@ class GooglePhotoSphereLoader extends Loader {
             
               thumbnail.appendChild(th[k]);
               th[k].addEventListener("click", copyDataUrl);
-				      showProgress("Image " + k + " loaded.");
+				      //showProgress("Image " + k + " loaded.");
               
               k++;
               if (ps[k-1]) {
@@ -111,7 +111,7 @@ class GooglePhotoSphereLoader extends Loader {
             th[k].download = durl;
             th[k].src = dataURLtoBlob( durl );
           }
-      } catch(e) { showError(e); }
+      } catch(e) { alert(e); }
       return;
     }
 
