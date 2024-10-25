@@ -54,79 +54,48 @@ class GooglePhotoSphereLoader extends Loader {
           originRoll: parseFloat(metadata[1][0][5][0][1][2][2]),
         },
       };
+      const widths = [];
+      const levels = [];
+      let level = 1;
+      for (const w of metadata[1][0][2][3][0])) {
+        widths.push(w[0][1]);
+        levels.push(level);
+        level *= 2;
+      }
     } catch(e) {
-      try {
-          id = 'https://lh5.googleusercontent.com/p/' + id + '=w4096-h2048-k-no';
-          var c = document.createElement('canvas');
-          var ctx = c.getContext("2d", {willReadFrequently: true});
-          canvasContainer.appendChild(c);
-          /*showMessage(
-            "Panorama loaded, street view data © " + 
-              cs[k-1] +
-              ".<br/>"
-          );*/
-          const metadata = {};
-          metadata.copyright = '© ' + cs[k-1];
-          metadata.location = {
-            "latLng": {
-              "lat": parseFloat(latLng[0]),
-              "lng": parseFloat(latLng[1])
-            }
-          };
-          stt.push(metadata);
-          
-          frame.src = id;
-          frame.crossOrigin = "anonymous";
-          frame.onload = function(e) {
-            c.width = frame.width;
-					  c.height = frame.height;
-					  ctx.drawImage(frame, 0, 0, c.width, c.height);
-            //showProgress("Image acquired.");
-            
-            th[k] = document.createElement('img');
-            th[k].style.width = '' + c.width / 64 + 'px';
-            th[k].style.height = '' + c.height / 64 + 'px';
-            th[k].onload = function() {
-              c.width = 1;
-              c.height = 1;
-              ctx = null;
-            
-              thumbnail.appendChild(th[k]);
-              th[k].addEventListener("click", copyDataUrl);
-				      //showProgress("Image " + k + " loaded.");
-              
-              k++;
-              if (ps[k-1]) {
-                load(ps[k-1], true);
-              } else {
-                k=1;
-                thumbnail.style.display = 'block';
-                frame.src = "";
-                durl = "";
-                subs.value = JSON.stringify(stt);
-                stt = [];
-              }
-				    }
-            var durl = c.toDataURL();
-            th[k].download = durl;
-            th[k].src = dataURLtoBlob( durl );
+      this.metadata = {
+        copyright: '',
+        location: {
+          latLng: {
+            lat: -90.0,
+            lng: -90.0,
           }
-      } catch(e) { alert(e); }
-      return;
+        },
+        tiles: {
+          worldSize: {
+            width: 4096,
+            height: 2048,
+          },
+          tileSize: {
+            width: 4096,
+            height: 2048,
+          },
+          originHeading: 180.0,
+          originPitch: 0.0,
+          originRoll: 0.0,
+        },
+      };
+      const widths = [];
+      const levels = [];
+      let level = 1;
+      widths.push(4096);
+      levels.push(level);
+      level *= 2;
     }
 
     const aspectRatio =
       this.metadata.tiles.worldSize.width /
       this.metadata.tiles.worldSize.height;
-
-    const widths = [];
-    const levels = [];
-    let level = 1;
-    for (const w of metadata[1][0][2][3][0]) {
-      widths.push(w[0][1]);
-      levels.push(level);
-      level *= 2;
-    }
 
     this.canvas.width = widths[zoom];
     this.canvas.height = this.canvas.width / aspectRatio;
