@@ -31,5 +31,7 @@ if (ids.length>0) {
 	const l = window.location.href.split('@')[1].split('/')[0].split(',');
 	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + cs.join(',') + '&ps=' + ps.join(',');
 } else {
-	window.location.href = url + '?ids=' + window.location.href.split('!1s')[1].split('!2e')[0];
+	const l = window.location.href.split('@')[1].split('/')[0].split(',');
+	const c = encodeURIComponent(document.getElementById('titlecard').innerText.trim().replace(/\n/g, ' - '));
+	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + c + '&ps=' + window.location.href.split('!1s')[1].split('!2e')[0];
 }
