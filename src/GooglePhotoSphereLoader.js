@@ -72,9 +72,6 @@ class GooglePhotoSphereLoader extends Loader {
       this.canvas.width = widths[zoom];
       this.canvas.height = this.canvas.width / aspectRatio;
 
-      tileWidth = this.metadata.tiles.tileSize.width;
-      tileHeight = this.metadata.tiles.tileSize.height;
-
       w = levels[zoom];
       h = w / aspectRatio;
       
@@ -94,8 +91,8 @@ class GooglePhotoSphereLoader extends Loader {
             height: 2048,
           },
           tileSize: {
-            width: 2048,
-            height: 2048,
+            width: 512,
+            height: 512,
           },
           originHeading: 180.0,
           originPitch: 0.0,
@@ -107,13 +104,14 @@ class GooglePhotoSphereLoader extends Loader {
       this.canvas.width = 4096;
       this.canvas.height = this.canvas.width / aspectRatio;
 
-      tileWidth = 2048;
-      tileHeight = 2048;
-      w = 2;
-      h = 1;
+      w = 8;
+      h = w / aspectRatio;
       
       tl = false;
     }
+    
+    tileWidth = this.metadata.tiles.tileSize.width;
+    tileHeight = this.metadata.tiles.tileSize.height;
 
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
