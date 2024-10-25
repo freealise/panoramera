@@ -29,5 +29,7 @@ if (ids.length>0) {
 	window.location.href = url + '?ids=' + ids.join(',');
 } else if (ps.length>0) {
 	const l = window.location.href.split('@')[1].split('/')[0].split(',');
-	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + cs.join(',') + '&ps=' + ps.join(','); //+ window.location.href.split('!1s')[1].split('!2e')[0];
+	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + cs.join(',') + '&ps=' + ps.join(',');
+} else {
+	window.location.href = url + '?ids=' + window.location.href.split('!1s')[1].split('!2e')[0];
 }
