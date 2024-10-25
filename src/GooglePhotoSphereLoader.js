@@ -77,7 +77,7 @@ class GooglePhotoSphereLoader extends Loader {
             height: 2048,
           },
           tileSize: {
-            width: 4096,
+            width: 2048,
             height: 2048,
           },
           originHeading: 180.0,
@@ -85,8 +85,8 @@ class GooglePhotoSphereLoader extends Loader {
           originRoll: 0.0,
         },
       };
-      const widths = [4096, 4096];
-      const levels = [1, 1];
+      const widths = [2048, 2048];
+      const levels = [1, 2];
     }
 
     const aspectRatio =
