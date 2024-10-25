@@ -29,6 +29,8 @@ class GooglePhotoSphereLoader extends Loader {
 
     this.zoom = zoom;
     this.panoId = id;
+    
+    var w, h, tl, tileWidth, tileHeight;
 
     const metadata = await getPhotoSphereInfo(id);
     try {
@@ -70,26 +72,25 @@ class GooglePhotoSphereLoader extends Loader {
       this.canvas.width = widths[zoom];
       this.canvas.height = this.canvas.width / aspectRatio;
 
-      const tileWidth = this.metadata.tiles.tileSize.width;
-      const tileHeight = this.metadata.tiles.tileSize.height;
+      tileWidth = this.metadata.tiles.tileSize.width;
+      tileHeight = this.metadata.tiles.tileSize.height;
 
-      const w = levels[zoom];
-      const h = w / aspectRatio;
+      w = levels[zoom];
+      h = w / aspectRatio;
       
-      const tl = true;
+      tl = true;
     } catch(e) {
-      alert(e);
       
       const aspectRatio = 2;
       this.canvas.width = 4096;
       this.canvas.height = this.canvas.width / aspectRatio;
 
-      const tileWidth = 4096;
-      const tileHeight = 2048;
-      const w = 1;
-      const h = 1;
+      tileWidth = 4096;
+      tileHeight = 2048;
+      w = 1;
+      h = 1;
       
-      const tl = false;
+      tl = false;
     }
 
     for (let y = 0; y < h; y++) {
@@ -106,7 +107,7 @@ class GooglePhotoSphereLoader extends Loader {
         });
       }
     }
-
+    
     const res = await this.stitcher.process();
     return res;
   }
