@@ -30,7 +30,7 @@ class GooglePhotoSphereLoader extends Loader {
     this.zoom = zoom;
     this.panoId = id;
     
-    var w, h, tl, tileWidth, tileHeight;
+    var w, h, tl, url, tileWidth, tileHeight;
 
     const metadata = await getPhotoSphereInfo(id);
     try {
@@ -96,9 +96,9 @@ class GooglePhotoSphereLoader extends Loader {
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         if (tl === true) {
-          const url = `https://lh3.ggpht.com/p/${id}=x${x}-y${y}-z${zoom}`;
+          url = `https://lh3.ggpht.com/p/${id}=x${x}-y${y}-z${zoom}`;
         } else {
-          const url = 'https://lh5.googleusercontent.com/p/' + id + '=w' + this.canvas.width + '-h' + this.canvas.height + '-k-no';
+          url = 'https://lh5.googleusercontent.com/p/' + id + '=w' + this.canvas.width + '-h' + this.canvas.height + '-k-no';
         }
         this.stitcher.addTileTask({
           url: url,
