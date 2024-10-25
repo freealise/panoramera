@@ -26,12 +26,17 @@ for (var i=0; i<buttons.length; i++) {
 }
 var url = 'https://freeali.se/panoramera/examples/basic/index.html';
 if (ids.length>0) {
-	window.location.href = url + '?ids=' + ids.join(',');
+	 window.location.href = url + '?ids=' + ids.join(',');
 } else if (ps.length>0) {
-	const l = window.location.href.split('@')[1].split('/')[0].split(',');
-	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + cs.join(',') + '&ps=' + ps.join(',');
+	 const l = window.location.href.split('@')[1].split('/')[0].split(',');
+	 window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + cs.join(',') + '&ps=' + ps.join(',');
 } else {
-	const l = window.location.href.split('@')[1].split('/')[0].split(',');
-	const c = encodeURIComponent(document.getElementById('titlecard').innerText.trim().replace(/\n/g, ' - '));
-	window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + c + '&ps=' + window.location.href.split('!1s')[1].split('!2e')[0];
+	 const l = window.location.href.split('@')[1].split('/')[0].split(',');
+	 const c = encodeURIComponent(document.getElementById('titlecard').innerText.trim().replace(/\n/g, ' - '));
+	 const id = window.location.href.split('!1s')[1].split('!2e')[0];
+	 if (id.length > 22) {
+	   window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + c + '&ps=' + id;
+	 } else {
+		  window.location.href = url + '?ids=' + id;
+ 	}
 }
