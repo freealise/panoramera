@@ -31,34 +31,53 @@ class GooglePhotoSphereLoader extends Loader {
     this.panoId = id;
 
     const metadata = await getPhotoSphereInfo(id);
-    alert(JSON.stringify(metadata[1][0][4]));
-    if (metadata[1][0][4][1] === null) {
-      const copyright = '';
+    if (!metadata.indexOf('.')) {
+      this.metadata = {
+        copyright: cs[k-1],
+        location: {
+          latLng: {
+            lat: -90.0,
+            lng: -90.0,
+          }
+        },
+        tiles: {
+          worldSize: {
+            width: 4096,
+            height: 2048,
+          },
+          tileSize: {
+            width: 512,
+            height: 512,
+          },
+          originHeading: 180.0,
+          originPitch: 0.0,
+          originRoll: 0.0,
+        },
+      };
     } else {
-      const copyright = metadata[1][0][4][1][0][0][0];
+      this.metadata = {
+        copyright: metadata[1][0][4][1][0][0][0],
+        location: {
+          latLng: {
+            lat: parseFloat(metadata[1][0][5][0][1][0][2]),
+            lng: parseFloat(metadata[1][0][5][0][1][0][3]),
+          }
+        },
+        tiles: {
+          worldSize: {
+            width: metadata[1][0][2][2][1],
+            height: metadata[1][0][2][2][0],
+          },
+          tileSize: {
+            width: metadata[1][0][2][3][1][1],
+            height: metadata[1][0][2][3][1][0],
+          },
+          originHeading: parseFloat(metadata[1][0][5][0][1][2][0]),
+          originPitch: parseFloat(metadata[1][0][5][0][1][2][1])-90.0,
+          originRoll: parseFloat(metadata[1][0][5][0][1][2][2]),
+        },
+      };
     }
-    this.metadata = {
-      copyright: copyright,
-      location: {
-        latLng: {
-          lat: parseFloat(metadata[1][0][5][0][1][0][2]),
-          lng: parseFloat(metadata[1][0][5][0][1][0][3]),
-        }
-      },
-      tiles: {
-        worldSize: {
-          width: metadata[1][0][2][2][1],
-          height: metadata[1][0][2][2][0],
-        },
-        tileSize: {
-          width: metadata[1][0][2][3][1][1],
-          height: metadata[1][0][2][3][1][0],
-        },
-        originHeading: parseFloat(metadata[1][0][5][0][1][2][0]),
-        originPitch: parseFloat(metadata[1][0][5][0][1][2][1])-90.0,
-        originRoll: parseFloat(metadata[1][0][5][0][1][2][2]),
-      },
-    };
 
     const aspectRatio =
       this.metadata.tiles.worldSize.width /
