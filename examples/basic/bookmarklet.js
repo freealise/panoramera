@@ -35,7 +35,11 @@ if (ids.length>0) {
 	 const c = encodeURIComponent(document.getElementById('titlecard').innerText.trim().replace(/\n/g, ' - '));
 	 const id = window.location.href.split('!1s')[1].split('!2e')[0];
 	 if (id.length > 22) {
-	   window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + c + '&ps=' + id;
+			 if (id.slice(id.length-1) != '.') {
+	     window.location.href = url + '?l=' + l[0] + ',' + l[1] 	+ '&c=' + c + '&ps=' + id;
+				} else {
+					 alert("Can not fetch this photo. Please click ⋮ on the title card and 'Report a problem' to download it manually.");
+				}
 	 } else {
 		  window.location.href = url + '?ids=' + id;
  	}
