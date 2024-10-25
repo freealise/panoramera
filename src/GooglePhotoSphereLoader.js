@@ -62,52 +62,39 @@ class GooglePhotoSphereLoader extends Loader {
         levels.push(level);
         level *= 2;
       }
-      const tile = true;
-    } catch(e) {
-      alert(e);
-      this.metadata = {
-        copyright: '',
-        location: {
-          latLng: {
-            lat: -90.0,
-            lng: -90.0,
-          }
-        },
-        tiles: {
-          worldSize: {
-            width: 4096,
-            height: 2048,
-          },
-          tileSize: {
-            width: 4096,
-            height: 2048,
-          },
-          originHeading: 180.0,
-          originPitch: 0.0,
-          originRoll: 0.0,
-        },
-      };
-      const widths = [2048, 4096];
-      const levels = [1, 2];
-      const tile = false;
-    }
-try {
-    const aspectRatio =
+      
+      const aspectRatio =
       this.metadata.tiles.worldSize.width /
       this.metadata.tiles.worldSize.height;
 
-    this.canvas.width = widths[zoom];
-    this.canvas.height = this.canvas.width / aspectRatio;
+      this.canvas.width = widths[zoom];
+      this.canvas.height = this.canvas.width / aspectRatio;
 
-    const tileWidth = this.metadata.tiles.tileSize.width;
-    const tileHeight = this.metadata.tiles.tileSize.height;
+      const tileWidth = this.metadata.tiles.tileSize.width;
+      const tileHeight = this.metadata.tiles.tileSize.height;
 
-    const w = levels[zoom];
-    const h = w / aspectRatio;
+      const w = levels[zoom];
+      const h = w / aspectRatio;
+      
+      const tl = true;
+    } catch(e) {
+      alert(e);
+      
+      const aspectRatio = 2;
+      this.canvas.width = 4096;
+      this.canvas.height = this.canvas.width / aspectRatio;
+
+      const tileWidth = 4096;
+      const tileHeight = 2048;
+      const w = 1;
+      const h = 1;
+      
+      const tl = false;
+    }
 
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
-        if (tile === true) {
+        if (tl === true) {
           const url = `https://lh3.ggpht.com/p/${id}=x${x}-y${y}-z${zoom}`;
         } else {
           const url = 'https://lh5.googleusercontent.com/p/' + id + '=w' + this.canvas.width + '-h' + this.canvas.height + '-k-no';
@@ -122,7 +109,6 @@ try {
 
     const res = await this.stitcher.process();
     return res;
-} catch(e) {alert(e);}
   }
 }
 
