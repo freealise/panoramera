@@ -292,9 +292,9 @@ try {
     });*/
     if (divs == null) {
       divs = document.getElementById('map').getElementsByTagName('div');
+      alert(divs.length);
       for (var i=0; i<divs.length; i++) {
-        if (divs[i].innerHTML.trim() == 'For development purposes only') {
-          alert(i);
+        if (divs[i].childNodes[0].innerText == 'For development purposes only') {
           divs[i].style.display = 'none';
           break;
         }
