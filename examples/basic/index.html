@@ -282,12 +282,12 @@ try {
 
   if (panorama.getVisible() === false) {
     panorama.setPosition( location.latLng );
-    panorama.setVisible(!panorama.getVisible());
     panorama.setPano(location.pano);
-    panorama.setPov({
+    panorama.setVisible(!panorama.getVisible());
+    /*panorama.setPov({
       heading: 270,
       pitch: 0,
-    });
+    });*/
     document.getElementById('map').style.filter = 'invert(1)';
   }
   
@@ -369,7 +369,7 @@ async function initialize() {
             pitch: 10,
           },
         );
-        google.maps.event.addListener(panorama, "click", function(event) {
+        document.getElementById("map").addEventListener("click", function(event) {
           panorama.setVisible(false);
         });
         //panorama.setVisible(true);
