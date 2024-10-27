@@ -257,7 +257,7 @@ function toDegrees(radians) {
 return radians * 180 / Math.PI;
 }
        
-var sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng, oldLat, oldLng, panoDist, panoFOV;
+var sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng, oldLat, oldLng, panoDist, panoFOV, panoZoom;
 
 function processSVData({ data }) {
 try {
@@ -270,9 +270,11 @@ try {
   panoLng = location.latLng.lng();
   if (oldLat && oldLng) {
     panoDist = distVincenty(oldLat, oldLng, panoLat, panoLng);
-    panoFOV = 180 / Math.pow(2, panoDist/2.5);
+    panoZoom = panoDist/2.5;
+    panoFOV = 180 / Math.pow(2, panoZoom);
   } else {
     panoDist = 0.0;
+    panoZoom = 0.0;
     panoFOV = 180;
   }
   oldLat = panoLat;
@@ -293,7 +295,7 @@ try {
   // y=fov, h=theta, t=phi
   //https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
   //https://maps.googleapis.com/maps/api/streetview?size=400x400&location=47.5763831,-122.4211769%20&fov=80&heading=70&pitch=0&key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg
-  document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps<br/>" + panoFOV + " deg";
+  document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps<br/>zoom " + panoZoom + ", fov " + panoFOV + " deg";
   document.getElementById('loadLink').target = "_top";
 } catch(e) {alert(e);}
 }
