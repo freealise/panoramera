@@ -292,13 +292,10 @@ try {
     });*/
     if (divs == null) {
       divs = document.getElementById('map').getElementsByTagName('div');
-      alert(divs.length);
       for (var i=0; i<divs.length; i++) {
-        var ih = divs[i].innerHTML.trim();
-        if (ih.indexOf('<') == -1 && ih.length > 0) {
-          alert(ih); //== 'For development purposes only'
-          //divs[i].style.display = 'none';
-          //break;
+        if (divs[i].childNodes[0] && divs[i].childNodes[0].nodeValue == 'For development purposes only') {
+          divs[i].style.display = 'none';
+          break;
         }
       }
     }
