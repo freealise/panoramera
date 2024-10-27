@@ -220,7 +220,7 @@ function distVincenty(lat1, lon1, lat2, lon2) {
  do {
   var sinLambda = Math.sin(lambda),
       cosLambda = Math.cos(lambda),
-      sinSigma = Math.sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda)),
+      sinSigma = Math.sqrt((cosU2 * sinLambda) * (cosU2 * sinLambda) + (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda) * (cosU1 * sinU2 - sinU1 * cosU2 * cosLambda));
   if (0 === sinSigma) {
    return 0; // co-incident points
   };
