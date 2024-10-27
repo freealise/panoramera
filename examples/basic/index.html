@@ -291,14 +291,8 @@ try {
       pitch: 0,
     });*/
     if (dev === true) {
-      var divs = document.getElementById("map").getElementsByTagName('div');
-      for (var i=0; i<divs.length; i++) {
-        if (divs[i].innerHTML == 'For development purposes only' || (divs[i].style.position == 'absolute' && divs[i].style.bottom == '0px') ) {
-          divs[i].style.display = 'none';
-          //break;
-        }
-      }
-      //document.getElementById("map").lastChild.style.display = 'none';
+      document.getElementById("map").innerHTML = document.getElementById("map").innerHTML.replace('For development purposes only', '<a id="dev" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>');
+      document.getElementById("dev").click();
       dev = false;
     }
   }
