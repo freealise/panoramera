@@ -257,7 +257,8 @@ function toDegrees(radians) {
 return radians * 180 / Math.PI;
 }
        
-var divs, sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng, oldLat, oldLng, panoDist, panoFOV, panoZoom;
+var sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng, oldLat, oldLng, panoDist, panoFOV, panoZoom;
+var divs = null;
 
 function processSVData({ data }) {
 try {
@@ -289,10 +290,11 @@ try {
       heading: 270,
       pitch: 0,
     });*/
-    if (divs === null) {
+    if (divs == null) {
       divs = document.getElementById('map').getElementsByTagName('div');
       for (var i=0; i<divs.length; i++) {
-        if (divs[i].style.top == '50%' && divs[i].style.fontSize == '20px') {
+        if (divs[i].innerHTML.trim() == 'For development purposes only') {
+          alert(i);
           divs[i].style.display = 'none';
           break;
         }
