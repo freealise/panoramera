@@ -207,7 +207,7 @@ function distVincenty(lat1, lon1, lat2, lon2) {
      b = 6356752.3142,
      f = 1 / 298.257223563, // WGS-84 ellipsoid params
      L = toRadians(lon2-lon1),
-     x = Math.atan((1 - f),
+     x = Math.atan(1 - f),
      U1 = x * Math.tan(toRadians(lat1)),
      U2 = x * Math.tan(toRadians(lat2)),
      sinU1 = Math.sin(U1),
