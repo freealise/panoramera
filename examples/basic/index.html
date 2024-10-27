@@ -293,9 +293,10 @@ try {
     if (divs == null) {
       divs = document.getElementById('map').getElementsByTagName('div');
       for (var i=0; i<divs.length; i++) {
-        if (divs[i].childNodes[0] && divs[i].childNodes[0].nodeValue == 'For development purposes only') {
+        if (divs[i].childNodes[0] && !divs[i].childNodes[0].childNodes[0] && divs[i].childNodes[0].innerHTML.length > 0) {// == 'For development purposes only') {
+          alert(divs[i].childNodes[0].innerHTML);
           divs[i].style.display = 'none';
-          break;
+          //break;
         }
       }
     }
