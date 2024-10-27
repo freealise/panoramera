@@ -257,7 +257,7 @@ function toDegrees(radians) {
 return radians * 180 / Math.PI;
 }
        
-var sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng, oldLat, oldLng, panoDist, panoFOV, panoZoom;
+var divs, sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng, oldLat, oldLng, panoDist, panoFOV, panoZoom;
 
 function processSVData({ data }) {
 try {
@@ -289,6 +289,15 @@ try {
       heading: 270,
       pitch: 0,
     });*/
+    if (divs === null) {
+      divs = document.getElementById('map').getElementsByTagName('div');
+      for (var i=0; i<divs.length; i++) {
+        if (divs[i].style.top == '50%' && divs[i].style.fontSize == '20px') {
+          divs[i].style.display = 'none';
+          break;
+        }
+      }
+    }
   }
   
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
@@ -391,13 +400,6 @@ async function initialize() {
         google.maps.event.addListener(panorama, "closeclick", function(event) {
           document.getElementById('map').style.filter = 'invert(0)';
         });
-        const divs = document.getElementById('map').getElementsByTagName('div');
-        for (var i=0; i<divs.length; i++) {
-          if (divs[i].style.width == '128px' && divs[i].style.height == '128px' && divs[i].innerText.trim() == 'For development purposes only') {
-            divs[i].style.display = 'none';
-            break;
-          }
-        }
 }
 window.initialize = initialize;
 
