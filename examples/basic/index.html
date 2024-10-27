@@ -290,10 +290,6 @@ try {
       heading: 270,
       pitch: 0,
     });*/
-    if (dev === true) {
-      document.getElementById("map").innerHTML = document.getElementById("map").innerHTML.replace('For development purposes only', '');
-      dev = false;
-    }
   }
   
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
@@ -374,12 +370,7 @@ async function initialize() {
             pitch: 10,
           },
         );
-        document.getElementById("map").addEventListener("click", function(event) {
-          document.getElementById('map').style.opacity = 0.0;
-          setTimeout(function(){
-            document.getElementById('map').style.opacity = 1.0;
-          }, 500);
-        });
+        
         //panorama.setVisible(true);
         google.maps.event.addListener(panorama, "position_changed", function(event) {
             //panorama.setZoom(panoZoom);
@@ -393,8 +384,30 @@ async function initialize() {
                 alert(error),//console.error(error),
 						);
         });
+        
         google.maps.event.addListener(panorama, "closeclick", function(event) {
           document.getElementById('map').style.filter = 'invert(0)';
+        });
+        
+        document.getElementById("map").addEventListener("click", function(event) {
+          document.getElementById('map').style.opacity = 0.0;
+          setTimeout(function(){
+            document.getElementById('map').style.opacity = 1.0;
+          }, 500);
+        });
+        
+        document.getElementById("map").addEventListener("pointerdown", () => {
+          if (dev === true) {
+            var divs = document.getElementById("map").getElementsByTagName('div');
+            for (var i=0; i<divs.length; i++) {
+              if (divs[i].innerHTML == 'For development purposes only' || (divs[i].style.position == 'absolute' && divs[i].style.bottom == '0px') ) {
+                divs[i].style.display = 'none';
+                //break;
+              }
+            }
+            document.getElementById("map").lastChild.style.display = 'none';
+            dev = false;
+          }
         });
 }
 window.initialize = initialize;
