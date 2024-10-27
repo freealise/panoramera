@@ -393,7 +393,7 @@ async function initialize() {
         });
         const divs = document.getElementById('map').getElementsByTagName('div');
         for (var i=0; i<divs.length; i++) {
-          if (divs[i].innerText == 'For development purposes only') {
+          if (divs[i].style.width == '128px' && divs[i].style.height == '128px' && divs[i].innerText.trim() == 'For development purposes only') {
             divs[i].style.display = 'none';
             break;
           }
