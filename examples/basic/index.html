@@ -284,7 +284,7 @@ try {
     panorama.setPosition( location.latLng );
     panorama.setPano(location.pano);
     document.getElementById('map').style.filter = 'invert(1)';
-    setTimeout(function(){panorama.setVisible(!panorama.getVisible());}, 500);
+    panorama.setVisible(!panorama.getVisible());
     /*panorama.setPov({
       heading: 270,
       pitch: 0,
@@ -370,7 +370,10 @@ async function initialize() {
           },
         );
         document.getElementById("map").addEventListener("click", function(event) {
-          panorama.setVisible(false);
+          document.getElementById('map').style.opacity = 0.0;
+          setTimeout(function(){
+            document.getElementById('map').style.opacity = 1.0;
+          }, 250);
         });
         //panorama.setVisible(true);
         google.maps.event.addListener(panorama, "position_changed", function(event) {
