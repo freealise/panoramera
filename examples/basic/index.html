@@ -294,10 +294,11 @@ try {
       divs = document.getElementById('map').getElementsByTagName('div');
       alert(divs.length);
       for (var i=0; i<divs.length; i++) {
-        if (divs[i].style.fontSize == '20px') {
-          alert(divs[i].innerHTML.trim()); //== 'For development purposes only'
+        var ih = divs[i].innerHTML.trim();
+        if (ih.indexOf('<') == -1 && ih.length > 0) {
+          alert(ih); //== 'For development purposes only'
           divs[i].style.display = 'none';
-          //break;
+          break;
         }
       }
     }
