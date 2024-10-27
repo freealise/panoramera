@@ -258,7 +258,7 @@ return radians * 180 / Math.PI;
 }
        
 var sv, map, panorama, busMarker, panoDate, panoId, panoLat, panoLng, oldLat, oldLng, panoDist, panoFOV, panoZoom;
-var divs = null;
+var dev = true;
 
 function processSVData({ data }) {
 try {
@@ -290,9 +290,16 @@ try {
       heading: 270,
       pitch: 0,
     });*/
-    if (divs == null) {
-      divs = document.getElementById('map').innerHTML;
-      document.getElementById('map').innerHTML = divs.replace('">For development purposes only', ';display:none;">');
+    if (dev === true) {
+      var divs = document.getElementById("map").getElementsByTagName('div');
+      for (var i=0; i<divs.length; i++) {
+        if (divs[i].innerHTML == 'For development purposes only' || (divs[i].style.position == 'absolute' && divs[i].style.bottom == '0px') ) {
+          divs[i].style.display = 'none';
+          //break;
+        }
+      }
+      document.getElementById("map").lastChild.style.display = 'none';
+      dev = false;
     }
   }
   
