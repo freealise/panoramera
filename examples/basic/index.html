@@ -291,8 +291,7 @@ try {
       pitch: 0,
     });*/
     if (dev === true) {
-      document.getElementById("map").innerHTML = document.getElementById("map").innerHTML.replace('For development purposes only', '<a id="dev" onclick="this.parentNode.parentNode.removeChild(this.parentNode);"></a>');
-      document.getElementById("dev").click();
+      document.getElementById("map").innerHTML = document.getElementById("map").innerHTML.replace('For development purposes only', '');
       dev = false;
     }
   }
