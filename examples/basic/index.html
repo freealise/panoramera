@@ -283,9 +283,8 @@ try {
   if (panorama.getVisible() === false) {
     panorama.setPosition( location.latLng );
     panorama.setPano(location.pano);
-    panorama.setVisible(!panorama.getVisible());
     document.getElementById('map').style.filter = 'invert(1)';
-    setTimeout(function(){panorama.setVisible(!panorama.getVisible());}, 250);
+    setTimeout(function(){panorama.setVisible(!panorama.getVisible());}, 500);
     /*panorama.setPov({
       heading: 270,
       pitch: 0,
