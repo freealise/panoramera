@@ -371,6 +371,8 @@ async function initialize() {
         );
         //panorama.setVisible(true);
         google.maps.event.addListener(panorama, "position_changed", function(event) {
+            event.preventDefault();
+            panorama.setZoom(panoZoom);
             sv.getPanorama({ 
               location: panorama.getPosition(), 
               radius: 100, 
