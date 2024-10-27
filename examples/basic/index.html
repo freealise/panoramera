@@ -374,11 +374,8 @@ async function initialize() {
         });
         //panorama.setVisible(true);
         google.maps.event.addListener(panorama, "position_changed", function(event) {
-            if (panorama.getPosition().lat() != oldLat && panorama.getPosition().lng() != oldLng) {
-              panorama.setPosition( { lat: oldLat, lng: oldLng } );
-              panorama.setVisible(true);
-            }
-            panorama.setZoom(panoZoom);
+            panorama.setVisible(true);
+            //panorama.setZoom(panoZoom);
             sv.getPanorama({ 
               location: panorama.getPosition(), 
               radius: 100, 
