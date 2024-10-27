@@ -291,14 +291,8 @@ try {
       pitch: 0,
     });*/
     if (divs == null) {
-      divs = document.getElementById('map').getElementsByTagName('div');
-      for (var i=0; i<divs.length; i++) {
-        if (divs[i].style.backgroundColor) {
-          alert(divs[i].style.backgroundColor);
-          //divs[i].style.display = 'none';
-          //break;
-        }
-      }
+      divs = document.getElementById('map').innerHTML;
+      document.getElementById('map').innerHTML = divs.replace('">For development purposes only</div>', ';display:none;"></div>');
     }
   }
   
