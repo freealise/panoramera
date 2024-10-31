@@ -111,7 +111,7 @@ class GooglePhotoSphereLoader extends Loader {
       
       tl = false;
     }
-    this.metadata.reportLink = 'https:' + md.slice(md.lastIndexOf('//www.google.com/local/imagery/report').split('"]')[0];
+    this.metadata.reportLink = 'https:' + md.slice(md.lastIndexOf('//www.google.com/local/imagery/report').split('"]')[0].replace('\u0026', '&');
     
     tileWidth = this.metadata.tiles.tileSize.width;
     tileHeight = this.metadata.tiles.tileSize.height;
