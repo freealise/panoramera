@@ -1,5 +1,6 @@
 import { Loader } from "./Loader.js";
 import { getPanoramaById, getGoogleStreetViewService } from "./utils.js";
+var md = null;
 
 // AF1QipMKVZBKb5dP2my1FWB2ljCp2vXqiISTzj056YD_
 // https://www.google.com/maps/photometa/v1?authuser=0&hl=en&gl=uk&pb=!1m4!1smaps_sv.tactile!11m2!2m1!1b1!2m2!1sen!2suk!3m3!1m2!1e10!2sAF1QipMKVZBKb5dP2my1FWB2ljCp2vXqiISTzj056YD_!4m57!1e1!1e2!1e3!1e4!1e5!1e6!1e8!1e12!2m1!1e1!4m1!1i48!5m1!1e1!5m1!1e2!6m1!1e1!6m1!1e2!9m36!1m3!1e2!2b1!3e2!1m3!1e2!2b0!3e3!1m3!1e3!2b1!3e2!1m3!1e3!2b0!3e3!1m3!1e8!2b0!3e3!1m3!1e1!2b0!3e3!1m3!1e4!2b0!3e3!1m3!1e10!2b1!3e2!1m3!1e10!2b0!3e3
@@ -9,6 +10,7 @@ async function getPhotoSphereInfo(id) {
   const res = await fetch(url);
   const text = await res.text();
   const info = JSON.parse(text.substr(4));
+  md = text;
   return info;
 }
 
@@ -109,6 +111,7 @@ class GooglePhotoSphereLoader extends Loader {
       
       tl = false;
     }
+    this.metadata.reportLink = 'https:' + md.slice(md.lastIndexOf('//www.google.com/local/imagery/report').split('"]')[0];
     
     tileWidth = this.metadata.tiles.tileSize.width;
     tileHeight = this.metadata.tiles.tileSize.height;
