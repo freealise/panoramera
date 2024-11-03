@@ -323,7 +323,7 @@ async function initialize() {
 
 //const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-        const cafeMarker = new google.maps.Marker({
+        /*const cafeMarker = new google.maps.Marker({
           position: { lat: 50.0746800, lng: 14.4335700 },
           map,
           //content: pinSvg,
@@ -346,7 +346,7 @@ async function initialize() {
           icon: "https://freeali.se/assets/images/C-FU.svg",
           draggable: true,
           title: "Bus Stop",
-        });
+        });*/
 
         var georssLayer = new google.maps.KmlLayer({
           url: 'https://map.freeali.se/feeds/posts/default?alt=rss'
@@ -688,17 +688,6 @@ function Recorder(cnvs, fps) {
             );
             //alert(JSON.stringify(loader.metadata));
             stt.push(loader.metadata); //location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
-            markers[k-1] = new google.maps.Marker({
-              position: { 
-                lat: loader.metadata.location.latLng.lat, 
-                lng: loader.metadata.location.latLng.lng 
-              },
-              map,
-              //content: pinSvg,
-              //icon: "https://freeali.se/assets/images/C-FU.svg",
-              //draggable: true,
-              title: loader.metadata.copyright,
-            });
             k++;
             if (ps[k-1]) {
               load(ps[k-1], true);
@@ -792,17 +781,6 @@ function Recorder(cnvs, fps) {
           );
           //alert(JSON.stringify(loader.metadata));
           stt.push(loader.metadata); //location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
-          markers[j] = new google.maps.Marker({
-            position: { 
-              lat: loader.metadata.location.latLng.lat, 
-              lng: loader.metadata.location.latLng.lng 
-            },
-            map,
-            //content: pinSvg,
-            //icon: "https://freeali.se/assets/images/C-FU.svg",
-            //draggable: true,
-            title: loader.metadata.copyright,
-          });
           j++;
           if (ids[j]) {
             load(ids[j], false);
@@ -985,7 +963,6 @@ function dataURLtoBlob(dataURL) {
       var copyright = '';
       var latLng = [];
       var stt = [];
-      var markers = [];
       var idParam = null;
       var psParam = null;
       var cParam = null;
