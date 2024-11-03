@@ -688,6 +688,17 @@ function Recorder(cnvs, fps) {
             );
             //alert(JSON.stringify(loader.metadata));
             stt.push(loader.metadata); //location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
+            markers[k-1] = new google.maps.Marker({
+              position: { 
+                lat: loader.metadata.location.latLng.lat, 
+                lng: loader.metadata.location.latLng.lng 
+              },
+              map,
+              //content: pinSvg,
+              //icon: "https://freeali.se/assets/images/C-FU.svg",
+              //draggable: true,
+              title: loader.metadata.copyright,
+            });
             k++;
             if (ps[k-1]) {
               load(ps[k-1], true);
@@ -781,6 +792,17 @@ function Recorder(cnvs, fps) {
           );
           //alert(JSON.stringify(loader.metadata));
           stt.push(loader.metadata); //location.latLng.lat() + "," + loader.metadata.location.latLng.lng() + " ";
+          markers[j] = new google.maps.Marker({
+            position: { 
+              lat: loader.metadata.location.latLng.lat, 
+              lng: loader.metadata.location.latLng.lng 
+            },
+            map,
+            //content: pinSvg,
+            //icon: "https://freeali.se/assets/images/C-FU.svg",
+            //draggable: true,
+            title: loader.metadata.copyright,
+          });
           j++;
           if (ids[j]) {
             load(ids[j], false);
@@ -963,6 +985,7 @@ function dataURLtoBlob(dataURL) {
       var copyright = '';
       var latLng = [];
       var stt = [];
+      var markers = [];
       var idParam = null;
       var psParam = null;
       var cParam = null;
