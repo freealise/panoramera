@@ -267,10 +267,10 @@ line3
                 if (location.href.split("?file=")[1]) {
                     var path = location.href.split("?file=")[1];
                     var fln = path.slice(path.lastIndexOf("/")+1);
-                    var url = "https://freealise-depth-anything-video.hf.space/file=" + path.slice(0, path.lastIndexOf("/")+1); 
+                    var url = "https://freealise-depth-anything-v2-video.hf.space/file=" + path.slice(0, path.lastIndexOf("/")+1); 
                 } else {
                     var fln = "TriangleWithoutIndices.gltf";
-                    var url = "https://huggingface.co/spaces/freealise/Depth-Anything-Video/resolve/main/"; 
+                    var url = "https://huggingface.co/spaces/freealise/Depth-Anything-V2-Video/resolve/main/"; 
                 }
 
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
