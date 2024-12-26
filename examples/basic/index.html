@@ -448,6 +448,8 @@ window.initialize = initialize;
       const canvases = document.getElementsByTagName('canvas');
       const ctxs = [];
 
+var blur_in = new Array(256);
+blur_in.fill(1);
 
 const fileSelect = document.getElementById("fileSelect"),
 fileElem = document.getElementById("fileElem"),
@@ -539,6 +541,8 @@ async function loadDepth() {
                   "subtitles": null
                 }, 	// blob in 'Input Video' Video component		
 				        "vits", // string  in 'Model Type' Dropdown component
+                blur_in.join(' '),
+                1, 32,
                 subs.value.trim()
 	  ]);
     depth.src = result.data[0].video.url;
