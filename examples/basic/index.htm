@@ -275,6 +275,7 @@ line3
 
 var intv = setInterval(function(){
     if (document.getElementById("bgimage").value.slice(0,5) == 'https') {
+        alert('ok');
 BABYLON.SceneLoader.Append(url, fln, scene, function (scene) {
 try {
   engine.setHardwareScalingLevel(1.0);
