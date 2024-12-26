@@ -326,7 +326,7 @@ try {
         document.getElementById("fnum").innerHTML += '<option value="' + i + '">' + j + '</option>';
       }
       scene.meshes[i].rotationQuaternion = null;
-      scene.meshes[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
+      //scene.meshes[i].material.pointSize = Math.ceil(Math.sqrt(2)*Math.log2(Math.PI/document.getElementById("zoom").value));
       scene.meshes[i].position.z = coords[parseInt(order[j])].lat;
       scene.meshes[i].position.x = coords[parseInt(order[j])].lng;
       scene.meshes[i].rotation.y = coords[parseInt(order[j])].heading / 180 * Math.PI;
