@@ -308,7 +308,7 @@ try {
   
   document.getElementById('loadLink').href = 'https://www.google.com/maps/@'+panoLat+','+panoLng+',3a,90y,180.00h,90t/data=!3m7!1e1!3m5!1s'+panoId+'!2e0!5s'+panoDate.replace('-','')+'01T000000!7i16384!8i8192?entry=ttu';
   // y=fov, h=theta, t=phi
-  //https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=vyIt4SOcloKf_5uK_82ZIw&cb_client=maps_sv.tactile.gps&w=203&h=100&yaw=310.16492&pitch=0&thumbfov=100
+  //https://streetviewpixels-pa.googleapis.com/v1/thumbnail?panoid=CCBWqYeljZnrtlJzJQaEGw&cb_client=maps_sv.tactile.gps&w=8192&h=4096&yaw=208.25&pitch=0&thumbfov=160
   //https://maps.googleapis.com/maps/api/streetview?size=400x400&location=47.5763831,-122.4211769%20&fov=80&heading=70&pitch=0&key=AIzaSyB41DRUbKWJHPxaFjMAwdrzWzbVKartNGg
   document.getElementById('loadLink').innerHTML = "<b>" + location.description + "</b><br/>View on Google Maps<br/>zoom " + panoZoom + ", fov " + panoFOV + " deg";
   document.getElementById('loadLink').target = "_top";
