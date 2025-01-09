@@ -132,9 +132,6 @@
         <input type="radio" id="display2" name="display" value="gr" onchange="toggleDisplay(this.value);"/>
         <label for="display2">depth</label> - When the slideshow video is available, it is loaded automatically into the depth estimation AI which returns a map of how far each point of a photo is from the camera, also as a video. It should be used to enhance the focus of images and for parallax effect.<p/>
         
-        <input type="radio" id="display3" name="display" value="model" onchange="toggleDisplay(this.value);"/>
-        <label for="display3">model</label> - <p/>
-        
         <input type="radio" id="display4" name="display" value="none" onchange="toggleDisplay(this.value);" checked/>
         <label for="display4">none</label>
       </p>
@@ -172,10 +169,6 @@
         <a href="" id="DepthLink"></a>
         <script type="module" src="https://gradio.s3-us-west-2.amazonaws.com/4.44.0/gradio.js"></script>
         <gradio-app src="https://freealise-depth-anything-v2-video.hf.space" id="gradio" style="display:none"></gradio-app>
-      </div>
-      <div id="model" class="display">
-        <!--<iframe src="index.htm" id="iframe3D"></iframe>-->
-        <a href='#' id='fullscreen' onclick='const model=document.getElementById("model").getElementsByTagName("iframe")[0];if(model.style.width!="100vw"){model.style.width="100vw";model.style.height="100vh";}else{model.style.width="320px";model.style.height="256px";}'>[+]</a>
       </div>
     </section>
     <script src="cube2equi.js"></script>
