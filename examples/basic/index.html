@@ -940,6 +940,10 @@ try {
       
       function copyPanoId(e) {
         PanoId.value = e.target.title;
+        toggleDisplay("map");
+        panorama.setPano(PanoId.value);
+        document.getElementById('map').style.filter = 'invert(1)';
+        panorama.setVisible(true);
       }
       
 function dataURLtoBlob(dataURL) {
