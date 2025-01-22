@@ -144,6 +144,7 @@
       -->
       <form id="PanoIdForm">
         <input type="text" id="PanoId" placeholder="Panorama #"/>
+        <input type="checkbox" id="LoadStreet" checked/><label for="LoadStreet"> load panos along the street by click on thumbnail</label><br/>
         <input type="text" id="PanoIdInput" placeholder="Place address"/>
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
@@ -426,6 +427,7 @@ window.initialize = initialize;
       var progressDiv = document.getElementById("progressDiv");
       var canvasContainer = document.getElementById("canvasContainer");
       var PanoId = document.getElementById("PanoId");
+      var LoadStreet = document.getElementById("LoadStreet");
       var PanoIdInput = document.getElementById("PanoIdInput");
       var PanoIdForm = document.getElementById("PanoIdForm");
       var DownloadImages = document.getElementById("DownloadImages");
@@ -938,12 +940,33 @@ try {
         showProgress("Copied image to clipboard.");
       }
       
+      var panos = [];
       function copyPanoId(e) {
         PanoId.value = e.target.title;
         toggleDisplay("map");
         panorama.setPano(PanoId.value);
         document.getElementById('map').style.filter = 'invert(1)';
         panorama.setVisible(true);
+        if (LoadStreet.checked) {
+          panos = [];
+          panorama.addListener("links_changed", () => {
+            setTimeout(function(){
+              const links = panorama.getLinks();
+              const dn = panorama.getLocation().shortDescription.replace(/\d/g,'').trim();
+              panos[panos.length] = panorama.getPano();
+
+              for (const i in links) {
+                if (links[i].description == dn && panos.indexOf(links[i].pano) == -1) {
+                  panorama.setPano(links[i].pano);
+                  panorama.setPov({heading:links[i].heading, pitch:0.0});
+                  break;
+                }
+              }
+            }, 5000);
+          });
+        } else {
+          panorama.removeListener("links_changed");
+        }
       }
       
 function dataURLtoBlob(dataURL) {
