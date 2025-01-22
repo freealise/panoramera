@@ -144,7 +144,7 @@
       -->
       <form id="PanoIdForm">
         <input type="text" id="PanoId" placeholder="Panorama #"/>
-        <input type="checkbox" id="LoadStreet" checked/><label for="LoadStreet"> load panos along the street by click on thumbnail</label><br/>
+        <input type="checkbox" id="LoadStreet" checked/><label for="LoadStreet"> log panos along the street by click on thumbnail</label><br/>
         <input type="text" id="PanoIdInput" placeholder="Place address"/>
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
@@ -949,11 +949,13 @@ try {
         panorama.setVisible(true);
         if (LoadStreet.checked) {
           panos = [];
+          messageDiv.innerHTML = '';
           panorama.addListener("links_changed", () => {
             setTimeout(function(){
               const links = panorama.getLinks();
               const dn = panorama.getLocation().shortDescription.replace(/\d/g,'').trim();
               panos[panos.length] = panorama.getPano();
+              messageDiv.innerHTML += panos[panos.length] + '<br/>';
 
               for (const i in links) {
                 if (links[i].description == dn && panos.indexOf(links[i].pano) == -1) {
