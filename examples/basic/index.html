@@ -143,6 +143,7 @@
       https://streetviewpixels-pa.googleapis.com/v1/tile - current endpoint
       -->
       <form id="PanoIdForm">
+        <input type="text" id="PanoId" placeholder="Panorama #"/>
         <input type="text" id="PanoIdInput" placeholder="Place address"/>
         <input type="submit" id="PanoIdFormSubmit" value="Find on map"/>
         <input type="button" id="DownloadImages" value="Download images"/>
@@ -424,6 +425,7 @@ window.initialize = initialize;
       var errorDiv = document.getElementById("errorDiv");
       var progressDiv = document.getElementById("progressDiv");
       var canvasContainer = document.getElementById("canvasContainer");
+      var PanoId = document.getElementById("PanoId");
       var PanoIdInput = document.getElementById("PanoIdInput");
       var PanoIdForm = document.getElementById("PanoIdForm");
       var DownloadImages = document.getElementById("DownloadImages");
@@ -866,7 +868,6 @@ try {
             ctxs[k] = null;
             
             thumbnail.appendChild(th[k]);
-            th[k].addEventListener("click", copyDataUrl);
             showProgress("Loaded thumbnail "+k);
             k++;
             if (k < canvases.length) {
@@ -884,6 +885,14 @@ try {
           var durl = canvases[k].toDataURL();
           th[k].download = durl;
           th[k].src = dataURLtoBlob( durl );
+          if (ids[k-1]) {
+            th[k].title = ids[k-1];
+          } else {
+            th[k].title = ps[k-1];
+          }
+          th[k].alt = cs[k-1];
+          th[k].addEventListener("dblclick", copyDataUrl);
+          th[k].addEventListener("click", copyPanoId);
 				}
       }
 
@@ -927,6 +936,10 @@ try {
         window.focus();
         navigator.clipboard.writeText( e.target.download );
         showProgress("Copied image to clipboard.");
+      }
+      
+      function copyPanoId(e) {
+        PanoId.value = e.target.title;
       }
       
 function dataURLtoBlob(dataURL) {
