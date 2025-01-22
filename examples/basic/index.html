@@ -949,19 +949,21 @@ try {
         panorama.setVisible(true);
         if (LoadStreet.checked) {
           panos = [];
-          messageDiv.innerHTML = '';
+          messageDiv.innerText = '';
           panorama.addListener("links_changed", () => {
             setTimeout(function(){
               const links = panorama.getLinks();
               const dn = panorama.getLocation().shortDescription.replace(/\d/g,'').trim();
               panos[panos.length] = panorama.getPano();
-              messageDiv.innerHTML += panos[panos.length-1] + ' ';
+              messageDiv.innerText += panos[panos.length-1] + ',';
 
               for (const i in links) {
                 if (links[i].description == dn && panos.indexOf(links[i].pano) == -1) {
                   panorama.setPano(links[i].pano);
                   panorama.setPov({heading:links[i].heading, pitch:0.0});
                   break;
+                } else if (i == links.length-1) {
+                  window.location.href = './index.html?ids=' + messageDiv.innerText + '#';
                 }
               }
             }, 5000);
