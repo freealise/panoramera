@@ -955,7 +955,7 @@ try {
               const links = panorama.getLinks();
               const dn = panorama.getLocation().shortDescription.replace(/\d/g,'').trim();
               panos[panos.length] = panorama.getPano();
-              messageDiv.innerHTML += panos[panos.length] + '<br/>';
+              messageDiv.innerHTML += panos[panos.length-1] + ' ';
 
               for (const i in links) {
                 if (links[i].description == dn && panos.indexOf(links[i].pano) == -1) {
