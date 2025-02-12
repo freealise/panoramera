@@ -1,6 +1,8 @@
 # panoramera
 
-Panorama fetching tools for JavaScript
+Panorama fetching tools for JavaScript - 
+import 360• photos and find their depth map for showing them in 3D with focus blur and parallax,
+also remove unnecessary objects and merge different timepoints of the same place for inpainting.
 
 Panoramera is a spiritual successor to [PanomNom.js](https://github.com/spite/PanomNom.js/) ([GSVPano.js](https://github.com/spite/GSVPano.js/)), the new version of which had been updated to use ES6 features like modules and async/await.
 
