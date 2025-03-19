@@ -1,0 +1,338 @@
+<html>
+    <head>
+        <style>
+            body {
+                font-family: arial, sans;
+            }
+            h1 {
+                width: 100%;
+                text-align: center;
+                
+            }
+            canvas {
+                border: 1px solid #000;
+                position: absolute;
+                display: none;
+            }
+            #outputImg {
+                display: block;
+                margin: auto;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>360 Image Drawing Guide</h1>
+        <canvas id="stage" width="2048" height="1024"></canvas>
+
+        <img id="outputImg" width="2048" height="1024" />
+
+        <p>
+            Right-click and select "save image as..." to download full-resolution image.
+        </p>
+        <textarea cols='25' rows='10' id='out'></textarea>
+
+
+        <script>
+
+const WIDTH = 2048;
+const HEIGHT = WIDTH/2;
+
+let outputImg = document.getElementById("outputImg");
+let canvas = document.getElementById("stage");
+let ctx = canvas.getContext('2d');
+ctx.imageSmoothingEnabled = false;
+
+let testPoint = [-100, 100, 100];
+
+let testPoints = [
+    [-10, -10, 10, 'rgb(0, 0, 255)'],
+    [-10, 10, 10, 'rgb(0, 0, 255)'],
+    [10, 10, 10, 'rgb(0, 0, 255)'],
+    [10, -10, 10, 'rgb(0, 0, 255)'],
+    [5, -10, 7, 'rgb(0, 0, 255)'],
+    [-5, -10, 7, 'rgb(0, 0, 255)'],
+    [0, -10, 7, 'rgb(0, 0, 255)'],
+
+    [-10, 10, -10, 'rgb(0, 255, 0)'],
+    [-10, 10, 10, 'rgb(0, 255, 0)'],
+    [10, 10, 10, 'rgb(0, 255, 0)'],
+    [10, 10, -10, 'rgb(0, 255, 0)'],
+    [10, 10, -5, 'rgb(0, 255, 0)'],
+    [10, 10, 5, 'rgb(0, 255, 0)'],
+    [10, 10, 5, 'rgb(0, 255, 0)'],
+];
+
+
+function equiProj(point) {
+    let [x, y, z] = point;
+
+    let angle1 = Math.atan2(z, x);
+    let angle2 = Math.asin(y / (Math.sqrt(x*x + y*y + z*z)));
+    if (isNaN(angle2)) {
+        angle2 = 0;
+    }
+    
+    return [angle1, angle2];
+}
+
+function remapPoint(p) {
+    return [ (p[0]/Math.PI) * (WIDTH/2),
+        (p[1]/(Math.PI/2)) * (HEIGHT/2) ];
+}
+
+function drawPoint(point) {
+    let p = equiProj(point);
+    p = remapPoint(p);
+
+    ctx.fillStyle = point[3];
+    ctx.beginPath();
+    ctx.arc(p[0], p[1], 5, 0, Math.PI*2);
+    ctx.fill();
+}
+
+function eLineTo(s, e, divs) {
+    let p = [0, 0, 0];
+    let projPt;
+
+    ctx.beginPath();
+    p = s;
+    projPt = remapPoint(equiProj(p));
+    ctx.moveTo(projPt[0], projPt[1]);
+
+    let u;
+    for (let i=0; i < divs; i++) {
+        u = i / (divs-1);
+        for (let j=0; j < 3; j++) {
+            p[j] = (s[j] * (1-u)) + (e[j] * u);
+        }
+        projPt = remapPoint(equiProj(p));
+        ctx.lineTo(projPt[0], projPt[1]);
+    }
+    ctx.stroke();
+}
+
+
+function drawGridFace(size, divs) {
+/*
+    eLineTo([-100, -100, 10],
+        [100, -100, 10], 500);
+    eLineTo([-100, 100, 10],
+        [100, 100, 10], 500);    
+*/
+    let dist = 20;
+
+    let inc;    
+    for (let i=0; i < divs; i++) {
+        inc = i * ((size*2) / (divs-1));
+        
+        // front
+        ctx.strokeStyle = 'rgb(100, 0, 0)';
+        eLineTo([-size, inc-size, dist],[size, inc-size, dist], 500);
+        eLineTo([inc-size, -size, dist],[inc-size, size, dist], 500);
+
+        // back
+        ctx.strokeStyle = 'rgb(100, 0, 0)';
+        eLineTo([-size, inc-size, -dist],[size, inc-size, -dist], 500);
+        eLineTo([inc-size, -size, -dist],[inc-size, size, -dist], 500);
+
+        // right
+        ctx.strokeStyle = 'rgb(0, 0, 100)';
+        eLineTo([dist, inc-size, -size],[dist, inc-size, size], 500);
+        eLineTo([dist, -size, inc-size],[dist, size, inc-size], 500);
+
+        // top
+        ctx.strokeStyle = 'rgb(0, 100, 0)';
+        eLineTo([-size, -dist*2, inc-size],[size, -dist*2, inc-size], 500);
+        eLineTo([inc-size, -dist*2, -size],[inc-size, -dist*2, size], 500);
+
+
+        // bottom
+        ctx.strokeStyle = 'rgb(0, 100, 0)';
+        eLineTo([-size, dist*2, inc-size],[size, dist*2, inc-size], 500);
+        eLineTo([inc-size, dist*2, -size],[inc-size, dist*2, size], 500);
+    }
+}
+
+function getYpos(theta, x)
+{
+    // return Math.sin(x);
+    return Math.atan(Math.tan(theta) * Math.cos(x));
+}
+
+function deg2rad(deg) {
+    return (deg/180 * Math.PI);
+}
+
+function remap(xin, yin) {
+    return [
+        (xin / Math.PI) * (WIDTH/2),
+        (yin / (Math.PI/2)) * (HEIGHT/2)
+    ];
+}
+
+let points = [];
+points[0] = [];
+points[1] = [];
+points[2] = [];
+
+function drawHoriz(theta, offset, c)
+{
+    // atan(tan(pi * (75/180)) * cos(x))
+    ctx.save();
+
+    ctx.beginPath();
+
+    // draw from -Math.PI to Math.PI 
+    let divs = 25 * 500;
+    let delta = (Math.PI * 2) / (divs - 1);
+
+    const imgData = ctx.getImageData(0, 0, WIDTH, HEIGHT);
+
+    let plotX, plotY;
+    let x, y;
+    for (let i=0; i < divs; i++) {
+        plotX = -Math.PI + (i * delta);
+        plotY = getYpos(deg2rad(theta), plotX+offset);
+
+        [x,y] = remap(plotX, plotY);
+        if (c === false) {
+          points[0].push([x,y]);
+        } else {
+          points[1].push([x,y]);
+        }
+
+        if ( i === 0 ) {
+          //ctx.moveTo(x, y);
+        } else {
+          //ctx.lineTo(x, y);
+          var coord = (Math.round(y+HEIGHT/2)*WIDTH+Math.round(x))*4;
+          
+            if (c === false) {
+               
+                imgData.data[coord] = 0;
+                imgData.data[coord+1] = 255;
+                imgData.data[coord+2] = 255;
+                imgData.data[coord+3] = 255;
+              
+            } else if (c === true && imgData.data[coord] == 0 && imgData.data[coord+1] == 255 && imgData.data[coord+2] == 255) {
+              var check = false;
+              for (var j=4; j<24; j+=4) {
+               if (imgData.data[coord-j] == 255 && imgData.data[coord-j+2] == 255) { check = true; }
+              }
+              if (check === false || parseInt(y) == 0) {
+                imgData.data[coord] = 255;
+                imgData.data[coord+1] = 0;
+                imgData.data[coord+2] = 255;
+                imgData.data[coord+3] = 255;
+                points[2].push({'x':parseInt(x)+WIDTH/2, 'y':parseInt(y)+HEIGHT/2});
+              }
+            } else if (imgData.data[coord] == 0 && imgData.data[coord+1] == 0 && imgData.data[coord+2] == 0) {
+              imgData.data[coord] = 255;
+              imgData.data[coord+1] = 255;
+              imgData.data[coord+2] = 0;
+              imgData.data[coord+3] = 255;
+            }
+            if (parseInt(x) / (WIDTH/4) == parseInt(parseInt(x) / (WIDTH/4))) {
+                imgData.data[coord] = 255;
+                imgData.data[coord+1] = 0;
+                imgData.data[coord+2] = 255;
+                imgData.data[coord+3] = 255;
+              }
+          
+        }
+    }
+    ctx.putImageData(imgData, 0, 0);
+
+    ctx.stroke();
+    ctx.restore();
+}
+
+function drawVerticals(angle) {
+    ctx.save();
+    
+    let divs = 360 / angle;
+    let delta = WIDTH / divs;
+
+    for (let i=0; i < divs; i++) {
+        ctx.beginPath();
+
+        ctx.moveTo(i*delta, 0);
+        ctx.lineTo(i*delta, HEIGHT);
+        ctx.stroke();
+    }
+
+    ctx.restore();
+}
+
+
+function drawGrid(delta)
+{   
+    ctx.clearRect(0, 0, WIDTH, HEIGHT);
+    //ctx.fillStyle = 'rgb(255,255,255)';
+    //ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+    ctx.strokeStyle = 'rgba(255, 0, 255, 0.5)';
+
+    ctx.lineWidth = 0.5;
+    ctx.strokeRect(0, 0, WIDTH, HEIGHT);
+
+
+    /*ctx.lineWidth = 1;
+
+    ctx.beginPath();
+    ctx.moveTo(WIDTH/2, 0);
+    ctx.lineTo(WIDTH/2, HEIGHT);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(0, HEIGHT/2);
+    ctx.lineTo(WIDTH, HEIGHT/2);
+    ctx.stroke();*/
+
+    ctx.lineWidth = 0.5;
+
+    ctx.lineWidth = 0.5;
+    //drawVerticals(15);
+
+    ctx.lineWidth = 0.5;
+    drawVerticals(90);
+
+
+    // draw horizontals
+    ctx.save();
+    ctx.translate(WIDTH/2, HEIGHT/2);
+
+    
+    for (let t = -75; t < 76; t += 15) {
+        ctx.strokeStyle = 'rgba(0, 255, 255, 1.0)';
+        drawHoriz(t, 0, false);
+    }
+    for (let t = -75; t < 76; t += 15) {
+        ctx.strokeStyle = 'rgba(255, 255, 0, 1.0)';
+        drawHoriz(t, Math.PI/2, true);
+    }
+    /*ctx.lineWidth = 5;
+    for (let i=0; i < points[0].length; i++) {
+        for (let j=0; j < points[1].length; j++) {
+
+            var dist = Math.sqrt(Math.pow((points[0][i][0]-points[1][j][0]),2) + Math.pow((points[0][i][1]-points[1][j][1]),2));
+console.log(dist);
+            if (dist < 3) {
+                //ctx.strokeRect((points[0][i][0]+points[1][j][0])/2, (points[0][i][1]+points[1][j][1])/2, 1, 1);
+            }
+        }
+    }*/
+    ctx.restore();
+
+    outputImg.src = canvas.toDataURL("image/png");
+    document.getElementById("out").value = JSON.stringify(points[2]);
+}
+
+drawGrid(ctx);
+
+        </script>
+        <!-- https://www.adrianherbez.net/2019/06/equirectangular-grid-generator/ -->
+
+    </body>
+</html>
