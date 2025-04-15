@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>WebGL panorama</title>
+    <style>
+    canvas {
+      width:320px;
+      height:240px;
+      user-select:none;
+      touch-action:none;
+    }
+    body {
+      margin:0;
+      padding:0;
+      background-color:#808080;
+      text-align:center;
+    }
+    video::cue {
+      font-family: serif;
+    }
+    </style>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"
+      integrity="sha512-zhHQR0/H5SEBL3Wn6yYSaTTZej12z0hVZKOv3TwCUXT1z5qeqGcXJLLrbERYRScEDDpYIJhPC1fk31gqR783iQ=="
+      crossorigin="anonymous"
+      defer
+    ></script>
+    <script src="webgl-demo.js" type="module"></script>
+  </head>
+
+  <body oncontextmenu="return false;">
+    <canvas id="glcanvas" width="1024" height="768"></canvas><br/>
+    pan<input type="range" id="pan" min="-0.05" max="0.05" value="0.0" step="0.001"/>
+    fov<input type="range" id="fov" min="5" max="90" value="45" step="1"/><br/>
+    time<input type="range" id="time" min="0" max="60" value="0" step="1"/>
+    <input type='button' id="snapshot" title="Snapshot" value="⬚"/>
+    <input type='button' id='record' title='Record' value='●'/><br/>
+    file <input type="file" id="files" accept="video/mp4"/><br/>
+    subs <input type="file" id="subs" accept="text/vtt"/>
+  </body>
+</html>
