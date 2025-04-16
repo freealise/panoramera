@@ -96,7 +96,7 @@ function main() {
       discard;
     } else {
       highp float vAlpha = texelColor.a;
-      gl_FragColor = vec4(texelColor.rgb * vLighting, vAlpha);
+      gl_FragColor = vec4(texelColor.rgb, vAlpha);  // vec4(texelColor.rgb * vLighting, vAlpha);
     }
   }
 `;
